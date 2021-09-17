@@ -4,15 +4,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { villagerHomeListData } from "../../mockData";
 import { VillagerHomeData } from "../../type";
 import AppConsole from "./AppConsole";
-import MapWithHomeLocations from "./MapWithHomeLocations";
+import dynamic from 'next/dynamic'
 import ModalSetting from "./Modals/ModalSetting";
 import VillagerConsole from "./VillagerConsole";
-// import MapWithHomeLocations from "./components/MapWithHomeLocations";
-// import AppConsole from "./components/AppConsole";
-// import { villagerHomeListData } from "./mockData";
-// import { VillagerHomeData } from "./type";
-// import VillagerConsole from "./components/VillagerConsole";
-// import ModalSetting from "./components/ModalSetting";
+
+/**
+ * Dynamic imports
+ */
+const MapWithHomeLocations = dynamic(() => import("./MapWithHomeLocations"), {
+  // loading: () => "Loading...",
+  ssr: false
+});
+
 
 const useStyles = makeStyles({
   mapContainer: {
@@ -73,7 +76,7 @@ function MainContent() {
         changeShowConditionHandler={changeShowConditionHandler}
       />
       <Grid container>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <AppConsole
             open={drawerOpen}
             setOpen={setDrawerOpen}
@@ -85,7 +88,7 @@ function MainContent() {
             isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
             handleOpenModalSetting={handleOpenModalSetting}
           />
-        </Grid>
+        </Grid> */}
         <Grid container>
           <Grid item xs={6}></Grid>
           <Grid item xs={4}>
