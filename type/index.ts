@@ -7,4 +7,5 @@ export type VillagerHomeData = {
   homeRepresentativesImg: string;
   isFoodRecieved: boolean;
   numberOfFamilyMember: number;
+  addressAdditionalDescription:string;
 };

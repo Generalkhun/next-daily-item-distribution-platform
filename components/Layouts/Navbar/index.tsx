@@ -1,12 +1,11 @@
 import { IconButton, Theme, Toolbar, Typography, AppBar, makeStyles, createStyles, Grid } from "@material-ui/core";
-import StarIcon from '@material-ui/icons/Star';
 import React from "react";
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useRouter } from "next/dist/client/router";
 import { get } from 'lodash'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      zIndex: 9999
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // }
     },
     appbar: {
-        backgroundColor: '#545454' 
+      backgroundColor: '#333437',
     }
   }),
 );
@@ -61,35 +60,34 @@ const NavBar = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Grid container>
-            <Grid item style={{ zIndex: 9999, marginTop: 22 }} xs={6} sm={6} md={6} lg={6}>
-              <Typography variant="h6" className={classes.title}>
-                ส่งของเข้าบ้าน
-              </Typography>
+            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={6} sm={6} md={6} lg={6}>
+              <IconButton onClick={(e) => {
+                e.preventDefault()
+                typeof window !== 'undefined' && router.push('/')
+              }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <Typography className={classes.otherNavText}>
+                  ส่งของเข้าบ้าน
+                </Typography>
+              </IconButton>
             </Grid>
             <Grid item className={classes.naviagtionWrapper}>
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <StarIcon className={pathname === '/heros' ? classes.otherNavIconSelectedheros : classes.otherNavIcon} />
-                <div onClick={(e) => {
-                  e.preventDefault()
-                  typeof window !== 'undefined' &&  router.push('/heros')
-                }}
-                >
-                  <Typography className={classes.otherNavText}>
-                    ประเภทของw
-                  </Typography>
-                </div>
-              </IconButton>
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <FavoriteIcon className={pathname === '/myfavhero' ? classes.otherNavIconSelectedfav : classes.otherNavIcon} />
-                <div onClick={(e) => {
-                  e.preventDefault()
-                  typeof window !== 'undefined' &&  router.push('/myfavhero')
-                }}
-                >
-                  <Typography className={classes.otherNavText}>
+              <IconButton onClick={(e) => {
+                e.preventDefault()
+                typeof window !== 'undefined' && router.push('/datamanagement')
+              }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <Typography className={classes.otherNavText}>
                   เพิ่ม/แก้ไขข้อมูล
-                  </Typography>
-                </div>
+                </Typography>
+              </IconButton>
+            </Grid>
+            <Grid item className={classes.naviagtionWrapper}>
+              <IconButton onClick={(e) => {
+                e.preventDefault()
+                typeof window !== 'undefined' && router.push('/datamanagement')
+              }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <Typography className={classes.otherNavText}>
+                  ออกจากระบบ
+                </Typography>
               </IconButton>
             </Grid>
           </Grid>

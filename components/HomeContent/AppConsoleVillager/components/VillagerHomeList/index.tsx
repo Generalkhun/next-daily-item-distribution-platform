@@ -5,7 +5,7 @@ import {
   Avatar,
 } from "@material-ui/core";
 import React from "react";
-import { VillagerHomeData } from "../../type";
+import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
 
 interface Props {
@@ -40,6 +40,7 @@ const VillagerHomeList = (props: Props) => {
                 foodRecieveStatus={villagerHomeData.isFoodRecieved}
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
+                homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
               />
             </ListItem>
           ) : (

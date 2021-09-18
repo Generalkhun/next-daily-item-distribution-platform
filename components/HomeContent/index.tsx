@@ -3,7 +3,7 @@ import { Grid, makeStyles, Paper } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 import { villagerHomeListData } from "../../mockData";
 import { VillagerHomeData } from "../../type";
-import AppConsole from "./AppConsole";
+import AppConsoleVillager from "./AppConsoleVillager";
 import dynamic from 'next/dynamic'
 import ModalSetting from "./Modals/ModalSetting";
 import VillagerConsole from "./VillagerConsole";
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     height: "90vh",
   },
 });
-function MainContent() {
+function HomeContent() {
   /**
    * Component states
    */
@@ -76,8 +76,8 @@ function MainContent() {
         changeShowConditionHandler={changeShowConditionHandler}
       />
       <Grid container>
-        {/* <Grid item xs={12}>
-          <AppConsole
+        <Grid item xs={12} lg={4}>
+          <AppConsoleVillager
             open={drawerOpen}
             setOpen={setDrawerOpen}
             setOpenVillagerConsole={setOpenVillagerConsole}
@@ -88,8 +88,8 @@ function MainContent() {
             isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
             handleOpenModalSetting={handleOpenModalSetting}
           />
-        </Grid> */}
-        <Grid container>
+        </Grid>
+        {/* <Grid container>
           <Grid item xs={6}></Grid>
           <Grid item xs={4}>
             <VillagerConsole
@@ -98,8 +98,8 @@ function MainContent() {
               setOpenVillagerConsole={setOpenVillagerConsole}
             />
           </Grid>
-        </Grid>
-        <Grid item xs={12} style={{ paddingTop: 80 }}>
+        </Grid> */}
+        <Grid item xs={12} lg={8} style={{ paddingTop: 80 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations
               setDrawerOpen={setDrawerOpen}
@@ -116,4 +116,4 @@ function MainContent() {
   );
 }
 
-export default MainContent;
+export default HomeContent;
