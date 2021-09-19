@@ -6,6 +6,7 @@ import HomeContent from '../components/HomeContent'
 import { getAllVillagerDataFromGoogleSheet } from '../helpers/api/googleSheetApi'
 import { get } from 'lodash'
 import { formatGoogleSheetDataResponse } from '../helpers/utils/formatGoogleSheetDataResponse'
+import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextProvider'
 
 interface Props {
 
@@ -13,14 +14,12 @@ interface Props {
 
 const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     // set data to the context on useEffect
-    // const { initialGoogleSheetData, googleSheetDataState } = useContext(googleSheetDataContext)
+    const { InitializeSheetData, googleSheetData } = useContext(GoogleSheetDataContext)
 
     useEffect(() => {
         // set google sheet data in the context
-        // initialGoogleSheetData(sheetData)
-        console.log('props.sheetDataRsp', props.sheetDataRsp);
-
-
+        console.log('props.sheetDataRsp', props.sheetDataRsp)
+        InitializeSheetData(props.sheetDataRsp)
     }, [])
     return (
         <>
