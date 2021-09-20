@@ -89,17 +89,7 @@ function HomeContent() {
             handleOpenModalSetting={handleOpenModalSetting}
           />
         </Grid>
-        {/* <Grid container>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={4}>
-            <VillagerConsole
-              selectedVillagerInfo={selectedVillagerInfo}
-              openVillagerConsole={openVillagerConsole}
-              setOpenVillagerConsole={setOpenVillagerConsole}
-            />
-          </Grid>
-        </Grid> */}
-        <Grid item xs={12} lg={8} style={{ paddingTop: 80 }}>
+        <Grid item xs={12} lg={8} style={{ paddingTop: 10,paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations
               setDrawerOpen={setDrawerOpen}

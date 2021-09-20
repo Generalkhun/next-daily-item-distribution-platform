@@ -6,4 +6,4 @@ export const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
 }
 
 const TOTAL_HOUSE_NUM = 1000 // changable
-export const SHEET_RANGE_MAIN_PAGE = `MainPage!A1:E${TOTAL_HOUSE_NUM}`
+export const SHEET_RANGE_MAIN_PAGE = `MainPage!A1:I${TOTAL_HOUSE_NUM}`
