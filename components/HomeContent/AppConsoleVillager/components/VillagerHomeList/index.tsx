@@ -5,8 +5,9 @@ import {
   Avatar,
   makeStyles
 } from "@material-ui/core";
-import { map } from "lodash";
-import React from "react";
+import { get, map } from "lodash";
+import React, { useContext } from "react";
+import { DisplayingVillagerDataContext } from "../../../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
 
@@ -19,7 +20,7 @@ interface Props {
 
 const useStyles = makeStyles({
   villagerListItem: {
-    color:'white'
+    color: 'white'
   }
 })
 const VillagerHomeList = (props: Props) => {
@@ -27,10 +28,14 @@ const VillagerHomeList = (props: Props) => {
     villagerHomeListData,
     onClickVillager,
     selectedVillagerInfo,
-    isShowOnlyWaitingVillager,
   } = props;
 
   const classes = useStyles()
+
+  // get mapdata from dispalyVillagerData context
+  const { displayVillagerState, displayVillagerDispatch } = useContext
+    (DisplayingVillagerDataContext)
+  const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
   return (
     <>

@@ -1,5 +1,7 @@
 import { google } from "googleapis"
-import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_MAIN_PAGE } from "../../constants";
+import { get } from "lodash";
+import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE } from "../../constants";
+import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataResponse";
 
 
 // This funtion is to connect googlesheet api
@@ -19,11 +21,22 @@ export const getAllVillagerDataFromGoogleSheet = async () => {
     const sheets = await connectGoogleSheetsApi()
 
     //query and return response
-    const  response = await sheets.spreadsheets.values.get({
+    const response = await sheets.spreadsheets.values.get({
         spreadsheetId: process.env.SHEET_ID,
         range: SHEET_RANGE_MAIN_PAGE
     })
-    console.log('responseaa',response);
-    
-    return response
+
+    return formatGoogleSheetDataResponse(get(response, 'data.values'))
+}
+
+export const getItemCatDataFromGoogleSheet = async () => {
+    const sheets = await connectGoogleSheetsApi()
+
+    //query and return response
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.SHEET_ID,
+        range: SHEET_RANGE_ITEM_CAT
+    })
+
+    return formatGoogleSheetDataResponse(get(response, 'data.values'))
 }

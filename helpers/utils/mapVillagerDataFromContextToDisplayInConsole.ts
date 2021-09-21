@@ -1,4 +1,5 @@
 import { includes, get, map } from 'lodash'
+import { VillagerHomeData } from '../../type'
 export const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerState: any) => {
     const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
     const currentSelectedItemId = get(displayVillagerState, 'filterCondition.itemCatSelected')

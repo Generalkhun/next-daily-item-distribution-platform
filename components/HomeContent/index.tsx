@@ -57,7 +57,6 @@ function HomeContent() {
     setSelectedVillagerInfo(villager);
     setOpenVillagerConsole(true);
     setMapCenterLocation(villager.homeLocation);
-    map && !isFromClickLocation && map.closePopup();
   };
   const handleCloseModalSetting = () => {
     setIsOpenModalSetting(false);

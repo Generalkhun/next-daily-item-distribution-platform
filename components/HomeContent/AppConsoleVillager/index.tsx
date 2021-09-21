@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -29,6 +29,10 @@ import { VillagerHomeData } from "../../../type";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 import styles from './AppConsoleVillager.module.css'
+import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPeople, calcTotalPeople } from "../../../helpers/utils/calcSummaryInfo";
+import SummaryInfo from "./components/VillagerHomeList/components/SummaryInfo";
+import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetContextProvider";
+import DataDisplaySetting from "./components/VillagerHomeList/components/DataDisplaySetting";
 
 interface Props {
   open: boolean;
@@ -48,12 +52,14 @@ const AppConsoleVillager = (props: Props) => {
   const { displayVillagerState, displayVillagerDispatch } = useContext
     (DisplayingVillagerDataContext)
 
+  // get item cat data from the context
+  const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
+  console.log('googleSheetItemCatData',googleSheetItemCatData);
+  
+
   const {
     onClickVillager,
-    open,
-    setOpen,
     selectedVillagerInfo,
-    setOpenVillagerConsole,
     isShowOnlyWaitingVillager,
     handleOpenModalSetting
   } = props;
@@ -65,21 +71,23 @@ const AppConsoleVillager = (props: Props) => {
   const villagerHomeListData = mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
   console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
+  // calculate for summary info
+  const summaryInfoItemName = 'test'
+
+  const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
+
+  const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
+
+  const summaryInfoTotalNonRecievedItemHome = calcTotalNonRecievedItemHome(villagerHomeListData)
+
+  const summaryInfoTotalNonRecievedItemPeople = calcTotalNonRecievedItemPeople(villagerHomeListData)
+
   return (
     <>
       <Paper variant="outlined">
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography>เลือกกลุ่มบ้านที่ต้องการดูข้อมูล</Typography>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <Button>จากแผนที่</Button>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <Button onClick={handleOpenModalSetting}>จากเงื่อนไขอื่น</Button>
-          </Grid>
-
-        </Grid>
+        <DataDisplaySetting
+        />
+        
       </Paper>
 
       <Paper variant="outlined" className={styles.villageHomeListWrapper}>
@@ -99,7 +107,7 @@ const AppConsoleVillager = (props: Props) => {
             <List>
               <VillagerHomeList
                 isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-                villagerHomeListData={slice(villagerHomeListData, (villagerHomeListData.length / 2) + 1, villagerHomeListData.length)}
+                villagerHomeListData={slice(villagerHomeListData, (villagerHomeListData.length / 2), villagerHomeListData.length)}
                 onClickVillager={onClickVillager}
                 selectedVillagerInfo={selectedVillagerInfo}
               />
@@ -109,7 +117,14 @@ const AppConsoleVillager = (props: Props) => {
       </Paper>
 
       <Paper variant="outlined">
-        ยอดรวม
+        <Typography>ยอดรวม</Typography>
+        <SummaryInfo
+          summaryInfoItemName={summaryInfoItemName}
+          summaryInfoTotalHome={summaryInfoTotalHome}
+          summaryInfoTotalPeople={summaryInfoTotalPeople}
+          summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
+          summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
+        />
       </Paper>
     </>
 

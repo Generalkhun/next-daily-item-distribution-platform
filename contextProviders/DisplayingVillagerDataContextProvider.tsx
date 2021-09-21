@@ -16,8 +16,12 @@ const displayVillagerDataReducer = (state: any, action: any) => {
             return state
         // return { ...state, displayVillagerData: filterDisplayVillagerByArea(action.payload.filterByAreaData,state.allVillagerData,filterCondition:{...state.filterCondition,}) }
         case 'filterByFoodRecieved':
-            return state
-
+            return {
+                ...state, filterCondition: {
+                    ...state.filterCondition,
+                    displayOnlyNotrecieved: !state.filterCondition.displayOnlyNotrecieved
+                }
+            }
         case 'focusOnVillager':
             return state
         default:
