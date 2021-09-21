@@ -75,6 +75,7 @@ function HomeContent() {
         isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
         changeShowConditionHandler={changeShowConditionHandler}
       />
+
       <Grid container>
         <Grid item xs={12} lg={4}>
           <AppConsoleVillager

@@ -73,7 +73,7 @@ const MapWithHomeLocations = (props: Props) => {
   const markers = React.useMemo(() => map(villagerList,
     villager => (
       <Marker key={villager.HOME_ID} longitude={parseFloat(villager.HOUSE_LOCATION_LNG)} latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
-        <LocationOnIcon color='error' />
+        <LocationOnIcon color='success' />
       </Marker>
     )
   ), [villagerList]);

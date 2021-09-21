@@ -66,9 +66,23 @@ const AppConsoleVillager = (props: Props) => {
   return (
     <>
       <div className={classes.drawerHeader}>
-        <Typography>รายชื่อ</Typography>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography>เลือกแสดงผลข้อมูลบ้าน</Typography>
+          </Grid>
+         
+          <Grid item xs={12} lg={6}>
+            <Button>จากตำแหน่งบนแผนที่</Button>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Button onClick={handleOpenModalSetting}>จากเงื่อนไขอื่น</Button>
+          </Grid>
+
+        </Grid>
+
       </div>
       <Divider />
+      <Typography>รายชื่อ</Typography>
       <List>
         <VillagerHomeList
           isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
@@ -79,7 +93,7 @@ const AppConsoleVillager = (props: Props) => {
       </List>
       {/* total supplies */}
       <>
-      ยอดรวม
+        ยอดรวม
       </>
     </>
 
