@@ -1,8 +1,9 @@
 import { Grid, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core'
-import { get } from 'lodash'
+import { get, map } from 'lodash'
 import React, { useContext } from 'react'
 import { DisplayingVillagerDataContext } from '../../../../../../contextProviders/DisplayingVillagerDataContextProvider'
-
+import { GoogleSheetDataContext } from '../../../../../../contextProviders/GoogleSheetContextProvider'
+import { SimpleListMenu } from '../../../../../common/SimpleListMenu'
 interface Props {
 
 }
@@ -12,12 +13,18 @@ const DataDisplaySetting = (props: Props) => {
     const { displayVillagerState, displayVillagerDispatch } = useContext
         (DisplayingVillagerDataContext)
 
+    // get itemCat data from the context
+    const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
+
+    console.log('googleSheetItemCatData', googleSheetItemCatData);
+    const itemCatListOptions = map(googleSheetItemCatData, (itemCatData) => itemCatData.ITEM_TITLE)
+
 
     const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
     const changeShowConditionHandler = () => {
         // change context data
-        displayVillagerDispatch({type:'filterByFoodRecieved'})
+        displayVillagerDispatch({ type: 'filterByFoodRecieved' })
     }
     return (
         <Grid container>
@@ -43,7 +50,9 @@ const DataDisplaySetting = (props: Props) => {
                 <Button>ดูเฉพาะพื้นที่</Button>
             </Grid>
             <Grid item xs={12} lg={4}>
-                <Button>ประเภทของ:</Button>
+                <SimpleListMenu
+                    options={itemCatListOptions}
+                />
             </Grid>
 
         </Grid>

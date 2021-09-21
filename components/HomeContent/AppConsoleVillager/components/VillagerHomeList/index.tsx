@@ -64,14 +64,6 @@ const VillagerHomeList = (props: Props) => {
         </>
       ))}
     </>
-    // {villagerHomeListData.map((villagerHomeData:VillagerHomeData, index) => (
-    //     <ListItem button key={villagerHomeData.homeId}>
-    //       <ListItemIcon>
-    //         {index % 2 === 0 ? <HomeIcon /> : <HomeIcon />}
-    //       </ListItemIcon>
-    //       <ListItemText primary={villagerHomeData.homeRepresentativesName} />
-    //     </ListItem>
-    //   ))}
   );
 };
 

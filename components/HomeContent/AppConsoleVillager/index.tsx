@@ -1,20 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
-  Button,
-  makeStyles,
-  createStyles,
-  Theme,
   useTheme,
-  CssBaseline,
-  Drawer,
-  Divider,
   List,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Paper
 } from "@material-ui/core";
@@ -33,7 +21,6 @@ import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPe
 import SummaryInfo from "./components/VillagerHomeList/components/SummaryInfo";
 import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetContextProvider";
 import DataDisplaySetting from "./components/VillagerHomeList/components/DataDisplaySetting";
-
 interface Props {
   open: boolean;
   setOpen: any;
