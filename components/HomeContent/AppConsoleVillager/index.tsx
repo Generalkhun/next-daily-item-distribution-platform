@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -15,22 +15,24 @@ import {
   List,
   Checkbox,
   FormControlLabel,
-  Grid
+  Grid,
+  Paper
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import SettingsIcon from "@material-ui/icons/Settings";
 import clsx from "clsx";
-
+import { get } from 'lodash'
 import VillagerHomeList from "./components/VillagerHomeList";
 import { appConsoleStyles } from "./styles";
 import { VillagerHomeData } from "../../../type";
+import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
+import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 
 interface Props {
   open: boolean;
   setOpen: any;
   mapCenterLocation: [number, number];
-  villagerHomeListData: Array<VillagerHomeData>;
   onClickVillager: (villager: VillagerHomeData) => void;
   selectedVillagerInfo: VillagerHomeData;
   setOpenVillagerConsole: any;
@@ -41,8 +43,11 @@ interface Props {
 
 const useStyles = appConsoleStyles
 const AppConsoleVillager = (props: Props) => {
+  // get mapdata from dispalyVillagerData context
+  const { displayVillagerState, displayVillagerDispatch } = useContext
+    (DisplayingVillagerDataContext)
+
   const {
-    villagerHomeListData,
     onClickVillager,
     open,
     setOpen,
@@ -54,47 +59,44 @@ const AppConsoleVillager = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-    setOpenVillagerConsole(false);
-  };
+  console.log('displayVillagerState',displayVillagerState);
+  
+  const villagerHomeListData = mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
+  console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
   return (
     <>
-      <div className={classes.drawerHeader}>
+      <Paper variant="outlined">
         <Grid container>
           <Grid item xs={12}>
-            <Typography>เลือกแสดงผลข้อมูลบ้าน</Typography>
+            <Typography>เลือกกลุ่มบ้านที่ต้องการดูข้อมูล</Typography>
           </Grid>
-         
           <Grid item xs={12} lg={6}>
-            <Button>จากตำแหน่งบนแผนที่</Button>
+            <Button>จากแผนที่</Button>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Button onClick={handleOpenModalSetting}>จากเงื่อนไขอื่น</Button>
           </Grid>
 
         </Grid>
+      </Paper>
 
-      </div>
-      <Divider />
-      <Typography>รายชื่อ</Typography>
-      <List>
-        <VillagerHomeList
-          isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-          villagerHomeListData={villagerHomeListData}
-          onClickVillager={onClickVillager}
-          selectedVillagerInfo={selectedVillagerInfo}
-        />
-      </List>
-      {/* total supplies */}
-      <>
+      <Paper variant="outlined">
+        <Typography>รายชื่อ</Typography>
+        <List>
+          <VillagerHomeList
+            isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+            villagerHomeListData={villagerHomeListData}
+            onClickVillager={onClickVillager}
+            selectedVillagerInfo={selectedVillagerInfo}
+          />
+        </List>
+        {/* total supplies */}
+      </Paper>
+
+      <Paper variant="outlined">
         ยอดรวม
-      </>
+      </Paper>
     </>
 
   );

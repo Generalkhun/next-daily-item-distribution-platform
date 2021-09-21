@@ -4,6 +4,7 @@ import {
   ListItemText,
   Avatar,
 } from "@material-ui/core";
+import { map } from "lodash";
 import React from "react";
 import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
@@ -25,9 +26,9 @@ const VillagerHomeList = (props: Props) => {
 
   return (
     <>
-      {villagerHomeListData.map((villagerHomeData: VillagerHomeData, index) => (
+      {map(villagerHomeListData, (villagerHomeData: VillagerHomeData, index) => (
         <>
-          {!(isShowOnlyWaitingVillager && villagerHomeData.isFoodRecieved) ? (
+          {!(isShowOnlyWaitingVillager && villagerHomeData.isItemRecieved) ? (
             <ListItem
               button
               key={villagerHomeData.homeId}
@@ -37,7 +38,7 @@ const VillagerHomeList = (props: Props) => {
               <VillagerHome
                 key={index}
                 personName={villagerHomeData.homeRepresentativesName}
-                foodRecieveStatus={villagerHomeData.isFoodRecieved}
+                foodRecieveStatus={villagerHomeData.isItemRecieved}
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
