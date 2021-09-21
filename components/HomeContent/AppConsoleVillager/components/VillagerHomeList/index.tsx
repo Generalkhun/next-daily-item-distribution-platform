@@ -3,6 +3,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  makeStyles
 } from "@material-ui/core";
 import { map } from "lodash";
 import React from "react";
@@ -16,6 +17,11 @@ interface Props {
   selectedVillagerInfo: any;
 }
 
+const useStyles = makeStyles({
+  villagerListItem: {
+    color:'white'
+  }
+})
 const VillagerHomeList = (props: Props) => {
   const {
     villagerHomeListData,
@@ -24,12 +30,15 @@ const VillagerHomeList = (props: Props) => {
     isShowOnlyWaitingVillager,
   } = props;
 
+  const classes = useStyles()
+
   return (
     <>
       {map(villagerHomeListData, (villagerHomeData: VillagerHomeData, index) => (
         <>
           {!(isShowOnlyWaitingVillager && villagerHomeData.isItemRecieved) ? (
             <ListItem
+              className={classes.villagerListItem}
               button
               key={villagerHomeData.homeId}
               onClick={() => onClickVillager(villagerHomeData)}

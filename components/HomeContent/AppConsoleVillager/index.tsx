@@ -22,12 +22,13 @@ import HomeIcon from "@material-ui/icons/Home";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import SettingsIcon from "@material-ui/icons/Settings";
 import clsx from "clsx";
-import { get } from 'lodash'
+import { get, slice } from 'lodash'
 import VillagerHomeList from "./components/VillagerHomeList";
 import { appConsoleStyles } from "./styles";
 import { VillagerHomeData } from "../../../type";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
+import styles from './AppConsoleVillager.module.css'
 
 interface Props {
   open: boolean;
@@ -59,8 +60,8 @@ const AppConsoleVillager = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  console.log('displayVillagerState',displayVillagerState);
-  
+  console.log('displayVillagerState', displayVillagerState);
+
   const villagerHomeListData = mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
   console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
@@ -81,17 +82,30 @@ const AppConsoleVillager = (props: Props) => {
         </Grid>
       </Paper>
 
-      <Paper variant="outlined">
+      <Paper variant="outlined" className={styles.villageHomeListWrapper}>
         <Typography>รายชื่อ</Typography>
-        <List>
-          <VillagerHomeList
-            isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-            villagerHomeListData={villagerHomeListData}
-            onClickVillager={onClickVillager}
-            selectedVillagerInfo={selectedVillagerInfo}
-          />
-        </List>
-        {/* total supplies */}
+        <Grid container >
+          <Grid item xs={12} lg={6} >
+            <List>
+              <VillagerHomeList
+                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+                villagerHomeListData={slice(villagerHomeListData, 0, villagerHomeListData.length / 2)}
+                onClickVillager={onClickVillager}
+                selectedVillagerInfo={selectedVillagerInfo}
+              />
+            </List>
+          </Grid>
+          <Grid item xs={12} lg={6} >
+            <List>
+              <VillagerHomeList
+                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+                villagerHomeListData={slice(villagerHomeListData, (villagerHomeListData.length / 2) + 1, villagerHomeListData.length)}
+                onClickVillager={onClickVillager}
+                selectedVillagerInfo={selectedVillagerInfo}
+              />
+            </List>
+          </Grid>
+        </Grid>
       </Paper>
 
       <Paper variant="outlined">
