@@ -1,9 +1,9 @@
 import { Grid, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core'
 import { get, map } from 'lodash'
 import React, { useContext } from 'react'
-import { DisplayingVillagerDataContext } from '../../../../../../contextProviders/DisplayingVillagerDataContextProvider'
-import { GoogleSheetDataContext } from '../../../../../../contextProviders/GoogleSheetContextProvider'
-import { SimpleListMenu } from '../../../../../common/SimpleListMenu'
+import { DisplayingVillagerDataContext } from '../../../../../../../contextProviders/DisplayingVillagerDataContextProvider'
+import { GoogleSheetDataContext } from '../../../../../../../contextProviders/GoogleSheetContextProvider'
+import { ItemCatListSelector } from './components/ItemCatListSelector'
 interface Props {
 
 }
@@ -50,8 +50,9 @@ const DataDisplaySetting = (props: Props) => {
                 <Button>ดูเฉพาะพื้นที่</Button>
             </Grid>
             <Grid item xs={12} lg={4}>
-                <SimpleListMenu
+                <ItemCatListSelector
                     options={itemCatListOptions}
+                    displayVillagerDispatch={displayVillagerDispatch}
                 />
             </Grid>
 

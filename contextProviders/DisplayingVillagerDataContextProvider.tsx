@@ -12,6 +12,13 @@ const displayVillagerDataReducer = (state: any, action: any) => {
     switch (action.type) {
         case 'initialVillagerData':
             return { ...state, displayVillagerData: action.payload }
+        case 'itemCatSelect':
+            return {
+                ...state, filterCondition: {
+                    ...state.filterCondition,
+                    itemCatSelected: (action.payload + 1).toString()
+                }
+            }
         case 'filterByArea':
             return state
         // return { ...state, displayVillagerData: filterDisplayVillagerByArea(action.payload.filterByAreaData,state.allVillagerData,filterCondition:{...state.filterCondition,}) }
