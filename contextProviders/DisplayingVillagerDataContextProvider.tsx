@@ -47,8 +47,8 @@ export const DisplayVillagerDataProvider: React.FC<Props> = ({ children }) => {
         displayVillgerData: googleSheetVillagerData,
         filterCondition: {
             displayOnlyNotrecieved: false,
-            customAreaSelector: false,
-            itemCatSelected: 1,
+            customAreaRegtangleSelectorLatLng: [],
+            filterCondition: 1,
         },
         focusedVillagerId: 1,
     })

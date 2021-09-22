@@ -5,7 +5,7 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { get, map } from "lodash";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
+import DrawingLayer from "./components/DrawingLayer";
 interface Props {
   setDrawerOpen: any;
   mapCenterLocation: [number, number];
@@ -77,6 +77,22 @@ const MapWithHomeLocations = (props: Props) => {
       </Marker>
     )
   ), [villagerList]);
+  // // Regtangle drawer tool
+  // const [geojson,setGeojson] = useState<any>({
+  //   type: 'FeatureCollection',
+  //   features: []
+  // })
+  // const editableLayer = new EditableGeoJsonLayer(
+  //   {
+  //     id: 'geojson',
+  //     data: geojson,
+  //     mode: 'drawPoint',
+  //     onEdit: ({ updatedData }) => {
+  //       setGeojson({ geojson: updatedData });
+  //     }
+  //   }
+  // );
+
   return (
     /**
         * Map box 
@@ -87,9 +103,25 @@ const MapWithHomeLocations = (props: Props) => {
         // mapboxApiAccessToken={process.env.MAPBOX_KEY}
         mapboxApiAccessToken='pk.eyJ1IjoiZ2VuZXJhbGtodW4iLCJhIjoiY2t0bGl5NXduMXdmaTJ2bXA3NXgyMXR4aiJ9.dBaNof7U4QoJImXeDk1QXg'
         {...viewport}
-        onViewportChange={(nextViewport: any) => setViewport(nextViewport)}
+        onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
       >
+        <>
+        <DrawingLayer/>
+        {/* <MapGLDraw
+          mode={selectedMode}
+          features={features}
+          selectedFeatureId={selectedFeatureId}
+          onSelect={this._onSelect}
+          onUpdate={this._onUpdate}
+          getEditHandleStyle={this._getEditHandleStyle}
+          getFeatureStyle={this._getFeatureStyle}
+         /> */}
+         {/* <Editor
+          clickRadius={12}
+          mode={new DrawRectangleMode()}
+        /> */}
         {markers}
+        </>
       </ReactMapGL>
     </>
 
