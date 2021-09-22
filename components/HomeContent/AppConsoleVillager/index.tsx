@@ -6,21 +6,17 @@ import {
   Grid,
   Paper
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import SettingsIcon from "@material-ui/icons/Settings";
-import clsx from "clsx";
 import { get, slice } from 'lodash'
 import VillagerHomeList from "./components/VillagerHomeList";
 import { appConsoleStyles } from "./styles";
 import { VillagerHomeData } from "../../../type";
-import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 import styles from './AppConsoleVillager.module.css'
-import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPeople, calcTotalPeople } from "../../../helpers/utils/calcSummaryInfo";
-import SummaryInfo from "./components/VillagerHomeList/components/SummaryInfo";
+import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPeople, calcTotalPeople, findSelectedItemCatfromId } from "../../../helpers/utils/calcSummaryInfo";
+import SummaryInfo from "./components/SummaryInfo";
 import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetContextProvider";
-import DataDisplaySetting from "./components/VillagerHomeList/components/DataDisplaySetting";
+import DataDisplaySetting from "./components/DataDisplaySetting";
+import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 interface Props {
   open: boolean;
   setOpen: any;
@@ -48,7 +44,6 @@ const AppConsoleVillager = (props: Props) => {
     onClickVillager,
     selectedVillagerInfo,
     isShowOnlyWaitingVillager,
-    handleOpenModalSetting
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -59,7 +54,8 @@ const AppConsoleVillager = (props: Props) => {
   console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
   // calculate for summary info
-  const summaryInfoItemName = 'test'
+  
+  const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState,'filterCondition.itemCatSelected'),googleSheetItemCatData) 
 
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
 
@@ -70,11 +66,10 @@ const AppConsoleVillager = (props: Props) => {
   const summaryInfoTotalNonRecievedItemPeople = calcTotalNonRecievedItemPeople(villagerHomeListData)
 
   return (
-    <>
+    <div className={classes.AppConsoleVillagerWrapper}>
       <Paper variant="outlined">
         <DataDisplaySetting
         />
-        
       </Paper>
 
       <Paper variant="outlined" className={styles.villageHomeListWrapper}>
@@ -113,7 +108,7 @@ const AppConsoleVillager = (props: Props) => {
           summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
         />
       </Paper>
-    </>
+    </div>
 
   );
 };

@@ -1,8 +1,8 @@
 import { Grid, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core'
 import { get, map } from 'lodash'
 import React, { useContext } from 'react'
-import { DisplayingVillagerDataContext } from '../../../../../../../contextProviders/DisplayingVillagerDataContextProvider'
-import { GoogleSheetDataContext } from '../../../../../../../contextProviders/GoogleSheetContextProvider'
+import { DisplayingVillagerDataContext } from '../../../../../contextProviders/DisplayingVillagerDataContextProvider'
+import { GoogleSheetDataContext } from '../../../../../contextProviders/GoogleSheetContextProvider'
 import { ItemCatListSelector } from './components/ItemCatListSelector'
 interface Props {
 
@@ -29,7 +29,13 @@ const DataDisplaySetting = (props: Props) => {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <Typography>เลือกกลุ่มบ้านที่ต้องการดูข้อมูล</Typography>
+                <Typography>เลือกดูข้อมูล</Typography>
+            </Grid>
+            <Grid item xs={12} lg={4}>
+                <ItemCatListSelector
+                    options={itemCatListOptions}
+                    displayVillagerDispatch={displayVillagerDispatch}
+                />
             </Grid>
             <Grid item xs={12} lg={4}>
                 <FormControlLabel
@@ -42,18 +48,14 @@ const DataDisplaySetting = (props: Props) => {
                         />
                     }
                     label={
-                        <Typography>ดูเฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
+                        <Typography>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
                     }
                 />
             </Grid>
+
+
             <Grid item xs={12} lg={4}>
                 <Button>ดูเฉพาะพื้นที่</Button>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-                <ItemCatListSelector
-                    options={itemCatListOptions}
-                    displayVillagerDispatch={displayVillagerDispatch}
-                />
             </Grid>
 
         </Grid>
