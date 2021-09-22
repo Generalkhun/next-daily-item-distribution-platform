@@ -20,7 +20,12 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                 }
             }
         case 'filterByArea':
-            return state
+            return {
+                ...state, filterCondition: {
+                    ...state.filterCondition,
+                    customAreaRegtangleSelectorLatLng: action.payload
+                }
+            }
         // return { ...state, displayVillagerData: filterDisplayVillagerByArea(action.payload.filterByAreaData,state.allVillagerData,filterCondition:{...state.filterCondition,}) }
         case 'filterByFoodRecieved':
             return {
