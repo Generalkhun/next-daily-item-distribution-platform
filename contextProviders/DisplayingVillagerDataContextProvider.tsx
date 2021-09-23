@@ -19,6 +19,23 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                     itemCatSelected: (action.payload + 1).toString()
                 }
             }
+
+        case 'togglefilterByAreaOff':
+            return {
+                ...state,
+                mapRectangle: [],
+                filterCondition: {
+                    ...state.filterCondition,
+                    isFilterByArea: false
+                }
+            }
+        case 'togglefilterByAreaOn':
+            return {
+                ...state, filterCondition: {
+                    ...state.filterCondition,
+                    isFilterByArea: true
+                }
+            }
         case 'filterByArea':
             return {
                 ...state, filterCondition: {
@@ -48,6 +65,14 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                 ...state,
                 isDrawableMapMode: false
             }
+
+        // save map rectangle 
+        case 'updateMapRectangle':
+            return {
+                ...state,
+                mapRectangle: action.payload
+            }
+
         default:
             return state
     }
@@ -64,11 +89,13 @@ export const DisplayVillagerDataProvider: React.FC<Props> = ({ children }) => {
         displayVillgerData: googleSheetVillagerData,
         filterCondition: {
             displayOnlyNotrecieved: false,
+            isFilterByArea: false,
             filteredDisplayVillgerLatLng: [],
-            filterCondition: 1,
+            itemCatSelected: 1,
         },
         focusedVillagerId: 1,
-        isDrawableMapMode: false
+        isDrawableMapMode: false,
+        mapRectangle: []
     })
     // const [displayVillagerData, setDisplayVillagerData] = useState(initalDisplayVillagerData)
     // const updateDisplayingVillagerData = (newDisplayingVillagerData: any) => {

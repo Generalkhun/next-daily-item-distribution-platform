@@ -5,6 +5,7 @@ import { DisplayingVillagerDataContext } from '../../../../../contextProviders/D
 import { GoogleSheetDataContext } from '../../../../../contextProviders/GoogleSheetContextProvider'
 import { ItemCatListSelector } from './components/ItemCatListSelector'
 import { DrawRectangleMode } from 'react-map-gl-draw';
+import CancelIcon from '@mui/icons-material/Cancel';
 interface Props {
 
 }
@@ -22,14 +23,29 @@ const DataDisplaySetting = (props: Props) => {
 
 
     const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
-
+    const isFilterByArea = get(displayVillagerState, 'filterCondition.isFilterByArea')
     const changeShowConditionHandler = () => {
         // change context data
         displayVillagerDispatch({ type: 'filterByFoodRecieved' })
     }
     const toggleSelectByAreaHandler = () => {
+
+        console.log('isFilterByArea',isFilterByArea);
+        
+        // if isFilterByArea is off, turn it on 
+        if (!isFilterByArea) {
+            displayVillagerDispatch({ type: 'togglefilterByAreaOn' })
+        }
+
         // change context data
         displayVillagerDispatch({ type: 'toggleDrawableMapModeOn' })
+
+        // reset rectangle on map
+        displayVillagerDispatch({ type: 'updateMapRectangle', payload: [] })
+
+    }
+    const onTurnFilterByAreaOffHandler = () => {
+        displayVillagerDispatch({ type: 'togglefilterByAreaOff' })
     }
     return (
         <Grid container>
@@ -61,6 +77,8 @@ const DataDisplaySetting = (props: Props) => {
 
             <Grid item xs={12} lg={4}>
                 <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
+                {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
+                {/* <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button> */}
             </Grid>
 
         </Grid>
