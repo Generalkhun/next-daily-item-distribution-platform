@@ -26,6 +26,9 @@ export const appConsoleStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-start",
     },
+    AppConsoleVillagerWrapper: {
+      height:'50vh'
+    }
     // content: {
     //   flexGrow: 1,
     //   padding: theme.spacing(3),

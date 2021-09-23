@@ -1,0 +1,7 @@
+.villageHomeListWrapper{
+    /* background-color:black; */
+    height: 80vh;
+    opacity: 0.85;
+    overflow: scroll;
+   
+}

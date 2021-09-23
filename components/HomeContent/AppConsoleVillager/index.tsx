@@ -1,36 +1,26 @@
-import { useState } from "react";
+import React, { useContext } from "react";
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
-  Button,
-  makeStyles,
-  createStyles,
-  Theme,
   useTheme,
-  CssBaseline,
-  Drawer,
-  Divider,
   List,
-  Checkbox,
-  FormControlLabel,
-  Grid
+  Grid,
+  Paper
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import SettingsIcon from "@material-ui/icons/Settings";
-import clsx from "clsx";
-
+import { get, slice } from 'lodash'
 import VillagerHomeList from "./components/VillagerHomeList";
 import { appConsoleStyles } from "./styles";
 import { VillagerHomeData } from "../../../type";
-
+import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
+import styles from './AppConsoleVillager.module.css'
+import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPeople, calcTotalPeople, findSelectedItemCatfromId } from "../../../helpers/utils/calcSummaryInfo";
+import SummaryInfo from "./components/SummaryInfo";
+import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetContextProvider";
+import DataDisplaySetting from "./components/DataDisplaySetting";
+import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 interface Props {
   open: boolean;
   setOpen: any;
   mapCenterLocation: [number, number];
-  villagerHomeListData: Array<VillagerHomeData>;
   onClickVillager: (villager: VillagerHomeData) => void;
   selectedVillagerInfo: VillagerHomeData;
   setOpenVillagerConsole: any;
@@ -41,47 +31,84 @@ interface Props {
 
 const useStyles = appConsoleStyles
 const AppConsoleVillager = (props: Props) => {
+  // get mapdata from dispalyVillagerData context
+  const { displayVillagerState, displayVillagerDispatch } = useContext
+    (DisplayingVillagerDataContext)
+
+  // get item cat data from the context
+  const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
+  console.log('googleSheetItemCatData',googleSheetItemCatData);
+  
+
   const {
-    villagerHomeListData,
     onClickVillager,
-    open,
-    setOpen,
     selectedVillagerInfo,
-    setOpenVillagerConsole,
     isShowOnlyWaitingVillager,
-    handleOpenModalSetting
   } = props;
   const classes = useStyles();
   const theme = useTheme();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  console.log('displayVillagerState', displayVillagerState);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-    setOpenVillagerConsole(false);
-  };
+  const villagerHomeListData = mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
+  console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
+
+  // calculate for summary info
+  
+  const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState,'filterCondition.itemCatSelected'),googleSheetItemCatData) 
+
+  const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
+
+  const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
+
+  const summaryInfoTotalNonRecievedItemHome = calcTotalNonRecievedItemHome(villagerHomeListData)
+
+  const summaryInfoTotalNonRecievedItemPeople = calcTotalNonRecievedItemPeople(villagerHomeListData)
 
   return (
-    <>
-      <div className={classes.drawerHeader}>
-        <Typography>รายชื่อ</Typography>
-      </div>
-      <Divider />
-      <List>
-        <VillagerHomeList
-          isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-          villagerHomeListData={villagerHomeListData}
-          onClickVillager={onClickVillager}
-          selectedVillagerInfo={selectedVillagerInfo}
+    <div className={classes.AppConsoleVillagerWrapper}>
+      <Paper variant="outlined">
+        <DataDisplaySetting
         />
-      </List>
-      {/* total supplies */}
-      <>
-      ยอดรวม
-      </>
-    </>
+      </Paper>
+
+      <Paper variant="outlined" className={styles.villageHomeListWrapper}>
+        <Typography>รายชื่อ</Typography>
+        <Grid container >
+          <Grid item xs={12} lg={6} >
+            <List>
+              <VillagerHomeList
+                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+                villagerHomeListData={slice(villagerHomeListData, 0, villagerHomeListData.length / 2)}
+                onClickVillager={onClickVillager}
+                selectedVillagerInfo={selectedVillagerInfo}
+              />
+            </List>
+          </Grid>
+          <Grid item xs={12} lg={6} >
+            <List>
+              <VillagerHomeList
+                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+                villagerHomeListData={slice(villagerHomeListData, (villagerHomeListData.length / 2), villagerHomeListData.length)}
+                onClickVillager={onClickVillager}
+                selectedVillagerInfo={selectedVillagerInfo}
+              />
+            </List>
+          </Grid>
+        </Grid>
+      </Paper>
+
+      <Paper variant="outlined">
+        <Typography>ยอดรวม</Typography>
+        <SummaryInfo
+          summaryInfoItemName={summaryInfoItemName}
+          summaryInfoTotalHome={summaryInfoTotalHome}
+          summaryInfoTotalPeople={summaryInfoTotalPeople}
+          summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
+          summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
+        />
+      </Paper>
+    </div>
 
   );
 };

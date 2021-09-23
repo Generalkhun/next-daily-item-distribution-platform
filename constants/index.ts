@@ -6,4 +6,6 @@ export const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
 }
 
 const TOTAL_HOUSE_NUM = 1000 // changable
-export const SHEET_RANGE_MAIN_PAGE = `MainPage!A1:E${TOTAL_HOUSE_NUM}`
+const TOTAL_ITEM_CAT = 99
+export const SHEET_RANGE_MAIN_PAGE = `MainPage!A1:I${TOTAL_HOUSE_NUM}` // contain all villager data and status
+export const SHEET_RANGE_ITEM_CAT = `ItemCat!A1:C${TOTAL_ITEM_CAT}` // contain all item categories

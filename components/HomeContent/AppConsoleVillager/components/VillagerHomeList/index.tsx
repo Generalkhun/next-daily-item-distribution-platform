@@ -3,8 +3,11 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  makeStyles
 } from "@material-ui/core";
-import React from "react";
+import { get, map } from "lodash";
+import React, { useContext } from "react";
+import { DisplayingVillagerDataContext } from "../../../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
 
@@ -15,20 +18,32 @@ interface Props {
   selectedVillagerInfo: any;
 }
 
+const useStyles = makeStyles({
+  villagerListItem: {
+    color: 'white'
+  }
+})
 const VillagerHomeList = (props: Props) => {
   const {
     villagerHomeListData,
     onClickVillager,
     selectedVillagerInfo,
-    isShowOnlyWaitingVillager,
   } = props;
+
+  const classes = useStyles()
+
+  // get mapdata from dispalyVillagerData context
+  const { displayVillagerState, displayVillagerDispatch } = useContext
+    (DisplayingVillagerDataContext)
+  const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
   return (
     <>
-      {villagerHomeListData.map((villagerHomeData: VillagerHomeData, index) => (
+      {map(villagerHomeListData, (villagerHomeData: VillagerHomeData, index) => (
         <>
-          {!(isShowOnlyWaitingVillager && villagerHomeData.isFoodRecieved) ? (
+          {!(isShowOnlyWaitingVillager && villagerHomeData.isItemRecieved) ? (
             <ListItem
+              className={classes.villagerListItem}
               button
               key={villagerHomeData.homeId}
               onClick={() => onClickVillager(villagerHomeData)}
@@ -37,7 +52,7 @@ const VillagerHomeList = (props: Props) => {
               <VillagerHome
                 key={index}
                 personName={villagerHomeData.homeRepresentativesName}
-                foodRecieveStatus={villagerHomeData.isFoodRecieved}
+                foodRecieveStatus={villagerHomeData.isItemRecieved}
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
@@ -49,14 +64,6 @@ const VillagerHomeList = (props: Props) => {
         </>
       ))}
     </>
-    // {villagerHomeListData.map((villagerHomeData:VillagerHomeData, index) => (
-    //     <ListItem button key={villagerHomeData.homeId}>
-    //       <ListItemIcon>
-    //         {index % 2 === 0 ? <HomeIcon /> : <HomeIcon />}
-    //       </ListItemIcon>
-    //       <ListItemText primary={villagerHomeData.homeRepresentativesName} />
-    //     </ListItem>
-    //   ))}
   );
 };
 

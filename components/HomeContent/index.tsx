@@ -57,7 +57,6 @@ function HomeContent() {
     setSelectedVillagerInfo(villager);
     setOpenVillagerConsole(true);
     setMapCenterLocation(villager.homeLocation);
-    map && !isFromClickLocation && map.closePopup();
   };
   const handleCloseModalSetting = () => {
     setIsOpenModalSetting(false);
@@ -75,31 +74,21 @@ function HomeContent() {
         isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
         changeShowConditionHandler={changeShowConditionHandler}
       />
+
       <Grid container>
         <Grid item xs={12} lg={4}>
-          <AppConsoleVillager
-            open={drawerOpen}
-            setOpen={setDrawerOpen}
-            setOpenVillagerConsole={setOpenVillagerConsole}
-            mapCenterLocation={mapCenterLocation}
-            villagerHomeListData={villagerHomeListData}
-            onClickVillager={onClickVillager}
-            selectedVillagerInfo={selectedVillagerInfo}
-            isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-            handleOpenModalSetting={handleOpenModalSetting}
-          />
-        </Grid>
-        {/* <Grid container>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={4}>
-            <VillagerConsole
-              selectedVillagerInfo={selectedVillagerInfo}
-              openVillagerConsole={openVillagerConsole}
+            <AppConsoleVillager
+              open={drawerOpen}
+              setOpen={setDrawerOpen}
               setOpenVillagerConsole={setOpenVillagerConsole}
+              mapCenterLocation={mapCenterLocation}
+              onClickVillager={onClickVillager}
+              selectedVillagerInfo={selectedVillagerInfo}
+              isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+              handleOpenModalSetting={handleOpenModalSetting}
             />
-          </Grid>
-        </Grid> */}
-        <Grid item xs={12} lg={8} style={{ paddingTop: 80 }}>
+        </Grid>
+        <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations
               setDrawerOpen={setDrawerOpen}

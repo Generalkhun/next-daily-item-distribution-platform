@@ -1,4 +1,4 @@
-import { Grid, Avatar, ListItemText, Theme, Typography } from "@material-ui/core";
+import { Grid, Avatar, ListItemText, Theme, Typography, Divider } from "@material-ui/core";
 import { createStyles } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { ReactElement } from "react";
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => {
       width: theme.spacing(7),
       height: theme.spacing(7),
     },
+
   });
 });
 function VillagerHome(props: Props) {
@@ -66,7 +67,7 @@ function VillagerHome(props: Props) {
       <Grid item xs={12} lg={10}>
         <ListItemText
           primary={personName} secondary={"โทร: " + homeRepresentativesContactNum + " สมาชิก: " + numberOfFamilyMembers + " คน "}
-          style={{ paddingLeft: 20 }}
+          style={{ paddingLeft: 20 ,color:'black'}}
         />
       </Grid>
     </Grid>

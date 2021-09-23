@@ -7,7 +7,10 @@ const Layout: React.FC = ({ children }) => {
     return (
         <div>
             <NavBar/>
+            <div className={styles.bodyWrapper}>
             {children}
+            </div>
+          
         </div>
     )
 }

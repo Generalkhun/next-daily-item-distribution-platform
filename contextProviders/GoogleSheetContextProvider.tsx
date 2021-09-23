@@ -1,17 +1,21 @@
-import { Props } from "google-map-react";
 import { useState, createContext } from "react";
 
-
+interface Props { }
 export const GoogleSheetDataContext = createContext({} as any);
 
 export const GoogleSheetDataProvider: React.FC<Props> = ({ children }) => {
-    const [googleSheetData, setGoogleSheetData] = useState({} as any);
+    const [googleSheetVillagerData, setGoogleSheetVillagerData] = useState({} as any);
+    const [googleSheetItemCatData, setGoogleSheetItemCatData] = useState({} as any)
+    const initializeVillagerSheetData = (fetchedggSheetVillagerData: any) => setGoogleSheetVillagerData(fetchedggSheetVillagerData)
+    const initializeItemCatSheetData = (fetchedggSheetItemCatData: any) => setGoogleSheetItemCatData(fetchedggSheetItemCatData)
     return (
         <GoogleSheetDataContext.Provider
             value={
                 {
-                    googleSheetData,
-                    InitializeSheetData: (fetchedggSheetData: any) => setGoogleSheetData(fetchedggSheetData)
+                    googleSheetVillagerData,
+                    googleSheetItemCatData,
+                    initializeVillagerSheetData,
+                    initializeItemCatSheetData
                 }
             }
         >
