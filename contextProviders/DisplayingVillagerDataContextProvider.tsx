@@ -36,6 +36,18 @@ const displayVillagerDataReducer = (state: any, action: any) => {
             }
         case 'focusOnVillager':
             return state
+
+        // mode on the map,  wether will be drawable or normal map
+        case 'toggleDrawableMapModeOn':
+            return {
+                ...state,
+                isDrawableMapMode: true
+            }
+        case 'toggleDrawableMapModeOff':
+            return {
+                ...state,
+                isDrawableMapMode: false
+            }
         default:
             return state
     }
@@ -52,10 +64,11 @@ export const DisplayVillagerDataProvider: React.FC<Props> = ({ children }) => {
         displayVillgerData: googleSheetVillagerData,
         filterCondition: {
             displayOnlyNotrecieved: false,
-            customAreaRegtangleSelectorLatLng: [],
+            filteredDisplayVillgerLatLng: [],
             filterCondition: 1,
         },
         focusedVillagerId: 1,
+        isDrawableMapMode: false
     })
     // const [displayVillagerData, setDisplayVillagerData] = useState(initalDisplayVillagerData)
     // const updateDisplayingVillagerData = (newDisplayingVillagerData: any) => {

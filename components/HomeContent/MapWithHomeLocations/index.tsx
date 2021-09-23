@@ -6,6 +6,7 @@ import { DisplayingVillagerDataContext } from "../../../contextProviders/Display
 import { get, map } from "lodash";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DrawingLayer from "./components/DrawingLayer";
+import { Feature, Layer } from 'react-mapbox-gl';
 interface Props {
   setDrawerOpen: any;
   mapCenterLocation: [number, number];
@@ -70,7 +71,7 @@ const MapWithHomeLocations = (props: Props) => {
   });
 
   // Only rerender markers if props.data has changed
-  const markers = React.useMemo(() => map(villagerList,
+  const baseMarkers = React.useMemo(() => map(villagerList,
     villager => (
       <Marker key={villager.HOME_ID} longitude={parseFloat(villager.HOUSE_LOCATION_LNG)} latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
         <LocationOnIcon color='success' />
@@ -106,8 +107,11 @@ const MapWithHomeLocations = (props: Props) => {
         onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
       >
         <>
-        <DrawingLayer/>
-        {/* <MapGLDraw
+          {baseMarkers}
+          <DrawingLayer
+            baseMarkers={baseMarkers}
+          />
+          {/* <MapGLDraw
           mode={selectedMode}
           features={features}
           selectedFeatureId={selectedFeatureId}
@@ -116,11 +120,11 @@ const MapWithHomeLocations = (props: Props) => {
           getEditHandleStyle={this._getEditHandleStyle}
           getFeatureStyle={this._getFeatureStyle}
          /> */}
-         {/* <Editor
+          {/* <Editor
           clickRadius={12}
           mode={new DrawRectangleMode()}
         /> */}
-        {markers}
+
         </>
       </ReactMapGL>
     </>

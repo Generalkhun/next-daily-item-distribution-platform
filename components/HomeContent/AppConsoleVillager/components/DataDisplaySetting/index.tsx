@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 import { DisplayingVillagerDataContext } from '../../../../../contextProviders/DisplayingVillagerDataContextProvider'
 import { GoogleSheetDataContext } from '../../../../../contextProviders/GoogleSheetContextProvider'
 import { ItemCatListSelector } from './components/ItemCatListSelector'
+import { DrawRectangleMode } from 'react-map-gl-draw';
 interface Props {
 
 }
@@ -25,6 +26,10 @@ const DataDisplaySetting = (props: Props) => {
     const changeShowConditionHandler = () => {
         // change context data
         displayVillagerDispatch({ type: 'filterByFoodRecieved' })
+    }
+    const toggleSelectByAreaHandler = () => {
+        // change context data
+        displayVillagerDispatch({ type: 'toggleDrawableMapModeOn' })
     }
     return (
         <Grid container>
@@ -55,7 +60,7 @@ const DataDisplaySetting = (props: Props) => {
 
 
             <Grid item xs={12} lg={4}>
-                <Button>ดูเฉพาะพื้นที่</Button>
+                <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
             </Grid>
 
         </Grid>
