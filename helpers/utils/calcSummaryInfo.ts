@@ -1,10 +1,7 @@
 import { filter, reduce, find, get } from "lodash"
 
 export const findSelectedItemCatfromId = (selectedItemCatId: string, googleSheetItemCatData: any): string => {
-    console.log('selectedItemCatId', selectedItemCatId)
     const itemCatRecordOnSheet = find(googleSheetItemCatData, (sheetData) => sheetData.ITEM_ID === selectedItemCatId)
-    console.log('itemCatRecordOnSheet', itemCatRecordOnSheet);
-
     return get(itemCatRecordOnSheet, 'ITEM_TITLE')
 
 }

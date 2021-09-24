@@ -37,9 +37,6 @@ const AppConsoleVillager = (props: Props) => {
 
   // get item cat data from the context
   const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
-  console.log('googleSheetItemCatData', googleSheetItemCatData);
-
-
   const {
     onClickVillager,
     selectedVillagerInfo,
@@ -47,25 +44,13 @@ const AppConsoleVillager = (props: Props) => {
   } = props;
   const classes = useStyles();
   const theme = useTheme();
-
-  console.log('displayVillagerState', displayVillagerState);
-
-
   const villagerHomeListData = dataPrepFromVillagerDataContextToDisplayOnList(displayVillagerState)
-  // const villagerHomeListDataFromContext =  mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
-  // const villagerHomeListData = filterVillagerDataContextWithDrawnRectangle(villagerHomeListDataFromContext,displayVillagerState)
-  console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
   // calculate for summary info
-
   const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
-
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
-
   const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
-
   const summaryInfoTotalNonRecievedItemHome = calcTotalNonRecievedItemHome(villagerHomeListData)
-
   const summaryInfoTotalNonRecievedItemPeople = calcTotalNonRecievedItemPeople(villagerHomeListData)
 
   return (

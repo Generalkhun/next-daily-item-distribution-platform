@@ -35,7 +35,7 @@ export default function VillagerConsoleBox(props: Props) {
   const lng = (selectedVillagerInfo.homeLocation || [0, 0])[1];
 
   const [isGetFood, setIsGetFood] = useState<boolean>(
-    selectedVillagerInfo.isFoodRecieved || true
+    selectedVillagerInfo.isItemRecieved || true
   );
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -79,11 +79,10 @@ export default function VillagerConsoleBox(props: Props) {
             </Typography>
             <Divider />
             <Typography variant="body2" color="textSecondary" component="p">
-              {`สถานะ: ${
-                selectedVillagerInfo.isFoodRecieved
+              {`สถานะ: ${selectedVillagerInfo.isItemRecieved
                   ? "ได้รับข้าวแล้ว"
                   : "ยังไม่ได้รับข้าว"
-              }`}
+                }`}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -120,9 +119,9 @@ export default function VillagerConsoleBox(props: Props) {
           <Button
             onClick={toggleGetFoodStatus}
             fullWidth
-            disabled={selectedVillagerInfo.isFoodRecieved}
+            disabled={selectedVillagerInfo.isItemRecieved}
             variant="contained"
-            color={selectedVillagerInfo.isFoodRecieved ? undefined : "primary"}
+            color={selectedVillagerInfo.isItemRecieved ? undefined : "primary"}
           >
             ส่งสำเร็จแล้ว
           </Button>

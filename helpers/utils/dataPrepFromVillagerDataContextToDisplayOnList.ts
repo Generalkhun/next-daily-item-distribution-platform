@@ -25,9 +25,6 @@ const filterVillagerDataContextWithDrawnRectangle = (displayVillagerState: any, 
 
         return inside([parseFloat(villager.HOUSE_LOCATION_LNG), parseFloat(villager.HOUSE_LOCATION_LAT)], regtangleDrawn[0].geometry.coordinates[0])
     })
-    console.log('filterVillagerDataContextWithDrawnRectangle : filteredVillagerState', filteredVillagerState);
-
-
     return { ...displayVillagerState, displayVillagerData: filteredVillagerState }
 }
 

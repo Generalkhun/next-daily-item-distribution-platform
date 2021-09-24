@@ -17,8 +17,6 @@ const DataDisplaySetting = (props: Props) => {
 
     // get itemCat data from the context
     const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
-
-    console.log('googleSheetItemCatData', googleSheetItemCatData);
     const itemCatListOptions = map(googleSheetItemCatData, (itemCatData) => itemCatData.ITEM_TITLE)
 
 
@@ -29,9 +27,6 @@ const DataDisplaySetting = (props: Props) => {
         displayVillagerDispatch({ type: 'filterByFoodRecieved' })
     }
     const toggleSelectByAreaHandler = () => {
-
-        console.log('isFilterByArea',isFilterByArea);
-        
         // if isFilterByArea is off, turn it on 
         if (!isFilterByArea) {
             displayVillagerDispatch({ type: 'togglefilterByAreaOn' })
