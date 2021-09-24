@@ -8,34 +8,24 @@ import { GeoJSONLayer } from 'react-mapbox-gl/lib/geojson-layer';
 import { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import inside from "point-in-polygon";
-import { findRecievedItem } from '../../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole';
+import { findRecievedItem } from '../../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList';
 interface Props {
 }
 
 const DrawingLayer = () => {
-
-    //  const [isStaticRegRendered, setIsStaticRegRendered] = useState(false)
-    // const [baseMarkers, setBaseMarkers] = useState<any>();
     const [selectedMarkers, setSelectedMarkers] = useState<any>();
-    const [selectedAreaLatLng, setSelectedAreaLatLng] = useState<any>([])
-    // const [features, setFeatures] = useState([]); // displaying rectangle on map
     const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
-    const isStaticRegRendered = get(displayVillagerState, 'isStaticRegRendered') // render static regtangle
+
+    // get states from the context
     const mode = get(displayVillagerState, 'isDrawableMapMode') ? new DrawRectangleMode() : null
-    const displayVillgerData = get(displayVillagerState, 'displayVillgerData')
     const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
     const displayedRectangle = get(displayVillagerState, 'mapRectangle')
-    console.log('isShowOnlyWaitingVillager', isShowOnlyWaitingVillager);
-
-    // console.log('DrawingLayer displayVillagerState', displayVillagerState);
-    // console.log('selectedAreaLatLng.length', selectedAreaLatLng.length);
-    // console.log('isStaticRegRendered', isStaticRegRendered);
     const villagerList = get(displayVillagerState, 'displayVillagerData')
     const selectedItemCat = get(displayVillagerState, 'filterCondition.itemCatSelected')
 
     const isFilterByArea = get(displayVillagerState, 'filterCondition.isFilterByArea')
-    console.log('isFilterByArea', isFilterByArea);
 
+    // create base markers to render without having the selected rectangle, showing conditions are recieved selected item
     const baseMarkers = map(villagerList,
         villager => {
             const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
@@ -49,12 +39,11 @@ const DrawingLayer = () => {
         }
     )
 
-    console.log('baseMarkers', baseMarkers);
 
-    const createAndSetNewSelectedMarkers = (baseMarkers: any, polygon: any) => {
+
+    // updating markers function, adding isDisplay on wether its inside the rectangle or not
+    const selectedMarkersCreationHandler = (baseMarkers: any, polygon: any) => {
         const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
-            console.log('baseMarker', baseMarker);
-
             const { longitude, latitude } = get(baseMarker, 'props');
             const isInsidePolygon = inside([longitude, latitude], polygon);
             return (
@@ -62,6 +51,9 @@ const DrawingLayer = () => {
             )
         })
         setSelectedMarkers(newSelectedMarkers);
+        // update displaying marker inside the context to re-render the displaying list
+
+
     }
 
 
@@ -72,60 +64,33 @@ const DrawingLayer = () => {
      *  */
     useEffect(() => {
         if (!isEmpty(displayedRectangle)) {
-            createAndSetNewSelectedMarkers(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
+            selectedMarkersCreationHandler(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
         }
     }, [displayVillagerState])
 
-
-
-
     const updateHandler = (val: any) => {
-        console.log('val', val);
-
         displayVillagerDispatch({ type: 'updateMapRectangle', payload: val.data })
         if (val.editType === "addFeature") {
             const polygon = val.data[0].geometry.coordinates[0];
-
-            createAndSetNewSelectedMarkers(baseMarkers, polygon)
-            // const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
-            //     console.log('baseMarker', baseMarker);
-
-            //     const { longitude, latitude } = get(baseMarker, 'props');
-            //     const isInsidePolygon = inside([longitude, latitude], polygon);
-            //     return (
-            //         { ...baseMarker, isDisplay: isInsidePolygon }
-            //     )
-            // })
-            // setSelectedMarkers(newSelectedMarkers);
-
+            selectedMarkersCreationHandler(baseMarkers, polygon) // add created markers to state
             displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
         }
 
     }
-
     return (
         <>
-            {
-                isStaticRegRendered ? <>
-                </>
-                    :
-                    <Editor
-                        clickRadius={12}
-                        // mode={new DrawRectangleMode()}
-                        mode={mode as any}
-                        //onSelect={(feature: any) => clickCreatingRectangleAreaHandler(feature)}
-                        onUpdate={updateHandler}
-                        //onSelect={clickCreatingRectangleAreaHandler}
-                        features={displayedRectangle}
-                    />
-            }
+            <Editor
+                clickRadius={12}
+                mode={mode as any}
+                onUpdate={updateHandler}
+                features={displayedRectangle}
+            />
             {/* markers */}
             {isFilterByArea ?
                 (
                     isEmpty(displayedRectangle) ? baseMarkers : (
                         map(selectedMarkers,
                             (selectedMarker: any) => {
-                                console.log('selectedMarker', selectedMarker);
                                 return (<>
                                     {selectedMarker.isDisplay ? selectedMarker : <></>}
                                 </>

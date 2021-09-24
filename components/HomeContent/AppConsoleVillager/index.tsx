@@ -10,13 +10,13 @@ import { get, slice } from 'lodash'
 import VillagerHomeList from "./components/VillagerHomeList";
 import { appConsoleStyles } from "./styles";
 import { VillagerHomeData } from "../../../type";
-import { mapVillagerDataFromContextToDisplayInConsole } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 import styles from './AppConsoleVillager.module.css'
 import { calcTotalHome, calcTotalNonRecievedItemHome, calcTotalNonRecievedItemPeople, calcTotalPeople, findSelectedItemCatfromId } from "../../../helpers/utils/calcSummaryInfo";
 import SummaryInfo from "./components/SummaryInfo";
 import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetContextProvider";
 import DataDisplaySetting from "./components/DataDisplaySetting";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
+import { dataPrepFromVillagerDataContextToDisplayOnList } from "../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList";
 interface Props {
   open: boolean;
   setOpen: any;
@@ -37,8 +37,8 @@ const AppConsoleVillager = (props: Props) => {
 
   // get item cat data from the context
   const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
-  console.log('googleSheetItemCatData',googleSheetItemCatData);
-  
+  console.log('googleSheetItemCatData', googleSheetItemCatData);
+
 
   const {
     onClickVillager,
@@ -50,12 +50,15 @@ const AppConsoleVillager = (props: Props) => {
 
   console.log('displayVillagerState', displayVillagerState);
 
-  const villagerHomeListData = mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
+
+  const villagerHomeListData = dataPrepFromVillagerDataContextToDisplayOnList(displayVillagerState)
+  // const villagerHomeListDataFromContext =  mapVillagerDataFromContextToDisplayInConsole(displayVillagerState)
+  // const villagerHomeListData = filterVillagerDataContextWithDrawnRectangle(villagerHomeListDataFromContext,displayVillagerState)
   console.log('AppConsoleVillager villagerHomeListData', villagerHomeListData);
 
   // calculate for summary info
-  
-  const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState,'filterCondition.itemCatSelected'),googleSheetItemCatData) 
+
+  const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
 
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
 
