@@ -8,7 +8,7 @@ import { GeoJSONLayer } from 'react-mapbox-gl/lib/geojson-layer';
 import { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import inside from "point-in-polygon";
-import { findRecievedItem } from '../../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole';
+import { findRecievedItem } from '../../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList';
 interface Props {
 }
 
@@ -17,9 +17,7 @@ const DrawingLayer = () => {
     const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
 
     // get states from the context
-    const isStaticRegRendered = get(displayVillagerState, 'isStaticRegRendered') // render static regtangle
     const mode = get(displayVillagerState, 'isDrawableMapMode') ? new DrawRectangleMode() : null
-    const displayVillgerData = get(displayVillagerState, 'displayVillgerData')
     const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
     const displayedRectangle = get(displayVillagerState, 'mapRectangle')
     const villagerList = get(displayVillagerState, 'displayVillagerData')
@@ -42,8 +40,9 @@ const DrawingLayer = () => {
     )
 
 
+
     // updating markers function, adding isDisplay on wether its inside the rectangle or not
-    const createAndSetNewSelectedMarkers = (baseMarkers: any, polygon: any) => {
+    const selectedMarkersCreationHandler = (baseMarkers: any, polygon: any) => {
         const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
             const { longitude, latitude } = get(baseMarker, 'props');
             const isInsidePolygon = inside([longitude, latitude], polygon);
@@ -52,6 +51,9 @@ const DrawingLayer = () => {
             )
         })
         setSelectedMarkers(newSelectedMarkers);
+        // update displaying marker inside the context to re-render the displaying list
+
+
     }
 
 
@@ -62,7 +64,7 @@ const DrawingLayer = () => {
      *  */
     useEffect(() => {
         if (!isEmpty(displayedRectangle)) {
-            createAndSetNewSelectedMarkers(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
+            selectedMarkersCreationHandler(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
         }
     }, [displayVillagerState])
 
@@ -70,21 +72,17 @@ const DrawingLayer = () => {
         displayVillagerDispatch({ type: 'updateMapRectangle', payload: val.data })
         if (val.editType === "addFeature") {
             const polygon = val.data[0].geometry.coordinates[0];
-            createAndSetNewSelectedMarkers(baseMarkers, polygon)
+            selectedMarkersCreationHandler(baseMarkers, polygon) // add created markers to state
             displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
         }
 
     }
-
     return (
         <>
             <Editor
                 clickRadius={12}
-                // mode={new DrawRectangleMode()}
                 mode={mode as any}
-                //onSelect={(feature: any) => clickCreatingRectangleAreaHandler(feature)}
                 onUpdate={updateHandler}
-                //onSelect={clickCreatingRectangleAreaHandler}
                 features={displayedRectangle}
             />
             {/* markers */}

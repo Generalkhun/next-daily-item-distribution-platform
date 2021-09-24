@@ -65,42 +65,32 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                 ...state,
                 isDrawableMapMode: false
             }
-
         // save map rectangle 
         case 'updateMapRectangle':
             return {
                 ...state,
                 mapRectangle: action.payload
             }
-
         default:
             return state
     }
-    return
 }
 
 export const DisplayVillagerDataProvider: React.FC<Props> = ({ children }) => {
-
-
     const { googleSheetVillagerData } = useContext(GoogleSheetDataContext) // get google sheet data to init to display
-
     const [displayVillagerState, displayVillagerDispatch] = useReducer(displayVillagerDataReducer, {
         allVillagerData: googleSheetVillagerData,
-        displayVillgerData: googleSheetVillagerData,
+        displayVillagerData: googleSheetVillagerData,
         filterCondition: {
             displayOnlyNotrecieved: false,
             isFilterByArea: false,
-            filteredDisplayVillgerLatLng: [],
             itemCatSelected: 1,
         },
         focusedVillagerId: 1,
         isDrawableMapMode: false,
-        mapRectangle: []
+        mapRectangle: [],
     })
-    // const [displayVillagerData, setDisplayVillagerData] = useState(initalDisplayVillagerData)
-    // const updateDisplayingVillagerData = (newDisplayingVillagerData: any) => {
-    //     displayVillagerDispatch({type:'initialVillagerData', payload: newDisplayingVillagerData})
-    // }
+
     return (
         <DisplayingVillagerDataContext.Provider
             value={{
