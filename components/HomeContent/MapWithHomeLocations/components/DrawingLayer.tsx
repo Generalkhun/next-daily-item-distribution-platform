@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { Editor, DrawRectangleMode } from 'react-map-gl-draw';
 import { get, isEmpty, map } from 'lodash'
@@ -36,8 +36,6 @@ const DrawingLayer = () => {
     const isFilterByArea = get(displayVillagerState, 'filterCondition.isFilterByArea')
     console.log('isFilterByArea', isFilterByArea);
 
-
-
     const baseMarkers = map(villagerList,
         villager => {
             const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
@@ -53,6 +51,32 @@ const DrawingLayer = () => {
 
     console.log('baseMarkers', baseMarkers);
 
+    const createAndSetNewSelectedMarkers = (baseMarkers: any, polygon: any) => {
+        const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
+            console.log('baseMarker', baseMarker);
+
+            const { longitude, latitude } = get(baseMarker, 'props');
+            const isInsidePolygon = inside([longitude, latitude], polygon);
+            return (
+                { ...baseMarker, isDisplay: isInsidePolygon }
+            )
+        })
+        setSelectedMarkers(newSelectedMarkers);
+    }
+
+
+    /**
+     * Create side effect to force re creating new selectedMarkers again 
+     * for the edge case that if rectangle is already rendered, 
+     * when the filtering condition in the context changed, all marker should be re-render to
+     *  */
+    useEffect(() => {
+        if (!isEmpty(displayedRectangle)) {
+            createAndSetNewSelectedMarkers(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
+        }
+    }, [displayVillagerState])
+
+
 
 
     const updateHandler = (val: any) => {
@@ -61,23 +85,20 @@ const DrawingLayer = () => {
         displayVillagerDispatch({ type: 'updateMapRectangle', payload: val.data })
         if (val.editType === "addFeature") {
             const polygon = val.data[0].geometry.coordinates[0];
-            //const polygon = displayedRectangle[0].geometry.coordinates[0];
 
-            const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
-                console.log('baseMarker', baseMarker);
+            createAndSetNewSelectedMarkers(baseMarkers, polygon)
+            // const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
+            //     console.log('baseMarker', baseMarker);
 
-                const { longitude, latitude } = get(baseMarker, 'props');
-                const isInsidePolygon = inside([longitude, latitude], polygon);
-                return (
-                    { ...baseMarker, isDisplay: isInsidePolygon }
-                )
-            })
-            console.log('newSelectedMarkers', newSelectedMarkers);
-
-            setSelectedMarkers(newSelectedMarkers);
+            //     const { longitude, latitude } = get(baseMarker, 'props');
+            //     const isInsidePolygon = inside([longitude, latitude], polygon);
+            //     return (
+            //         { ...baseMarker, isDisplay: isInsidePolygon }
+            //     )
+            // })
+            // setSelectedMarkers(newSelectedMarkers);
 
             displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
-            //setFeatures([]);
         }
 
     }
@@ -104,6 +125,7 @@ const DrawingLayer = () => {
                     isEmpty(displayedRectangle) ? baseMarkers : (
                         map(selectedMarkers,
                             (selectedMarker: any) => {
+                                console.log('selectedMarker', selectedMarker);
                                 return (<>
                                     {selectedMarker.isDisplay ? selectedMarker : <></>}
                                 </>
