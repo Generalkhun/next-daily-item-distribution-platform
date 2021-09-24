@@ -15,7 +15,8 @@ interface Props {
 const DrawingLayer = () => {
 
     //  const [isStaticRegRendered, setIsStaticRegRendered] = useState(false)
-
+    // const [baseMarkers, setBaseMarkers] = useState<any>();
+    const [selectedMarkers, setSelectedMarkers] = useState<any>();
     const [selectedAreaLatLng, setSelectedAreaLatLng] = useState<any>([])
     // const [features, setFeatures] = useState([]); // displaying rectangle on map
     const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
@@ -24,6 +25,8 @@ const DrawingLayer = () => {
     const displayVillgerData = get(displayVillagerState, 'displayVillgerData')
     const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
     const displayedRectangle = get(displayVillagerState, 'mapRectangle')
+    console.log('isShowOnlyWaitingVillager', isShowOnlyWaitingVillager);
+
     // console.log('DrawingLayer displayVillagerState', displayVillagerState);
     // console.log('selectedAreaLatLng.length', selectedAreaLatLng.length);
     // console.log('isStaticRegRendered', isStaticRegRendered);
@@ -34,7 +37,7 @@ const DrawingLayer = () => {
     console.log('isFilterByArea', isFilterByArea);
 
 
-    // render markers on side effect
+
     const baseMarkers = map(villagerList,
         villager => {
             const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
@@ -47,7 +50,10 @@ const DrawingLayer = () => {
             )
         }
     )
-    const [selectedMarkers, setSelectedMarkers] = useState<any>(baseMarkers);
+
+    console.log('baseMarkers', baseMarkers);
+
+
 
     const updateHandler = (val: any) => {
         console.log('val', val);
@@ -58,6 +64,8 @@ const DrawingLayer = () => {
             //const polygon = displayedRectangle[0].geometry.coordinates[0];
 
             const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
+                console.log('baseMarker', baseMarker);
+
                 const { longitude, latitude } = get(baseMarker, 'props');
                 const isInsidePolygon = inside([longitude, latitude], polygon);
                 return (
@@ -92,15 +100,20 @@ const DrawingLayer = () => {
             }
             {/* markers */}
             {isFilterByArea ?
-                map(selectedMarkers,
-                    (selectedMarker: any) => {
-                        return (<>
-                            {selectedMarker.isDisplay ? selectedMarker : <></>}
-                        </>
+                (
+                    isEmpty(displayedRectangle) ? baseMarkers : (
+                        map(selectedMarkers,
+                            (selectedMarker: any) => {
+                                return (<>
+                                    {selectedMarker.isDisplay ? selectedMarker : <></>}
+                                </>
+                                )
+                            }
                         )
-                    }
+                    )
                 )
-                : selectedMarkers
+
+                : baseMarkers
             }
 
 
