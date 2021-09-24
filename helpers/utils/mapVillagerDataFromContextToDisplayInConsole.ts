@@ -1,4 +1,4 @@
-import { includes, get, map } from 'lodash'
+import { includes, get, map, split } from 'lodash'
 import { VillagerHomeData } from '../../type'
 export const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerState: any) => {
     const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
@@ -22,7 +22,7 @@ export const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerStat
 }
 
 
-const findRecievedItem = (currentSelectedItemId: number, itemsRecieved: string):boolean => {
-    const itemsRecievedArray = itemsRecieved.split(',')
+export const findRecievedItem = (currentSelectedItemId: number, itemsRecieved: string):boolean => {
+    const itemsRecievedArray = split(itemsRecieved,',') 
     return includes(itemsRecievedArray, currentSelectedItemId.toString())
 }

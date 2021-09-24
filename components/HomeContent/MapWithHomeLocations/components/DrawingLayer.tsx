@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { Editor, DrawRectangleMode } from 'react-map-gl-draw';
 import { get, isEmpty, map } from 'lodash'
@@ -8,58 +8,96 @@ import { GeoJSONLayer } from 'react-mapbox-gl/lib/geojson-layer';
 import { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import inside from "point-in-polygon";
+import { findRecievedItem } from '../../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole';
 interface Props {
-    baseMarkers: Array<any>
 }
 
-const DrawingLayer = ({ baseMarkers }: Props) => {
+const DrawingLayer = () => {
+
     //  const [isStaticRegRendered, setIsStaticRegRendered] = useState(false)
-    const [selectedMarkers, setSelectedMarkers] = useState<any>([]);
+    // const [baseMarkers, setBaseMarkers] = useState<any>();
+    const [selectedMarkers, setSelectedMarkers] = useState<any>();
     const [selectedAreaLatLng, setSelectedAreaLatLng] = useState<any>([])
-    const [features, setFeatures] = useState([]); // displaying rectangle on map
+    // const [features, setFeatures] = useState([]); // displaying rectangle on map
     const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const isStaticRegRendered = get(displayVillagerState, 'isStaticRegRendered') // render static regtangle
     const mode = get(displayVillagerState, 'isDrawableMapMode') ? new DrawRectangleMode() : null
     const displayVillgerData = get(displayVillagerState, 'displayVillgerData')
-    console.log('DrawingLayer displayVillagerState', displayVillagerState);
-    console.log('selectedAreaLatLng.length', selectedAreaLatLng.length);
-    console.log('isStaticRegRendered', isStaticRegRendered);
+    const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
+    const displayedRectangle = get(displayVillagerState, 'mapRectangle')
+    console.log('isShowOnlyWaitingVillager', isShowOnlyWaitingVillager);
 
+    // console.log('DrawingLayer displayVillagerState', displayVillagerState);
+    // console.log('selectedAreaLatLng.length', selectedAreaLatLng.length);
+    // console.log('isStaticRegRendered', isStaticRegRendered);
+    const villagerList = get(displayVillagerState, 'displayVillagerData')
+    const selectedItemCat = get(displayVillagerState, 'filterCondition.itemCatSelected')
 
-    const clickCreatingRectangleAreaHandler = (feature: any) => {
-        const currentMapCoords = get(feature, 'mapCoords')
-        // if mapCoords in feature returning undefine and we already got 2 locations, means that we got the rectangle
-        if (selectedAreaLatLng.length === 1) {
-            // save in the context if have 2 locations already
-            //displayVillagerDispatch({ type: 'filterByArea', payload: [...selectedAreaLatLng, currentMapCoords] })
+    const isFilterByArea = get(displayVillagerState, 'filterCondition.isFilterByArea')
+    console.log('isFilterByArea', isFilterByArea);
 
-            // reset selectedAreaLatLng state
-            //setSelectedAreaLatLng([])
-
-            // set map mode to non drawable
-            displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
-            return
+    const baseMarkers = map(villagerList,
+        villager => {
+            const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
+            return (
+                <Marker key={villager.HOME_ID} longitude={parseFloat(villager.HOUSE_LOCATION_LNG)} latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
+                    {(isShowOnlyWaitingVillager) ? (recieved ? <></> : <LocationOnIcon color={'error'} />)
+                        :
+                        <LocationOnIcon color={recieved ? 'success' : 'error'} />}
+                </Marker>
+            )
         }
+    )
 
-        // else, we push the location into selectedAreaLatLng 
-        //setSelectedAreaLatLng((previousLocsState: any) => [...previousLocsState, currentMapCoords])
+    console.log('baseMarkers', baseMarkers);
 
+    const createAndSetNewSelectedMarkers = (baseMarkers: any, polygon: any) => {
+        const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
+            console.log('baseMarker', baseMarker);
+
+            const { longitude, latitude } = get(baseMarker, 'props');
+            const isInsidePolygon = inside([longitude, latitude], polygon);
+            return (
+                { ...baseMarker, isDisplay: isInsidePolygon }
+            )
+        })
+        setSelectedMarkers(newSelectedMarkers);
     }
+
+
+    /**
+     * Create side effect to force re creating new selectedMarkers again 
+     * for the edge case that if rectangle is already rendered, 
+     * when the filtering condition in the context changed, all marker should be re-render to
+     *  */
+    useEffect(() => {
+        if (!isEmpty(displayedRectangle)) {
+            createAndSetNewSelectedMarkers(baseMarkers, displayedRectangle[0].geometry.coordinates[0])
+        }
+    }, [displayVillagerState])
+
+
+
+
     const updateHandler = (val: any) => {
-        setFeatures(val.data);
+        console.log('val', val);
+
+        displayVillagerDispatch({ type: 'updateMapRectangle', payload: val.data })
         if (val.editType === "addFeature") {
             const polygon = val.data[0].geometry.coordinates[0];
-            const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
-                const { longitude, latitude } = get(baseMarker, 'props');
-                const isInsidePolygon = inside([longitude, latitude], polygon);
-                return (
-                    { ...baseMarker, toggle: isInsidePolygon }
-                )
-            })
-            console.log('newSelectedMarkers', newSelectedMarkers);
 
-            setSelectedMarkers(newSelectedMarkers);
-            setFeatures([]);
+            createAndSetNewSelectedMarkers(baseMarkers, polygon)
+            // const newSelectedMarkers = map(baseMarkers, (baseMarker) => {
+            //     console.log('baseMarker', baseMarker);
+
+            //     const { longitude, latitude } = get(baseMarker, 'props');
+            //     const isInsidePolygon = inside([longitude, latitude], polygon);
+            //     return (
+            //         { ...baseMarker, isDisplay: isInsidePolygon }
+            //     )
+            // })
+            // setSelectedMarkers(newSelectedMarkers);
+
             displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
         }
 
@@ -77,28 +115,29 @@ const DrawingLayer = ({ baseMarkers }: Props) => {
                         mode={mode as any}
                         //onSelect={(feature: any) => clickCreatingRectangleAreaHandler(feature)}
                         onUpdate={updateHandler}
-                        features={features}
+                        //onSelect={clickCreatingRectangleAreaHandler}
+                        features={displayedRectangle}
                     />
             }
             {/* markers */}
-            {selectedMarkers.map(
-                (selectedMarker: any) => {
-                    const toggle = get(selectedMarker, 'toggle')
-                    return (
-                        <Marker key={get(selectedMarker, 'key')} latitude={get(selectedMarker, 'props.latitude')} longitude={get(selectedMarker, 'props.longitude')}>
-                            <span
-                                style={{
-                                    backgroundColor: toggle ? "red" : "black",
-                                    width: "10px",
-                                    height: "10px",
-                                    borderRadius: "50%",
-                                    display: "block"
-                                }}
-                            />
-                        </Marker>
+            {isFilterByArea ?
+                (
+                    isEmpty(displayedRectangle) ? baseMarkers : (
+                        map(selectedMarkers,
+                            (selectedMarker: any) => {
+                                console.log('selectedMarker', selectedMarker);
+                                return (<>
+                                    {selectedMarker.isDisplay ? selectedMarker : <></>}
+                                </>
+                                )
+                            }
+                        )
                     )
-                }
-            )}
+                )
+
+                : baseMarkers
+            }
+
 
         </>
 

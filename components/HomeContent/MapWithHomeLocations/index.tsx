@@ -7,13 +7,13 @@ import { get, map } from "lodash";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DrawingLayer from "./components/DrawingLayer";
 import { Feature, Layer } from 'react-mapbox-gl';
+import { findRecievedItem } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 interface Props {
   setDrawerOpen: any;
   mapCenterLocation: [number, number];
   villagerHomeListData: Array<VillagerHomeData>;
   onClickVillager: (villager: VillagerHomeData, isFromClickLocation: boolean) => void;
   setMap: any;
-  isShowOnlyWaitingVillager: boolean;
 }
 
 interface NextViewport {
@@ -40,15 +40,16 @@ const MapWithHomeLocations = (props: Props) => {
   const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
   console.log('displayVillagerState', displayVillagerState);
 
+  const selectedItemCat = get(displayVillagerState, 'filterCondition.itemCatSelected')
   const villagerList = get(displayVillagerState, 'displayVillagerData')
+  const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
   const {
     mapCenterLocation,
     villagerHomeListData,
     onClickVillager,
     setDrawerOpen,
-    setMap,
-    isShowOnlyWaitingVillager,
+    setMap
   } = props;
   const handleClickLocation = (event: any, villager: VillagerHomeData) => {
     console.log("this is", villager);
@@ -70,14 +71,7 @@ const MapWithHomeLocations = (props: Props) => {
     zoom: 17
   });
 
-  // Only rerender markers if props.data has changed
-  const baseMarkers = React.useMemo(() => map(villagerList,
-    villager => (
-      <Marker key={villager.HOME_ID} longitude={parseFloat(villager.HOUSE_LOCATION_LNG)} latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
-        <LocationOnIcon color='success' />
-      </Marker>
-    )
-  ), [villagerList]);
+  
   // // Regtangle drawer tool
   // const [geojson,setGeojson] = useState<any>({
   //   type: 'FeatureCollection',
@@ -107,9 +101,7 @@ const MapWithHomeLocations = (props: Props) => {
         onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
       >
         <>
-          {baseMarkers}
           <DrawingLayer
-            baseMarkers={baseMarkers}
           />
           {/* <MapGLDraw
           mode={selectedMode}
