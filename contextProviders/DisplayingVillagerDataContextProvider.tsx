@@ -71,6 +71,12 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                 ...state,
                 mapRectangle: action.payload
             }
+        // update focused villager
+        case 'updateFocusingVillager':
+            return {
+                ...state,
+                focusedVillagerId: parseInt(action.payload)
+            }
         default:
             return state
     }

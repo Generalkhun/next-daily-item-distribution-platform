@@ -1,13 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Button, Link } from "@material-ui/core";
 import { VillagerHomeData } from "../../../type";
-import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL from "react-map-gl";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
-import { get, map } from "lodash";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { get } from "lodash";
 import DrawingLayer from "./components/DrawingLayer";
-import { Feature, Layer } from 'react-mapbox-gl';
-import { findRecievedItem } from "../../../helpers/utils/mapVillagerDataFromContextToDisplayInConsole";
 interface Props {
   setDrawerOpen: any;
   mapCenterLocation: [number, number];
@@ -38,8 +34,6 @@ const MapWithHomeLocations = (props: Props) => {
 
   // get mapdata from dispalyVillagerData context
   const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
-  console.log('displayVillagerState', displayVillagerState);
-
   const selectedItemCat = get(displayVillagerState, 'filterCondition.itemCatSelected')
   const villagerList = get(displayVillagerState, 'displayVillagerData')
   const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
@@ -52,7 +46,6 @@ const MapWithHomeLocations = (props: Props) => {
     setMap
   } = props;
   const handleClickLocation = (event: any, villager: VillagerHomeData) => {
-    console.log("this is", villager);
     const isFromClickLocation = true
     onClickVillager(villager, isFromClickLocation);
     setDrawerOpen(true);
@@ -71,7 +64,7 @@ const MapWithHomeLocations = (props: Props) => {
     zoom: 17
   });
 
-  
+
   // // Regtangle drawer tool
   // const [geojson,setGeojson] = useState<any>({
   //   type: 'FeatureCollection',

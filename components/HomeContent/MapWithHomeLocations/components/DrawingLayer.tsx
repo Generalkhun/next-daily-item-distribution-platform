@@ -22,18 +22,40 @@ const DrawingLayer = () => {
     const displayedRectangle = get(displayVillagerState, 'mapRectangle')
     const villagerList = get(displayVillagerState, 'displayVillagerData')
     const selectedItemCat = get(displayVillagerState, 'filterCondition.itemCatSelected')
-
+    const focusedVillagerId = get(displayVillagerState, 'focusedVillagerId').toString()
     const isFilterByArea = get(displayVillagerState, 'filterCondition.isFilterByArea')
 
+    // functions
+    const onClickMarkerHandler = (villagerHomeId: string) => {
+        console.log('onClickMarkerHandler villagerHomeId', villagerHomeId);
+
+        // update clicked homeId to a focus villager inside the context
+        displayVillagerDispatch({ type: 'updateFocusingVillager', payload: villagerHomeId.toString() })
+
+    }
     // create base markers to render without having the selected rectangle, showing conditions are recieved selected item
     const baseMarkers = map(villagerList,
         villager => {
             const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
             return (
-                <Marker key={villager.HOME_ID} longitude={parseFloat(villager.HOUSE_LOCATION_LNG)} latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
-                    {(isShowOnlyWaitingVillager) ? (recieved ? <></> : <LocationOnIcon color={'error'} />)
-                        :
-                        <LocationOnIcon color={recieved ? 'success' : 'error'} />}
+                <Marker
+                    onClick={() => onClickMarkerHandler(villager.HOME_ID)}
+                    key={villager.HOME_ID}
+                    longitude={parseFloat(villager.HOUSE_LOCATION_LNG)}
+                    latitude={parseFloat(villager.HOUSE_LOCATION_LAT)} >
+                    <>
+                        {
+
+                            (isShowOnlyWaitingVillager) ? (recieved ? <></> : <LocationOnIcon fontSize={focusedVillagerId === villager.HOME_ID ? 'large' : 'small'} color={'error'} />)
+                                :
+                                <LocationOnIcon fontSize={focusedVillagerId === villager.HOME_ID ? 'large' : 'small'} color={recieved ? 'success' : 'error'} />
+
+
+                        }
+                    </>
+
+
+
                 </Marker>
             )
         }
