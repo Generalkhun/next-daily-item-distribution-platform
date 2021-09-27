@@ -59,8 +59,9 @@ const VillagerHomeList = (props: Props) => {
             >
               <VillagerHome
                 key={index}
+                homeLocation={villagerHomeData.homeLocation}
                 personName={villagerHomeData.homeRepresentativesName}
-                foodRecieveStatus={villagerHomeData.isItemRecieved}
+                isItemRecieved={villagerHomeData.isItemRecieved}
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
