@@ -39,8 +39,6 @@ const AppConsoleVillager = (props: Props) => {
   const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
   const {
     onClickVillager,
-    selectedVillagerInfo,
-    isShowOnlyWaitingVillager,
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -66,20 +64,16 @@ const AppConsoleVillager = (props: Props) => {
           <Grid item xs={12} lg={6} >
             <List>
               <VillagerHomeList
-                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
                 villagerHomeListData={slice(villagerHomeListData, 0, villagerHomeListData.length / 2)}
                 onClickVillager={onClickVillager}
-                selectedVillagerInfo={selectedVillagerInfo}
               />
             </List>
           </Grid>
           <Grid item xs={12} lg={6} >
             <List>
               <VillagerHomeList
-                isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
                 villagerHomeListData={slice(villagerHomeListData, (villagerHomeListData.length / 2), villagerHomeListData.length)}
                 onClickVillager={onClickVillager}
-                selectedVillagerInfo={selectedVillagerInfo}
               />
             </List>
           </Grid>

@@ -12,10 +12,8 @@ import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
 
 interface Props {
-  isShowOnlyWaitingVillager: boolean;
   villagerHomeListData: Array<VillagerHomeData>;
   onClickVillager: (villager: VillagerHomeData) => void;
-  selectedVillagerInfo: any;
 }
 
 const useStyles = makeStyles({
@@ -27,7 +25,6 @@ const VillagerHomeList = (props: Props) => {
   const {
     villagerHomeListData,
     onClickVillager,
-    selectedVillagerInfo,
   } = props;
 
   const classes = useStyles()
@@ -67,6 +64,7 @@ const VillagerHomeList = (props: Props) => {
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
+                isSelected={foucusedVillagerId === parseInt(villagerHomeData.homeId)}
               />
             </ListItem>
           ) : (

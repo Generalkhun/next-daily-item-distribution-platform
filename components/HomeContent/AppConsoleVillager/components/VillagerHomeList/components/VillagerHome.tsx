@@ -1,4 +1,4 @@
-import { Grid, Avatar, ListItemText, Theme, Typography, Divider } from "@material-ui/core";
+import { Grid, Avatar, ListItemText, Theme, Typography, Divider, Button } from "@material-ui/core";
 import { createStyles } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { ReactElement } from "react";
@@ -14,6 +14,7 @@ interface Props {
   personImgUrl: string;
   numberOfFamilyMembers: number;
   homeRepresentativesContactNum: string
+  isSelected: boolean
 }
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
@@ -21,11 +22,14 @@ const useStyles = makeStyles((theme: Theme) => {
       width: theme.spacing(7),
       height: theme.spacing(7),
     },
+    seeDetailButton: {
+      marginTop:15
+    }
 
   });
 });
 function VillagerHome(props: Props) {
-  const { personName, foodRecieveStatus, personImgUrl, numberOfFamilyMembers, homeRepresentativesContactNum } =
+  const { personName, foodRecieveStatus, personImgUrl, numberOfFamilyMembers, homeRepresentativesContactNum, isSelected } =
     props;
   const classes = useStyles();
   return (
@@ -67,9 +71,11 @@ function VillagerHome(props: Props) {
       <Grid item xs={12} lg={10}>
         <ListItemText
           primary={personName} secondary={"โทร: " + homeRepresentativesContactNum + " สมาชิก: " + numberOfFamilyMembers + " คน "}
-          style={{ paddingLeft: 20 ,color:'black'}}
+          style={{ paddingLeft: 20, color: 'black' }}
         />
       </Grid>
+      {isSelected ? <Button className={classes.seeDetailButton} variant='contained' fullWidth >ดูรายละเอียด</Button> : <></>}
+
     </Grid>
   );
 }

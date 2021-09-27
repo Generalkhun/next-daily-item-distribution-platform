@@ -96,7 +96,6 @@ function HomeContent() {
               villagerHomeListData={villagerHomeListData}
               onClickVillager={onClickVillager}
               setMap={setMap}
-              isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
             />
           </Paper>
         </Grid>
