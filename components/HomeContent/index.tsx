@@ -68,25 +68,18 @@ function HomeContent() {
 
   return (
     <>
-      <ModalSetting
-        isOpenModal={isOpenModalSetting}
-        handleCloseModal={handleCloseModalSetting}
-        isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-        changeShowConditionHandler={changeShowConditionHandler}
-      />
-
       <Grid container>
         <Grid item xs={12} lg={4}>
-            <AppConsoleVillager
-              open={drawerOpen}
-              setOpen={setDrawerOpen}
-              setOpenVillagerConsole={setOpenVillagerConsole}
-              mapCenterLocation={mapCenterLocation}
-              onClickVillager={onClickVillager}
-              selectedVillagerInfo={selectedVillagerInfo}
-              isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-              handleOpenModalSetting={handleOpenModalSetting}
-            />
+          <AppConsoleVillager
+            open={drawerOpen}
+            setOpen={setDrawerOpen}
+            setOpenVillagerConsole={setOpenVillagerConsole}
+            mapCenterLocation={mapCenterLocation}
+            onClickVillager={onClickVillager}
+            selectedVillagerInfo={selectedVillagerInfo}
+            isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
+            handleOpenModalSetting={handleOpenModalSetting}
+          />
         </Grid>
         <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
@@ -96,7 +89,6 @@ function HomeContent() {
               villagerHomeListData={villagerHomeListData}
               onClickVillager={onClickVillager}
               setMap={setMap}
-              isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
             />
           </Paper>
         </Grid>

@@ -12,10 +12,8 @@ import { VillagerHomeData } from "../../../../../type";
 import VillagerHome from "./components/VillagerHome";
 
 interface Props {
-  isShowOnlyWaitingVillager: boolean;
   villagerHomeListData: Array<VillagerHomeData>;
   onClickVillager: (villager: VillagerHomeData) => void;
-  selectedVillagerInfo: any;
 }
 
 const useStyles = makeStyles({
@@ -27,7 +25,6 @@ const VillagerHomeList = (props: Props) => {
   const {
     villagerHomeListData,
     onClickVillager,
-    selectedVillagerInfo,
   } = props;
 
   const classes = useStyles()
@@ -37,12 +34,13 @@ const VillagerHomeList = (props: Props) => {
     (DisplayingVillagerDataContext)
   const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
+  const foucusedVillagerId = get(displayVillagerState, 'focusedVillagerId')
 
   // functions
   const onClickVillagerHandler = (villagerHomeData: any) => {
-  
+
     // update focus villager inside the context
-    displayVillagerDispatch({type:'updateFocusingVillager', payload: villagerHomeData.homeId})
+    displayVillagerDispatch({ type: 'updateFocusingVillager', payload: villagerHomeData.homeId })
 
     // perform the selecting effect
     onClickVillager(villagerHomeData)
@@ -57,15 +55,17 @@ const VillagerHomeList = (props: Props) => {
               button
               key={villagerHomeData.homeId}
               onClick={() => onClickVillagerHandler(villagerHomeData)}
-              selected={selectedVillagerInfo.homeId === villagerHomeData.homeId}
+              selected={foucusedVillagerId === parseInt(villagerHomeData.homeId)}
             >
               <VillagerHome
                 key={index}
+                homeLocation={villagerHomeData.homeLocation}
                 personName={villagerHomeData.homeRepresentativesName}
-                foodRecieveStatus={villagerHomeData.isItemRecieved}
+                isItemRecieved={villagerHomeData.isItemRecieved}
                 personImgUrl={villagerHomeData.homeRepresentativesImg}
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
+                isSelected={foucusedVillagerId === parseInt(villagerHomeData.homeId)}
               />
             </ListItem>
           ) : (
