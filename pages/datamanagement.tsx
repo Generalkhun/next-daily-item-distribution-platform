@@ -29,8 +29,8 @@ const datamanagement = (props: Props) => {
                 })}
             </Grid>
             <Grid item xs={12} sm={10} md={8} lg={5}>
-                {selectedMenu === 0 ? <AddVillager/> :<></>}
-                {selectedMenu === 1 ? <AddItemCat/> :<></>}
+                {selectedMenu === 0 ? <AddVillager /> : <></>}
+                {selectedMenu === 1 ? <AddItemCat /> : <></>}
             </Grid>
             <Grid item sm={1} md={2} lg={3}></Grid>
         </Grid>
