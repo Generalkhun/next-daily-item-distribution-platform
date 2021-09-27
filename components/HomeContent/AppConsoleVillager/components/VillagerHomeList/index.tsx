@@ -37,12 +37,13 @@ const VillagerHomeList = (props: Props) => {
     (DisplayingVillagerDataContext)
   const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
+  const foucusedVillagerId = get(displayVillagerState, 'focusedVillagerId')
 
   // functions
   const onClickVillagerHandler = (villagerHomeData: any) => {
-  
+
     // update focus villager inside the context
-    displayVillagerDispatch({type:'updateFocusingVillager', payload: villagerHomeData.homeId})
+    displayVillagerDispatch({ type: 'updateFocusingVillager', payload: villagerHomeData.homeId })
 
     // perform the selecting effect
     onClickVillager(villagerHomeData)
@@ -57,7 +58,7 @@ const VillagerHomeList = (props: Props) => {
               button
               key={villagerHomeData.homeId}
               onClick={() => onClickVillagerHandler(villagerHomeData)}
-              selected={selectedVillagerInfo.homeId === villagerHomeData.homeId}
+              selected={foucusedVillagerId === parseInt(villagerHomeData.homeId)}
             >
               <VillagerHome
                 key={index}
