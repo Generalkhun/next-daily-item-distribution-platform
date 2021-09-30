@@ -5,7 +5,10 @@ import Divider from '@mui/material/Divider'
 import React, { useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { Button, Paper } from '@material-ui/core';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
+import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
+import ConfirmSubmitModal from './components/ConfirmSubmitModal';
+import axios from 'axios';
 interface Props {
 
 }
@@ -14,8 +17,10 @@ const addVillagerFormReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'updateHomeRepresentativesName':
       return { ...state, homeRepresentativesName: action.payload }
-    case 'updatehomeRepresentativesContactNum':
+    case 'updateHomeRepresentativesContactNum':
       return { ...state, homeRepresentativesContactNum: action.payload }
+    case 'updateNumberOfFamilyMember':
+      return { ...state, numberOfFamilyMember: action.payload }
     case 'updateHomeLocation':
       return { ...state, homeLocation: action.payload }
     case 'updateHomeRepresentativesImg':
@@ -26,7 +31,9 @@ const addVillagerFormReducer = (state: any, action: any) => {
 }
 
 const AddVillager = (props: Props) => {
+
   const [isOpenConfirmHomeLocationModal, setIsOpenConfirmHomeLocationModal] = useState(false)
+  const [isOpenConfirmSubmitModal, setIsOpenConfirmSubmitModal] = useState(false)
   const [addVillagerFormstate, addVillagerFormDispatch] = useReducer(addVillagerFormReducer, {
     homeRepresentativesName: "",
     homeRepresentativesContactNum: null,
@@ -36,6 +43,12 @@ const AddVillager = (props: Props) => {
     addressAdditionalDescription: "",
   })
 
+  const closeConfirmHomeLocationHandler = () => {
+    setIsOpenConfirmHomeLocationModal(false)
+  }
+  const closeConfirmSubmitHandler = () => {
+    setIsOpenConfirmHomeLocationModal(false)
+  }
   const updateFileHandler = (loadedFiles: any) => {
     console.log("loadedFiles", loadedFiles);
     addVillagerFormDispatch({ type: 'updateHomeRepresentativesImg', payload: loadedFiles });
@@ -46,12 +59,16 @@ const AddVillager = (props: Props) => {
       navigator.geolocation.getCurrentPosition(function (position) {
         console.log("Latitude is :", position.coords.latitude);
         console.log("Longitude is :", position.coords.longitude);
-        addVillagerFormDispatch({ type: 'updateHomeRepresentativesImg', payload: [position.coords.latitude, position.coords.longitude] });
+        addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
       });
     }
+    closeConfirmHomeLocationHandler()
+  }
+  const openConfirmSubmitModalHandler = () => {
+    setIsOpenConfirmSubmitModal(true)
   }
   const openLocationConFirmHandler = () => {
-    
+    setIsOpenConfirmHomeLocationModal(true)
   }
   const clickAddHomeLocationHandler = () => {
     onUpdateHomeLocation()
@@ -61,11 +78,40 @@ const AddVillager = (props: Props) => {
     // validate all fields
 
     // display confirmation modal
+    openConfirmSubmitModalHandler()
 
-    // 
+  }
+  const confirmSubmitAddVillagerHandler = async () => {
+
+    // save data 
+    console.log('addVillagerFormstate', addVillagerFormstate);
+    const res = await axios({
+      method: 'post',
+      url: 'api/addVillager',
+      data: {
+        firstName: 'Fred',
+        lastName: 'Flintstone'
+      }
+    })
+    console.log('res',res);
   }
   return (
     <>
+      <ConfirmSubmitModal
+        isOpenModal={isOpenConfirmSubmitModal}
+        handleCloseModal={closeConfirmSubmitHandler}
+        onConfirmSubmitAddVillagerHandler={confirmSubmitAddVillagerHandler}
+        addVillagerFormstate={addVillagerFormstate}
+      />
+      <ConfirmHomeLocationModal
+        isOpenModal={isOpenConfirmHomeLocationModal}
+        handleCloseModal={closeConfirmHomeLocationHandler}
+        onUpdateHomeLocation={onUpdateHomeLocation}
+      />
+      {/* {isOpenConfirmHomeLocationModal? <ConfirmHomeLocationModal
+    isOpenModal={isOpenConfirmHomeLocationModal}
+    handleCloseModal={closeConfirmHomeLocationHandler}
+    /> : <></>} */}
       <Grid container>
         <Grid item xs={12} md={6}>
           <Grid container>
@@ -75,7 +121,8 @@ const AddVillager = (props: Props) => {
                 id="required"
                 label="ชื่อตัวแทนบ้าน"
                 defaultValue=""
-                value={addVillagerFormstate.homeRepresentativesName}
+                value={get(addVillagerFormstate, 'homeRepresentativesName')}
+                onChange={(e) => addVillagerFormDispatch({ type: 'updateHomeRepresentativesName', payload: e.target.value })}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -84,7 +131,8 @@ const AddVillager = (props: Props) => {
                 id="outlined-required"
                 label="เบอร์ติดต่อ"
                 defaultValue=""
-                value={addVillagerFormstate.homeRepresentativesContactNum}
+                value={get(addVillagerFormstate, 'homeRepresentativesContactNum')}
+                onChange={(e) => addVillagerFormDispatch({ type: 'updatehomeRepresentativesContactNum', payload: e.target.value })}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -94,7 +142,8 @@ const AddVillager = (props: Props) => {
                 label="จำนวนสมาชิกในบ้าน"
                 defaultValue=""
                 type='number'
-                value={addVillagerFormstate.numberOfFamilyMember}
+                value={get(addVillagerFormstate, 'numberOfFamilyMember')}
+                onChange={(e) => addVillagerFormDispatch({ type: 'updateNumberOfFamilyMember', payload: e.target.value })}
               />
             </Grid>
           </Grid>
@@ -141,16 +190,17 @@ const AddVillager = (props: Props) => {
         id="required"
         label="ตำแหน่งที่อยู่"
         defaultValue=""
-        disabled={!isEmpty(addVillagerFormstate.homeLocation)}
+        disabled={true}
         onFocus={onUpdateHomeLocation}
-        value={addVillagerFormstate.homeLocation}
+        value={get(addVillagerFormstate, 'homeLocation')}
       />
       <TextField
         fullWidth
         required
         label="รายละเอียดตำแหน่งที่อยู่"
         defaultValue=""
-        value={addVillagerFormstate.addressAdditionalDescription}
+        value={get(addVillagerFormstate, 'addressAdditionalDescription')}
+        onChange={(e) => addVillagerFormDispatch({ type: 'updateAddressAdditionalDescription', payload: e.target.value })}
       />
 
       <Button variant='contained' onClick={submitAddVillagerHandler} fullWidth>เพิ่มบ้าน</Button>

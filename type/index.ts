@@ -8,3 +8,13 @@ export type VillagerHomeData = {
   numberOfFamilyMember: number;
   addressAdditionalDescription:string;
 };
+
+
+export type VillagerAddingFormState = {
+  homeRepresentativesName:string
+  homeRepresentativesContactNum:string
+  numberOfFamilyMember:number
+  homeLocation:number[]
+  homeRepresentativesImg:any
+  addressAdditionalDescription:string
+}

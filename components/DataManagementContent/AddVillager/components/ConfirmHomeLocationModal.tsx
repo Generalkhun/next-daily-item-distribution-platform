@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   isOpenModal: boolean;
   handleCloseModal: () => void;
+  onUpdateHomeLocation: () => void
 }
 
-export default function ModalConfirmStatusChange(props: Props) {
+export default function ConfirmHomeLocationModal(props: Props) {
   const classes = useStyles();
 
-  const { isOpenModal, handleCloseModal } = props;
+  const { isOpenModal, handleCloseModal,onUpdateHomeLocation } = props;
 
   return (
     <Modal
@@ -46,11 +47,11 @@ export default function ModalConfirmStatusChange(props: Props) {
     >
       <Fade in={isOpenModal}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">ยืนยันการส่งข้าวสำเร็จ</h2>
+          <h2 id="transition-modal-title">เพิ่มตำแหน่งที่อยู่</h2>
           <p id="transition-modal-description">
-            หากแน่ใจว่าส่งของสำเร็จแล้ว ให้กดยืนยัน
+            ให้ตำแหน่งที่อยู่กับแอพลิเคชั่น เพื่อระบุตำแหน่งที่อยู่ตอนนี้
           </p>
-          <Button>
+          <Button onClick={onUpdateHomeLocation}>
               ยืนยัน
           </Button>
           <Button onClick ={handleCloseModal}>
