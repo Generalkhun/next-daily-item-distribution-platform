@@ -9,6 +9,7 @@ import { get, isEmpty } from 'lodash';
 import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
 import ConfirmSubmitModal from './components/ConfirmSubmitModal';
 import axios from 'axios';
+import { mapRequestBodyAddVillagerFormState } from '../../../helpers/utils/mapRequestBodyAddVillagerFormState';
 interface Props {
 
 }
@@ -88,12 +89,9 @@ const AddVillager = (props: Props) => {
     const res = await axios({
       method: 'post',
       url: 'api/addVillager',
-      data: {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      }
+      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate)
     })
-    console.log('res',res);
+    console.log('res', res);
   }
   return (
     <>
