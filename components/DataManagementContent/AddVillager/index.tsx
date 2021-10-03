@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
 import React, { useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
-import { Button, IconButton, Paper, Typography } from '@material-ui/core';
+import { Button, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
 import { get, isEmpty } from 'lodash';
 import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
 import ConfirmSubmitModal from './components/ConfirmSubmitModal';
@@ -38,9 +38,38 @@ const addVillagerFormReducer = (state: any, action: any) => {
   }
 }
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+
+  },
+  topSectionFormWrapper: {
+    marginTop: 20,
+    marginLeft: 20,
+    paddingBottom: 20
+  },
+  topSectionLowerPartWrapper: {
+    marginTop: 20
+  },
+  numFamMembers: {
+    marginLeft: 10,
+  },
+  imgInputWrapper: {
+    marginTop: 10,
+    width: 400,
+    height: 250
+  }
+})
 const AddVillager = (props: Props) => {
+  const classes = useStyles()
   const [isOpenConfirmHomeLocationModal, setIsOpenConfirmHomeLocationModal] = useState(false)
   const [isOpenConfirmSubmitModal, setIsOpenConfirmSubmitModal] = useState(false)
+
   const [addVillagerFormstate, addVillagerFormDispatch] = useReducer(addVillagerFormReducer, {
     isValidated: false,
     // mandatory fields
@@ -60,6 +89,7 @@ const AddVillager = (props: Props) => {
     addressAdditionalDescription: "",
   })
 
+
   const closeConfirmHomeLocationHandler = () => {
     setIsOpenConfirmHomeLocationModal(false)
   }
@@ -72,14 +102,18 @@ const AddVillager = (props: Props) => {
   };
 
   const onUpdateHomeLocation = () => {
-    if (isEmpty(addVillagerFormstate.homeLocation)) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-        addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
-      });
-    }
-    closeConfirmHomeLocationHandler()
+    navigator.geolocation.getCurrentPosition(function (position) {
+      addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
+      //close modal
+      closeConfirmHomeLocationHandler()
+    });
+    // if (isEmpty(addVillagerFormstate.homeLocation)) {
+    //   navigator.geolocation.getCurrentPosition(function (position) {
+    //     console.log("Latitude is :", position.coords.latitude);
+    //     console.log("Longitude is :", position.coords.longitude);
+    //     addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
+    //   });
+    // }
   }
   const openConfirmSubmitModalHandler = () => {
     setIsOpenConfirmSubmitModal(true)
@@ -88,22 +122,28 @@ const AddVillager = (props: Props) => {
     setIsOpenConfirmHomeLocationModal(true)
   }
   const clickAddHomeLocationHandler = () => {
-    onUpdateHomeLocation()
+    // onUpdateHomeLocation()
     openLocationConFirmHandler()
   }
   const submitAddVillagerHandler = () => {
     // validate all fields
     addVillagerFormDispatch({ type: 'validateOnSubimit' })
-    console.log('get(addVillagerFormstate, "homeRepresentativesName")', get(addVillagerFormstate, 'homeRepresentativesName'));
 
     // display confirmation modal
+    if (
+      isEmpty(get(addVillagerFormstate, 'homeRepresentativesName')) ||
+      !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum')) ||
+      isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember')) ||
+      isEmpty(get(addVillagerFormstate, 'homeLocation'))
+    ) {
+      return
+    }
+
+
     // openConfirmSubmitModalHandler()
 
   }
   const confirmSubmitAddVillagerHandler = async () => {
-
-    // save data 
-    console.log('addVillagerFormstate', addVillagerFormstate);
     const res = await axios({
       method: 'post',
       url: 'api/addVillager',
@@ -112,60 +152,51 @@ const AddVillager = (props: Props) => {
     console.log('res', res);
   }
   return (
-    <>
-      <ConfirmSubmitModal
-        isOpenModal={isOpenConfirmSubmitModal}
-        handleCloseModal={closeConfirmSubmitHandler}
-        onConfirmSubmitAddVillagerHandler={confirmSubmitAddVillagerHandler}
-        addVillagerFormstate={addVillagerFormstate}
-      />
-      <ConfirmHomeLocationModal
-        isOpenModal={isOpenConfirmHomeLocationModal}
-        handleCloseModal={closeConfirmHomeLocationHandler}
-        onUpdateHomeLocation={onUpdateHomeLocation}
-      />
-      <Grid container>
-        <Grid item xs={12} md={6}>
-          <Grid container>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))}
-                required
-                placeholder='ชื่อที่จำง่าย เช่น พี่หมาย บังมานพ'
-                id="required"
-                label="ชื่อตัวแทนบ้าน"
-                defaultValue=""
-                value={get(addVillagerFormstate, 'homeRepresentativesName')}
-                helperText={(get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))) ? "จำเป็นต้องใส่" : ""}
-                onChange={(e) => addVillagerFormDispatch({ type: 'updateHomeRepresentativesName', payload: e.target.value })}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                error={get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))}
-                required
-                placeholder='เบอร์มือถือสิบหลัก'
-                id="outlined-required"
-                label="เบอร์ติดต่อ"
-                defaultValue=""
-                value={get(addVillagerFormstate, 'homeRepresentativesContactNum')}
-                helperText={(get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))) ? "เบอร์ไม่ถูกต้อง" : ""}
-                onChange={(e) => addVillagerFormDispatch({ type: 'updateHomeRepresentativesContactNum', payload: e.target.value })}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember'))}
-                required
-                id="required"
-                label="จำนวนสมาชิกในบ้าน"
-                defaultValue=""
-                type='number'
-                value={get(addVillagerFormstate, 'numberOfFamilyMember')}
-                helperText={(get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember'))) ? "จำเป็นต้องใส่" : ""}
-                onChange={(e) => addVillagerFormDispatch({ type: 'updateNumberOfFamilyMember', payload: e.target.value })}
-              />
-            </Grid>
+    <div className={classes.root}>
+      <Typography variant='h4'>เพิ่มข้อมูลบ้าน</Typography>
+      <Grid container className={classes.topSectionFormWrapper}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))}
+            required
+            placeholder='ชื่อที่จำง่าย เช่น พี่หมาย บังมานพ'
+            id="required"
+            label="ชื่อตัวแทนบ้าน"
+            defaultValue=""
+            value={get(addVillagerFormstate, 'homeRepresentativesName')}
+            helperText={(get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))) ? "จำเป็นต้องใส่" : ""}
+            onChange={(e) => addVillagerFormDispatch({ type: 'updateHomeRepresentativesName', payload: e.target.value })}
+          />
+        </Grid>
+        <Grid container className={classes.topSectionLowerPartWrapper}>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              error={get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))}
+              required
+              placeholder='เบอร์มือถือสิบหลัก'
+              id="outlined-required"
+              label="เบอร์ติดต่อ"
+              defaultValue=""
+              value={get(addVillagerFormstate, 'homeRepresentativesContactNum')}
+              helperText={(get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))) ? "เบอร์ไม่ถูกต้อง" : ""}
+              onChange={(e) => addVillagerFormDispatch({ type: 'updateHomeRepresentativesContactNum', payload: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              className={classes.numFamMembers}
+              error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember'))}
+              required
+              id="required"
+              label="จำนวนสมาชิกในบ้าน"
+              defaultValue=""
+              type='number'
+              value={get(addVillagerFormstate, 'numberOfFamilyMember')}
+              helperText={(get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember'))) ? "ต้องมีอย่างน้อย 1 คน" : ""}
+              onChange={(e) => addVillagerFormDispatch({ type: 'updateNumberOfFamilyMember', payload: e.target.value })}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -175,10 +206,10 @@ const AddVillager = (props: Props) => {
       <IconButton onClick={clickAddHomeLocationHandler} >
         <AddLocationAltIcon />
         <Typography>
-          เพิ่มตำแหน่งบ้าน
+          เพิ่มตำแหน่งที่อยู่ (ตามตำแหน่งอุปกรณ์)
         </Typography>
       </IconButton>
-      
+
       <TextField
         error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeLocation'))}
         fullWidth
@@ -199,16 +230,17 @@ const AddVillager = (props: Props) => {
         value={get(addVillagerFormstate, 'addressAdditionalDescription')}
         onChange={(e) => addVillagerFormDispatch({ type: 'updateAddressAdditionalDescription', payload: e.target.value })}
       />
-      <Paper style={{ width: 500, height: 400 }}>
+      <Paper className={classes.imgInputWrapper}>
+        <Typography>ภาพตัวแทนบ้าน</Typography>
         <DropzoneArea
           onChange={updateFileHandler}
           clearOnUnmount={true}
           filesLimit={1}
           acceptedFiles={["image/*"]}
-          showPreviews={true}
-          showPreviewsInDropzone={false}
+          showPreviews={false}
+          showPreviewsInDropzone={true}
           dropzoneText={
-            "อัพโหลดภาพตัวแทนบ้าน"
+            ""
           }
           getFileAddedMessage={(fileName) =>
             `อัพโหลดภาพ ${fileName} สำเร็จ`
@@ -216,7 +248,7 @@ const AddVillager = (props: Props) => {
           getFileRemovedMessage={(fileName) =>
             `นำภาพ ${fileName} ออกแล้ว`
           }
-          previewText="ตัวอย่างภาพ"
+          //previewText="ตัวอย่างภาพ"
           previewGridProps={{
             container: {
               spacing: 1,
@@ -233,7 +265,20 @@ const AddVillager = (props: Props) => {
         fullWidth>
         เพิ่มบ้าน
       </Button>
-    </>
+
+      {/* Modals */}
+      <ConfirmSubmitModal
+        isOpenModal={isOpenConfirmSubmitModal}
+        handleCloseModal={closeConfirmSubmitHandler}
+        onConfirmSubmitAddVillagerHandler={confirmSubmitAddVillagerHandler}
+        addVillagerFormstate={addVillagerFormstate}
+      />
+      <ConfirmHomeLocationModal
+        isOpenModal={isOpenConfirmHomeLocationModal}
+        handleCloseModal={closeConfirmHomeLocationHandler}
+        onUpdateHomeLocation={onUpdateHomeLocation}
+      />
+    </div>
 
   )
 }
