@@ -4,13 +4,14 @@ import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
 import React, { useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
-import { Button, Paper } from '@material-ui/core';
+import { Button, IconButton, Paper, Typography } from '@material-ui/core';
 import { get, isEmpty } from 'lodash';
 import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
 import ConfirmSubmitModal from './components/ConfirmSubmitModal';
 import axios from 'axios';
 import { mapRequestBodyAddVillagerFormState } from '../../../helpers/utils/mapRequestBodyAddVillagerFormState';
 import { validatePhoneNum } from '../../../helpers/utils/formValidations';
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 interface Props {
 
 }
@@ -130,6 +131,7 @@ const AddVillager = (props: Props) => {
               <TextField
                 error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))}
                 required
+                placeholder='ชื่อที่จำง่าย เช่น พี่หมาย บังมานพ'
                 id="required"
                 label="ชื่อตัวแทนบ้าน"
                 defaultValue=""
@@ -142,6 +144,7 @@ const AddVillager = (props: Props) => {
               <TextField
                 error={get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))}
                 required
+                placeholder='เบอร์มือถือสิบหลัก'
                 id="outlined-required"
                 label="เบอร์ติดต่อ"
                 defaultValue=""
@@ -165,42 +168,17 @@ const AddVillager = (props: Props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={{ width: 500, height: 400 }}>
-            <DropzoneArea
-              onChange={updateFileHandler}
-              clearOnUnmount={true}
-              filesLimit={1}
-              acceptedFiles={["image/*"]}
-              showPreviews={true}
-              showPreviewsInDropzone={false}
-              dropzoneText={
-                "อัพโหลดภาพตัวแทนบ้าน"
-              }
-              getFileAddedMessage={(fileName) =>
-                `อัพโหลดภาพ ${fileName} สำเร็จ`
-              }
-              getFileRemovedMessage={(fileName) =>
-                `นำภาพ ${fileName} ออกแล้ว`
-              }
-              previewText="ตัวอย่างภาพ"
-              previewGridProps={{
-                container: {
-                  spacing: 1,
-                  direction: "column",
-                  alignItems: "center",
-                },
-              }}
-            />
-          </Paper>
-
-        </Grid>
       </Grid>
 
       <Divider />
 
-      <Button onClick={clickAddHomeLocationHandler} fullWidth variant='contained'>เพิ่มคำแหน่งที่อยู่</Button>
-
+      <IconButton onClick={clickAddHomeLocationHandler} >
+        <AddLocationAltIcon />
+        <Typography>
+          เพิ่มตำแหน่งบ้าน
+        </Typography>
+      </IconButton>
+      
       <TextField
         error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeLocation'))}
         fullWidth
@@ -212,13 +190,42 @@ const AddVillager = (props: Props) => {
         onFocus={onUpdateHomeLocation}
         value={get(addVillagerFormstate, 'homeLocation')}
       />
+      <Divider style={{ paddingTop: 10, marginBottom: 10 }} />
       <TextField
         fullWidth
+        placeholder='ข้อมูลเพิ่มเติมเพื่อช่วยจำ เช่น ตรงข้ามร้านขายข้าวแกง ใกล้ปากซอย 3'
         label="รายละเอียดตำแหน่งที่อยู่"
         defaultValue=""
         value={get(addVillagerFormstate, 'addressAdditionalDescription')}
         onChange={(e) => addVillagerFormDispatch({ type: 'updateAddressAdditionalDescription', payload: e.target.value })}
       />
+      <Paper style={{ width: 500, height: 400 }}>
+        <DropzoneArea
+          onChange={updateFileHandler}
+          clearOnUnmount={true}
+          filesLimit={1}
+          acceptedFiles={["image/*"]}
+          showPreviews={true}
+          showPreviewsInDropzone={false}
+          dropzoneText={
+            "อัพโหลดภาพตัวแทนบ้าน"
+          }
+          getFileAddedMessage={(fileName) =>
+            `อัพโหลดภาพ ${fileName} สำเร็จ`
+          }
+          getFileRemovedMessage={(fileName) =>
+            `นำภาพ ${fileName} ออกแล้ว`
+          }
+          previewText="ตัวอย่างภาพ"
+          previewGridProps={{
+            container: {
+              spacing: 1,
+              direction: "column",
+              alignItems: "center",
+            },
+          }}
+        />
+      </Paper>
 
       <Button
         variant='contained'
