@@ -12,6 +12,7 @@ import axios from 'axios';
 import { mapRequestBodyAddVillagerFormState } from '../../../helpers/utils/mapRequestBodyAddVillagerFormState';
 import { validatePhoneNum } from '../../../helpers/utils/formValidations';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import { readImgURL } from '../../../helpers/utils/readImgURL';
 interface Props {
 
 }
@@ -27,7 +28,11 @@ const addVillagerFormReducer = (state: any, action: any) => {
     case 'updateHomeLocation':
       return { ...state, homeLocation: action.payload }
     case 'updateHomeRepresentativesImg':
-      return { ...state, homeRepresentativesImg: action.payload }
+      return {
+        ...state,
+        homeRepresentativesImg: action.payload,
+        homeRepresentativesImgURL: readImgURL(action.payload[0]) 
+      }
     case 'updateAddressAdditionalDescription':
       return { ...state, addressAdditionalDescription: action.payload }
     case 'validateOnSubimit':
@@ -86,6 +91,7 @@ const AddVillager = (props: Props) => {
 
     // optional fields
     homeRepresentativesImg: "",
+    homeRepresentativesImgURL: "",
     addressAdditionalDescription: "",
   })
 
@@ -129,7 +135,7 @@ const AddVillager = (props: Props) => {
     // validate all fields
     addVillagerFormDispatch({ type: 'validateOnSubimit' })
 
-    // display confirmation modal
+
     if (
       isEmpty(get(addVillagerFormstate, 'homeRepresentativesName')) ||
       !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum')) ||
@@ -139,8 +145,9 @@ const AddVillager = (props: Props) => {
       return
     }
 
+    // display confirmation modal
 
-    // openConfirmSubmitModalHandler()
+    openConfirmSubmitModalHandler()
 
   }
   const confirmSubmitAddVillagerHandler = async () => {

@@ -66,7 +66,7 @@ export default function ModalVillagerDetails(props: Props) {
         <div className={classes.paper}>
           <h2 id="transition-modal-title">ตั้งค่า</h2>
           <p id="transition-modal-description">ตั้งค่าการแสดงผลข้อมูล</p>
-          <VillagerDetailsCardManager {...props}/>
+          <VillagerDetailsCardManager submissionHandlerMode={true} {...props} />
           <VillagerTransactionHistory />
           {/* {JSON.stringify(villagerDetail)} */}
         </div>

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   media: {
     height: 220,
-    width:400
+    width: 400
   },
   contactButton: {
     paddingLeft: 10,
@@ -26,18 +26,21 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-    key: number;
-    homeLocation: [number, number]
-    personName: string;
-    isItemRecieved: boolean;
-    personImgUrl: string;
-    numberOfFamilyMembers: number;
-    homeRepresentativesContactNum: string
-    isSelected: boolean
+  key: number;
+  homeLocation: [number, number]
+  personName: string;
+  isItemRecieved?: boolean;
+  personImgUrl: string;
+  numberOfFamilyMembers: number;
+  homeRepresentativesContactNum: string
+  isSelected?: boolean
+  submissionHandlerMode?: boolean
+  showMapMode?: boolean
 }
 
 const VillagerDetailsCardManager = (props: Props) => {
-    const classes = useStyles();
+  const classes = useStyles();
+  const { submissionHandlerMode,showMapMode } = props
   const selectedVillagerInfo = props;
   const lat = (selectedVillagerInfo.homeLocation || [0, 0])[0];
   const lng = (selectedVillagerInfo.homeLocation || [0, 0])[1];
@@ -86,16 +89,16 @@ const VillagerDetailsCardManager = (props: Props) => {
                 selectedVillagerInfo.numberOfFamilyMembers}
             </Typography>
             <Divider />
-            <Typography variant="body2" color="textSecondary" component="p">
+            {submissionHandlerMode ? <Typography variant="body2" color="textSecondary" component="p">
               {`สถานะ: ${selectedVillagerInfo.isItemRecieved
-                  ? "ได้รับแล้ว"
-                  : "ยังไม่ได้รับ"
+                ? "ได้รับแล้ว"
+                : "ยังไม่ได้รับ"
                 }`}
-            </Typography>
+            </Typography> : <></>}
           </CardContent>
         </CardActionArea>
         <Divider />
-        <CardActions>
+        {submissionHandlerMode ? <><CardActions>
           <Grid container>
             <Grid item xs={12} lg={6} className={classes.contactButton}>
               <Button size="small" color="primary" variant="outlined" fullWidth>
@@ -123,17 +126,25 @@ const VillagerDetailsCardManager = (props: Props) => {
             </Grid>
           </Grid>
         </CardActions>
-        <CardActions>
-          <Button
-            onClick={toggleGetFoodStatus}
-            fullWidth
-            disabled={selectedVillagerInfo.isItemRecieved}
-            variant="contained"
-            color={selectedVillagerInfo.isItemRecieved ? undefined : "primary"}
-          >
-            ส่งสำเร็จแล้ว
-          </Button>
-        </CardActions>
+
+          <CardActions>
+            <Button
+              onClick={toggleGetFoodStatus}
+              fullWidth
+              disabled={selectedVillagerInfo.isItemRecieved}
+              variant="contained"
+              color={selectedVillagerInfo.isItemRecieved ? undefined : "primary"}
+            >
+              ส่งสำเร็จแล้ว
+            </Button>
+          </CardActions></> : <></>}
+
+          {showMapMode? 
+          
+          <p>map mode</p>
+          
+          : <></>}
+
       </Card>
     </>
   );

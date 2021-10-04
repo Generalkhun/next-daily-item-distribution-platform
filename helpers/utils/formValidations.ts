@@ -7,3 +7,4 @@ export const validatePhoneNum = (formValue: string) => {
     const phoneRegexp = new RegExp('^0([8|9|6])([0-9]{8}$)')
     return phoneRegexp.test(formValue) && formValue.length === 10
 }
+
