@@ -5,7 +5,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import { VillagerAddingFormState } from "../../../../type";
-import VillagerDetailsCardManager from "../../../HomeContent/AppConsoleVillager/components/VillagerHomeList/components/ModalVillagerDetails/components/VillagerDetailsCardManager";
+import VillagerDetailsCardManager from "../../../common/VillagerDetailsCardManager";
 import { get } from 'lodash'
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -65,20 +65,8 @@ export default function ConfirmSubmitModal(props: Props) {
                         homeRepresentativesContactNum={get(addVillagerFormstate, 'homeRepresentativesContactNum') as string}
                         submissionHandlerMode={false}
                         showMapMode={true}
+                        addressAdditionalDescription={get(addVillagerFormstate, 'addressAdditionalDescription')}
                     />
-
-                    {/* addressAdditionalDescription: ""
-homeLocation: (2) [13.758629, 100.651387]
-homeRepresentativesContactNum: "0988889999"
-homeRepresentativesImg: [File]
-homeRepresentativesName: "dkma"
-isShowErrorNumberOfFamilyMember: false
-isValidHomeLocation: false
-isValidHomeRepresentativesContactNum: false
-isValidHomeRepresentativesName: false
-isValidated: true
-numberOfFamilyMember: "4" */}
-
                     <Button onClick={() => onConfirmSubmitAddVillagerHandler({ mockup: 'test' })}>
                         ยืนยัน
                     </Button>

@@ -29,3 +29,12 @@ export type VillagerToAddObject = {
   numberOfFamilyMember: number;
   addressAdditionalDescription?: string;
 }
+
+export interface NextViewport {
+  width: string
+  height: string
+  // The latitude and longitude of the center of London
+  latitude: number
+  longitude: number
+  zoom: number
+}

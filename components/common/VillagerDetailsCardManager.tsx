@@ -8,7 +8,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Divider, Grid } from "@material-ui/core";
-import ModalConfirmStatusChange from "../../../../../../Modals/ModalConfirmStatusChange";
+import ModalConfirmStatusChange from "../HomeContent/Modals/ModalConfirmStatusChange";
+import ReactMapGL, { Marker } from "react-map-gl";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { get } from "lodash";
+import { NextViewport } from "../../type";
 
 const useStyles = makeStyles({
   root: {
@@ -36,17 +40,38 @@ interface Props {
   isSelected?: boolean
   submissionHandlerMode?: boolean
   showMapMode?: boolean
+  addressAdditionalDescription?: string
+
 }
 
 const VillagerDetailsCardManager = (props: Props) => {
   const classes = useStyles();
-  const { submissionHandlerMode,showMapMode } = props
-  const selectedVillagerInfo = props;
-  const lat = (selectedVillagerInfo.homeLocation || [0, 0])[0];
-  const lng = (selectedVillagerInfo.homeLocation || [0, 0])[1];
+  const { submissionHandlerMode, showMapMode } = props
+
+
+  // get villager data from props
+  const lat = (get(props, 'homeLocation') || [0, 0])[0];
+  const lng = (get(props, 'homeLocation') || [0, 0])[1];
+  const addressAdditionalDescription = get(props, 'addressAdditionalDescription')
+  const numberOfFamilyMembers = get(props, 'numberOfFamilyMembers')
+  const personName = get(props, 'personName')
+  const homeRepresentativesContactNum = get(props, 'homeRepresentativesContactNum')
+  const isItemRecieved = get(props, 'isItemRecieved')
+  const personImgUrl = get(props, 'personImgUrl')
+
+
+  // viewport, used on show map mode only 
+  const [viewport, setViewport] = useState<any>({
+    width: '41vh',
+    height: '40vh',
+    // The latitude and longitude of the center of distribution place
+    latitude: lat,
+    longitude: lng,
+    zoom: 16
+  });
 
   const [isGetFood, setIsGetFood] = useState<boolean>(
-    selectedVillagerInfo.isItemRecieved || true
+    get(props, 'isItemRecieved') || true
   );
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -72,25 +97,25 @@ const VillagerDetailsCardManager = (props: Props) => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={selectedVillagerInfo.personImgUrl}
+            image={personImgUrl}
             title="ข้อมูลตัวแทนบ้าน"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {selectedVillagerInfo.personName}
+              {personName}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {`เบอร์ติดต่อ: ${selectedVillagerInfo.homeRepresentativesContactNum}`}
+              {`เบอร์ติดต่อ: ${homeRepresentativesContactNum}`}
             </Typography>
             <Divider />
             <Typography variant="body2" color="textSecondary" component="p">
               {"จำนวนสมาชิกในบ้าน:" +
                 " " +
-                selectedVillagerInfo.numberOfFamilyMembers}
+                numberOfFamilyMembers}
             </Typography>
             <Divider />
             {submissionHandlerMode ? <Typography variant="body2" color="textSecondary" component="p">
-              {`สถานะ: ${selectedVillagerInfo.isItemRecieved
+              {`สถานะ: ${isItemRecieved
                 ? "ได้รับแล้ว"
                 : "ยังไม่ได้รับ"
                 }`}
@@ -131,18 +156,33 @@ const VillagerDetailsCardManager = (props: Props) => {
             <Button
               onClick={toggleGetFoodStatus}
               fullWidth
-              disabled={selectedVillagerInfo.isItemRecieved}
+              disabled={isItemRecieved}
               variant="contained"
-              color={selectedVillagerInfo.isItemRecieved ? undefined : "primary"}
+              color={isItemRecieved ? undefined : "primary"}
             >
               ส่งสำเร็จแล้ว
             </Button>
           </CardActions></> : <></>}
 
-          {showMapMode? 
-          
-          <p>map mode</p>
-          
+        {showMapMode ?
+
+          <>
+            <p>ที่อยู่ : {addressAdditionalDescription}</p>
+            <ReactMapGL
+              mapStyle="mapbox://styles/mapbox/streets-v11"
+              mapboxApiAccessToken={process.env.MAPBOX_KEY}
+              {...viewport}
+              onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
+            >
+              <Marker
+                longitude={lng}
+                latitude={lat}
+              >
+                <LocationOnIcon fontSize='large' color='error' />
+              </Marker>
+            </ReactMapGL>
+
+          </>
           : <></>}
 
       </Card>

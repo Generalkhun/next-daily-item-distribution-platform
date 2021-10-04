@@ -9,7 +9,7 @@ import {
   FormControlLabel,
   Typography,
 } from "@material-ui/core";
-import VillagerDetailsCardManager from "./components/VillagerDetailsCardManager";
+import VillagerDetailsCardManager from "../../../../../../common/VillagerDetailsCardManager";
 import VillagerTransactionHistory from "./components/VillagerTransactionHistory";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,7 +68,6 @@ export default function ModalVillagerDetails(props: Props) {
           <p id="transition-modal-description">ตั้งค่าการแสดงผลข้อมูล</p>
           <VillagerDetailsCardManager submissionHandlerMode={true} {...props} />
           <VillagerTransactionHistory />
-          {/* {JSON.stringify(villagerDetail)} */}
         </div>
       </Fade>
     </Modal>
