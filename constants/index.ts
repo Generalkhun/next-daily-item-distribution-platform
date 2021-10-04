@@ -17,3 +17,7 @@ export const MENUS_DATA_MGT = [
     { menuName: 'addItemCat', menuTitle: 'เพิ่มประเภทสิ่งของ' }
 ]
 export const USER_ENTERED = 'USER_ENTERED' // use inside ggsheet append param config
+
+
+export const CENTER_OF_DISTRIBUTION_LAT = 13.68474450590383
+export const CENTER_OF_DISTRIBUTION_LNG = 100.47730858426843

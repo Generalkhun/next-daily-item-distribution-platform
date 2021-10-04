@@ -100,7 +100,7 @@ const AddVillager = (props: Props) => {
     setIsOpenConfirmHomeLocationModal(false)
   }
   const closeConfirmSubmitHandler = () => {
-    setIsOpenConfirmHomeLocationModal(false)
+    setIsOpenConfirmSubmitModal(false)
   }
   const updateFileHandler = (loadedFiles: any) => {
     console.log("loadedFiles", loadedFiles);

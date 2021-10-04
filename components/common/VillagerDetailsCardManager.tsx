@@ -170,7 +170,7 @@ const VillagerDetailsCardManager = (props: Props) => {
             <p>ที่อยู่ : {addressAdditionalDescription}</p>
             <ReactMapGL
               mapStyle="mapbox://styles/mapbox/streets-v11"
-              mapboxApiAccessToken={process.env.MAPBOX_KEY}
+              mapboxApiAccessToken='pk.eyJ1IjoiZ2VuZXJhbGtodW4iLCJhIjoiY2t0bGl5NXduMXdmaTJ2bXA3NXgyMXR4aiJ9.dBaNof7U4QoJImXeDk1QXg'
               {...viewport}
               onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
             >
