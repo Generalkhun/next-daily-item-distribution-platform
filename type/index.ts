@@ -25,7 +25,6 @@ export type VillagerToAddObject = {
   homeRepresentativesContactNum?: string;
   homeLocation: [number, number];
   homeRepresentativesImg?: string;
-  isItemRecieved: boolean;
   numberOfFamilyMember: number;
   addressAdditionalDescription?: string;
 }

@@ -13,6 +13,7 @@ import { mapRequestBodyAddVillagerFormState } from '../../../helpers/utils/mapRe
 import { validatePhoneNum } from '../../../helpers/utils/formValidations';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { readImgURL } from '../../../helpers/utils/readImgURL';
+import { saveVillagerImgToGGDrive } from '../../../helpers/api/saveVillagerImgToGGDriveAPI';
 interface Props {
 
 }
@@ -31,7 +32,7 @@ const addVillagerFormReducer = (state: any, action: any) => {
       return {
         ...state,
         homeRepresentativesImg: action.payload,
-        homeRepresentativesImgURL: readImgURL(action.payload[0]) 
+        homeRepresentativesImgURL: readImgURL(action.payload[0])
       }
     case 'updateAddressAdditionalDescription':
       return { ...state, addressAdditionalDescription: action.payload }
@@ -134,8 +135,6 @@ const AddVillager = (props: Props) => {
   const submitAddVillagerHandler = () => {
     // validate all fields
     addVillagerFormDispatch({ type: 'validateOnSubimit' })
-
-
     if (
       isEmpty(get(addVillagerFormstate, 'homeRepresentativesName')) ||
       !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum')) ||
@@ -146,15 +145,20 @@ const AddVillager = (props: Props) => {
     }
 
     // display confirmation modal
-
     openConfirmSubmitModalHandler()
 
   }
   const confirmSubmitAddVillagerHandler = async () => {
+
+    // save image in google drive first
+
+    const imgURLGGdrive = await saveVillagerImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
+
+    // save all info in giigle sheeet
     const res = await axios({
       method: 'post',
-      url: 'api/addVillager',
-      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate)
+      url: 'api/addVillagerToGGSheet',
+      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive)
     })
     console.log('res', res);
   }
