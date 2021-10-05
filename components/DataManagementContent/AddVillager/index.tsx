@@ -14,6 +14,7 @@ import { validatePhoneNum } from '../../../helpers/utils/formValidations';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { readImgURL } from '../../../helpers/utils/readImgURL';
 import { saveVillagerImgToGGDrive } from '../../../helpers/api/saveVillagerImgToGGDriveAPI';
+import { getGGDriveImgURLViewWithId } from '../../../helpers/utils/getGGDriveImgURLViewWithId';
 interface Props {
 
 }
@@ -152,8 +153,9 @@ const AddVillager = (props: Props) => {
 
     // save image in google drive first
 
-    const imgURLGGdrive = await saveVillagerImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
-
+    const imgSavedGGdriveResp = await saveVillagerImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
+    const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
+    // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
     // save all info in giigle sheeet
     const res = await axios({
       method: 'post',

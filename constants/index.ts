@@ -8,7 +8,7 @@ import path from 'path'
 export const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
     //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    
+
     keyFile: './secrets/googleSheetKeyFile.json'
 }
 
@@ -25,13 +25,18 @@ export const MENUS_DATA_MGT = [
 export const USER_ENTERED = 'USER_ENTERED' // use inside ggsheet append param config
 
 //google drive
-export const SECRET_DIR = path.resolve('./secret')
-export const SCOPES = ['https://www.googleapis.com/auth/drive.file'] // If modifying these scopes, delete token.json.
+
+export const DRIVE_API_SECRET_DIR = path.resolve('./secrets')
+export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] // If modifying these scopes, delete token.json.
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-export const TOKEN_PATH = `${SECRET_DIR}/token.json`
-export const TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
+export const GOOGLE_DRIVE_AUTH_CONFIG: GoogleAuthOptions = {
+    scopes: DRIVE_API_SCOPES,
+    keyFile: './secrets/googleDriveKeyFile.json'
+}
+export const DRIVE_API_TOKEN_PATH = `${DRIVE_API_SECRET_DIR}/token.json`
+export const DRIVE_API_TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
 
 /**
  * base url
