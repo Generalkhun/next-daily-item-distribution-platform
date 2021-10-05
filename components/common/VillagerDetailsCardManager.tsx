@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 interface Props {
   key: number;
-  homeLocation: [number, number]
+  homeLocation: [string, string]
   personName: string;
   isItemRecieved?: boolean;
   personImgUrl: string;
@@ -50,8 +50,8 @@ const VillagerDetailsCardManager = (props: Props) => {
 
 
   // get villager data from props
-  const lat = (get(props, 'homeLocation') || [0, 0])[0];
-  const lng = (get(props, 'homeLocation') || [0, 0])[1];
+  const lat = parseFloat((get(props, 'homeLocation') || [0, 0])[0]);
+  const lng = parseFloat((get(props, 'homeLocation') || [0, 0])[1]);
   const addressAdditionalDescription = get(props, 'addressAdditionalDescription')
   const numberOfFamilyMembers = get(props, 'numberOfFamilyMembers')
   const personName = get(props, 'personName')

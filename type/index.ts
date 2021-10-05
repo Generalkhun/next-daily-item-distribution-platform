@@ -14,7 +14,7 @@ export type VillagerAddingFormState = {
   homeRepresentativesName: string
   homeRepresentativesContactNum?: string
   numberOfFamilyMember: number
-  homeLocation: number[]
+  homeLocation: [string,string]
   homeRepresentativesImg?: any
   addressAdditionalDescription?: string
 }

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
-import React, { useReducer, useState } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { Button, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
 import { get, isEmpty } from 'lodash';
@@ -15,6 +15,7 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { readImgURL } from '../../../helpers/utils/readImgURL';
 import { saveVillagerImgToGGDrive } from '../../../helpers/api/saveVillagerImgToGGDriveAPI';
 import { getGGDriveImgURLViewWithId } from '../../../helpers/utils/getGGDriveImgURLViewWithId';
+import { DisplayingVillagerDataContext } from '../../../contextProviders/DisplayingVillagerDataContextProvider';
 interface Props {
 
 }
@@ -97,6 +98,13 @@ const AddVillager = (props: Props) => {
     addressAdditionalDescription: "",
   })
 
+  // get dispatcher from dispalyVillagerData context
+  const { displayVillagerState } = useContext
+    (DisplayingVillagerDataContext)
+
+  const allVillagerData = get(displayVillagerState, 'allVillagerData')// get current total villagers
+
+  const currentTotalVillagers = allVillagerData.length
 
   const closeConfirmHomeLocationHandler = () => {
     setIsOpenConfirmHomeLocationModal(false)
@@ -111,17 +119,10 @@ const AddVillager = (props: Props) => {
 
   const onUpdateHomeLocation = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
-      addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
+      addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude.toString(), position.coords.longitude.toString()] });
       //close modal
       closeConfirmHomeLocationHandler()
     });
-    // if (isEmpty(addVillagerFormstate.homeLocation)) {
-    //   navigator.geolocation.getCurrentPosition(function (position) {
-    //     console.log("Latitude is :", position.coords.latitude);
-    //     console.log("Longitude is :", position.coords.longitude);
-    //     addVillagerFormDispatch({ type: 'updateHomeLocation', payload: [position.coords.latitude, position.coords.longitude] });
-    //   });
-    // }
   }
   const openConfirmSubmitModalHandler = () => {
     setIsOpenConfirmSubmitModal(true)
@@ -160,7 +161,7 @@ const AddVillager = (props: Props) => {
     const res = await axios({
       method: 'post',
       url: 'api/addVillagerToGGSheet',
-      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive)
+      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
     })
     console.log('res', res);
   }
