@@ -9,6 +9,8 @@ import { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import inside from "point-in-polygon";
 import { findRecievedItem } from '../../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList';
+import { CENTER_OF_DISTRIBUTION_LAT, CENTER_OF_DISTRIBUTION_LNG } from '../../../../constants';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 interface Props {
 }
 
@@ -73,9 +75,6 @@ const DrawingLayer = () => {
             )
         })
         setSelectedMarkers(newSelectedMarkers);
-        // update displaying marker inside the context to re-render the displaying list
-
-
     }
 
 
@@ -108,6 +107,7 @@ const DrawingLayer = () => {
                 features={displayedRectangle}
             />
             {/* markers */}
+
             {isFilterByArea ?
                 (
                     isEmpty(displayedRectangle) ? baseMarkers : (
@@ -124,6 +124,14 @@ const DrawingLayer = () => {
 
                 : baseMarkers
             }
+
+            {/* center of distrubution */}
+            <Marker
+                latitude={CENTER_OF_DISTRIBUTION_LAT}
+                longitude={CENTER_OF_DISTRIBUTION_LNG}
+            >
+                <AccountBalanceIcon fontSize='large' />
+            </Marker>
 
 
         </>

@@ -5,7 +5,8 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import { VillagerAddingFormState } from "../../../../type";
-
+import VillagerDetailsCardManager from "../../../common/VillagerDetailsCardManager";
+import { get } from 'lodash'
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         modal: {
@@ -34,6 +35,8 @@ export default function ConfirmSubmitModal(props: Props) {
 
     const { isOpenModal, handleCloseModal, onConfirmSubmitAddVillagerHandler, addVillagerFormstate } = props;
 
+    console.log('ConfirmSubmitModal: addVillagerFormstate', addVillagerFormstate);
+
     return (
         <Modal
             aria-labelledby="transition-modal-title"
@@ -53,6 +56,17 @@ export default function ConfirmSubmitModal(props: Props) {
                     <p id="transition-modal-description">
 
                     </p>
+                    <VillagerDetailsCardManager
+                        key={0}
+                        homeLocation={get(addVillagerFormstate, 'homeLocation') as [string, string]}
+                        personName={get(addVillagerFormstate, 'homeRepresentativesName')}
+                        personImgUrl={get(addVillagerFormstate, 'homeRepresentativesImgURL')}
+                        numberOfFamilyMembers={get(addVillagerFormstate, 'numberOfFamilyMember')}
+                        homeRepresentativesContactNum={get(addVillagerFormstate, 'homeRepresentativesContactNum') as string}
+                        submissionHandlerMode={false}
+                        showMapMode={true}
+                        addressAdditionalDescription={get(addVillagerFormstate, 'addressAdditionalDescription')}
+                    />
                     <Button onClick={() => onConfirmSubmitAddVillagerHandler({ mockup: 'test' })}>
                         ยืนยัน
                     </Button>

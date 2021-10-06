@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     // fetch all data from google sheet and save in the context
     const sheetVillagerDataRsp = await getAllVillagerDataFromGoogleSheet()
     const sheetitemCatDataRsp = await getItemCatDataFromGoogleSheet()
+    
     return {
         props: {
             sheetData: {

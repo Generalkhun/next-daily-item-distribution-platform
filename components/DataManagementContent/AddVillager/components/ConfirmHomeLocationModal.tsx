@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -30,7 +30,7 @@ interface Props {
 export default function ConfirmHomeLocationModal(props: Props) {
   const classes = useStyles();
 
-  const { isOpenModal, handleCloseModal,onUpdateHomeLocation } = props;
+  const { isOpenModal, handleCloseModal, onUpdateHomeLocation } = props;
 
   return (
     <Modal
@@ -52,11 +52,14 @@ export default function ConfirmHomeLocationModal(props: Props) {
             ให้ตำแหน่งที่อยู่กับแอพลิเคชั่น เพื่อระบุตำแหน่งที่อยู่ตอนนี้
           </p>
           <Button onClick={onUpdateHomeLocation}>
-              ยืนยัน
+            ยืนยัน
           </Button>
-          <Button onClick ={handleCloseModal}>
-              ยกเลิก
+          <Button onClick={handleCloseModal}>
+            ยกเลิก
           </Button>
+
+
+
         </div>
       </Fade>
     </Modal>

@@ -11,7 +11,11 @@ export const DisplayingVillagerDataContext = createContext({} as any)
 const displayVillagerDataReducer = (state: any, action: any) => {
     switch (action.type) {
         case 'initialVillagerData':
-            return { ...state, displayVillagerData: action.payload }
+            return {
+                ...state,
+                allVillagerData: action.payload,
+                displayVillagerData: action.payload,
+            }
         case 'itemCatSelect':
             return {
                 ...state, filterCondition: {
