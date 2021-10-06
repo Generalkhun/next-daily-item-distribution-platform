@@ -66,6 +66,7 @@ const VillagerHomeList = (props: Props) => {
                 numberOfFamilyMembers={villagerHomeData.numberOfFamilyMember}
                 homeRepresentativesContactNum={villagerHomeData.homeRepresentativesContactNum}
                 isSelected={foucusedVillagerId === parseInt(villagerHomeData.homeId)}
+                addressAdditionalDescription={villagerHomeData.addressAdditionalDescription}
               />
             </ListItem>
           ) : (

@@ -7,12 +7,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, Paper } from "@material-ui/core";
 import ModalConfirmStatusChange from "../HomeContent/Modals/ModalConfirmStatusChange";
 import ReactMapGL, { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { get } from "lodash";
 import { NextViewport } from "../../type";
+import useSelectItemCatName from "../../hooks/useSelectItemCatName";
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,9 @@ const useStyles = makeStyles({
     paddingRight: 10,
     paddingTop: 10,
   },
+  addrDescriptionWrapper : {
+   borderColor:'white'
+  }
 });
 
 interface Props {
@@ -47,8 +51,6 @@ interface Props {
 const VillagerDetailsCardManager = (props: Props) => {
   const classes = useStyles();
   const { submissionHandlerMode, showMapMode } = props
-
-
   // get villager data from props
   const lat = parseFloat((get(props, 'homeLocation') || [0, 0])[0]);
   const lng = parseFloat((get(props, 'homeLocation') || [0, 0])[1]);
@@ -59,6 +61,10 @@ const VillagerDetailsCardManager = (props: Props) => {
   const isItemRecieved = get(props, 'isItemRecieved')
   const personImgUrl = get(props, 'personImgUrl')
 
+  // get item cat name
+  const itemCatName = useSelectItemCatName()
+  console.log('itemCatName',itemCatName);
+  
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -126,6 +132,18 @@ const VillagerDetailsCardManager = (props: Props) => {
         {submissionHandlerMode ? <><CardActions>
           <Grid container>
             <Grid item xs={12} lg={6} className={classes.contactButton}>
+              <Paper variant='outlined' className={classes.addrDescriptionWrapper}>
+                <Typography variant='body2'>{ `รายละเอียดที่อยู่: ${!!addressAdditionalDescription ? addressAdditionalDescription : '-'}`}</Typography>
+              </Paper>
+              {/* <Button size="small" color="primary" variant="outlined" fullWidth>
+                <img
+                  width="40"
+                  height="47"
+                  src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"
+                />
+              </Button> */}
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.contactButton}>
               <Button size="small" color="primary" variant="outlined" fullWidth>
                 <a
                   target="_blank"
@@ -140,15 +158,7 @@ const VillagerDetailsCardManager = (props: Props) => {
                 </a>
               </Button>
             </Grid>
-            <Grid item xs={12} lg={6} className={classes.contactButton}>
-              <Button size="small" color="primary" variant="outlined" fullWidth>
-                <img
-                  width="40"
-                  height="47"
-                  src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"
-                />
-              </Button>
-            </Grid>
+
           </Grid>
         </CardActions>
 
@@ -160,7 +170,7 @@ const VillagerDetailsCardManager = (props: Props) => {
               variant="contained"
               color={isItemRecieved ? undefined : "primary"}
             >
-              ส่งสำเร็จแล้ว
+              {`ส่ง ${itemCatName} สำเร็จแล้ว`}
             </Button>
           </CardActions></> : <></>}
 
