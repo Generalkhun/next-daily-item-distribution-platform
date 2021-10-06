@@ -1,10 +1,6 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid'
-import Divider from '@mui/material/Divider'
 import React, { useContext, useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
-import { Button, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button, IconButton, makeStyles, Paper, Typography ,Grid, TextField, Divider } from '@material-ui/core';
 import { get, isEmpty } from 'lodash';
 import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
 import ConfirmSubmitModal from './components/ConfirmSubmitModal';
@@ -77,7 +73,6 @@ const AddVillager = (props: Props) => {
   const classes = useStyles()
   const [isOpenConfirmHomeLocationModal, setIsOpenConfirmHomeLocationModal] = useState(false)
   const [isOpenConfirmSubmitModal, setIsOpenConfirmSubmitModal] = useState(false)
-
   const [addVillagerFormstate, addVillagerFormDispatch] = useReducer(addVillagerFormReducer, {
     isValidated: false,
     // mandatory fields
@@ -175,7 +170,7 @@ const AddVillager = (props: Props) => {
             error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeRepresentativesName'))}
             required
             placeholder='ชื่อที่จำง่าย เช่น พี่หมาย บังมานพ'
-            id="required"
+            variant='outlined'
             label="ชื่อตัวแทนบ้าน"
             defaultValue=""
             value={get(addVillagerFormstate, 'homeRepresentativesName')}
@@ -190,7 +185,7 @@ const AddVillager = (props: Props) => {
               error={get(addVillagerFormstate, 'isValidated') && !validatePhoneNum(get(addVillagerFormstate, 'homeRepresentativesContactNum'))}
               required
               placeholder='เบอร์มือถือสิบหลัก'
-              id="outlined-required"
+              variant='outlined'
               label="เบอร์ติดต่อ"
               defaultValue=""
               value={get(addVillagerFormstate, 'homeRepresentativesContactNum')}
@@ -203,7 +198,7 @@ const AddVillager = (props: Props) => {
               className={classes.numFamMembers}
               error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'numberOfFamilyMember'))}
               required
-              id="required"
+              variant='outlined'
               label="จำนวนสมาชิกในบ้าน"
               defaultValue=""
               type='number'
@@ -228,7 +223,7 @@ const AddVillager = (props: Props) => {
         error={get(addVillagerFormstate, 'isValidated') && isEmpty(get(addVillagerFormstate, 'homeLocation'))}
         fullWidth
         required
-        id="required"
+        variant='filled'
         label="ตำแหน่งที่อยู่"
         defaultValue=""
         disabled={true}
