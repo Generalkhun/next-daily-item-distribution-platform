@@ -113,23 +113,3 @@ export const DisplayVillagerDataProvider: React.FC<Props> = ({ children }) => {
         </DisplayingVillagerDataContext.Provider>
     )
 }
-
-
-
-// export const GoogleSheetDataProvider: React.FC<Props> = ({ children }) => {
-//     const [googleSheetData, setGoogleSheetData] = useState({} as any);
-//     return (
-//         <GoogleSheetDataContext.Provider
-//             value={
-//                 {
-//                     googleSheetData,
-//                     InitializeSheetData: (fetchedggSheetData: any) => setGoogleSheetData(fetchedggSheetData)
-//                 }
-//             }
-//         >
-//             {children}
-//         </ GoogleSheetDataContext.Provider>
-
-//     )
-// }
-
