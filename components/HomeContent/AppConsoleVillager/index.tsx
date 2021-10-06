@@ -17,10 +17,11 @@ import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetCon
 import DataDisplaySetting from "./components/DataDisplaySetting";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { dataPrepFromVillagerDataContextToDisplayOnList } from "../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList";
+import useSelectItemCatName from "../../../hooks/useSelectItemCatName";
 interface Props {
   open: boolean;
   setOpen: any;
-  mapCenterLocation: [number, number];
+  mapCenterLocation: [string, string];
   onClickVillager: (villager: VillagerHomeData) => void;
   selectedVillagerInfo: VillagerHomeData;
   setOpenVillagerConsole: any;
@@ -45,7 +46,8 @@ const AppConsoleVillager = (props: Props) => {
   const villagerHomeListData = dataPrepFromVillagerDataContextToDisplayOnList(displayVillagerState)
 
   // calculate for summary info
-  const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
+  const summaryInfoItemName =  useSelectItemCatName()
+  // const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
   const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
   const summaryInfoTotalNonRecievedItemHome = calcTotalNonRecievedItemHome(villagerHomeListData)

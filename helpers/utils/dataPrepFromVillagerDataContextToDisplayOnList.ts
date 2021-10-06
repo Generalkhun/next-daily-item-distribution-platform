@@ -36,7 +36,7 @@ const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerState: any)
 
         return {
             homeId: get(villager, 'HOME_ID'),
-            homeLocation: [parseFloat(get(villager, 'HOUSE_LOCATION_LAT')), parseFloat(get(villager, 'HOUSE_LOCATION_LNG'))] as [number, number],
+            homeLocation: [get(villager, 'HOUSE_LOCATION_LAT'), get(villager, 'HOUSE_LOCATION_LNG')] as [string, string],
             homeRepresentativesName: get(villager, 'HOUSE_REPRESENTATIVES_NAME'),
             isItemRecieved: isItemRecieved,
             homeRepresentativesImg: get(villager, 'IMG_URL'),

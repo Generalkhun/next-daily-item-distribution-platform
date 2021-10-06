@@ -23,7 +23,7 @@ export type VillagerToAddObject = {
   homeId: string;
   homeRepresentativesName: string;
   homeRepresentativesContactNum?: string;
-  homeLocation: [number, number];
+  homeLocation: [string, string];
   homeRepresentativesImg?: string;
   numberOfFamilyMember: number;
   addressAdditionalDescription?: string;
