@@ -13,6 +13,7 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { get } from "lodash";
 import { NextViewport } from "../../type";
+import useSelectItemCatName from "../../hooks/useSelectItemCatName";
 
 const useStyles = makeStyles({
   root: {
@@ -60,6 +61,10 @@ const VillagerDetailsCardManager = (props: Props) => {
   const isItemRecieved = get(props, 'isItemRecieved')
   const personImgUrl = get(props, 'personImgUrl')
 
+  // get item cat name
+  const itemCatName = useSelectItemCatName()
+  console.log('itemCatName',itemCatName);
+  
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -165,7 +170,7 @@ const VillagerDetailsCardManager = (props: Props) => {
               variant="contained"
               color={isItemRecieved ? undefined : "primary"}
             >
-              ส่งสำเร็จแล้ว
+              {`ส่ง ${itemCatName} สำเร็จแล้ว`}
             </Button>
           </CardActions></> : <></>}
 
