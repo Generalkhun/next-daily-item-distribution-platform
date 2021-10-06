@@ -19,7 +19,7 @@ export const SHEET_RANGE_ITEM_CAT = `ItemCat!A1:C${TOTAL_ITEM_CAT}` // contain a
 export const SHEET_RANGE_ADD_PEOPLE = 'MainPage!A1:I' // used to append an added villager data into sheet
 
 export const MENUS_DATA_MGT = [
-    { menuName: 'addVillager', menuTitle: 'เพิ่มบ้าน' },
+    { menuName: 'addVillager', menuTitle: 'เพิ่มข้อมูลบ้าน' },
     { menuName: 'addItemCat', menuTitle: 'เพิ่มประเภทสิ่งของ' }
 ]
 export const USER_ENTERED = 'USER_ENTERED' // use inside ggsheet append param config
