@@ -10,13 +10,14 @@ import ModalVillagerDetails from "./ModalVillagerDetails";
 
 interface Props {
   key: number;
-  homeLocation: [number, number]
+  homeLocation: [string, string]
   personName: string;
   isItemRecieved: boolean;
   personImgUrl: string;
   numberOfFamilyMembers: number;
   homeRepresentativesContactNum: string
   isSelected: boolean
+  addressAdditionalDescription:string
 }
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({

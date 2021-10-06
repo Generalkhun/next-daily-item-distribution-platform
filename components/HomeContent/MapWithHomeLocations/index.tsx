@@ -8,7 +8,6 @@ import { filter, get } from "lodash";
 
 const MapWithHomeLocations = () => {
   const { displayVillagerState } = useContext(DisplayingVillagerDataContext)
-  console.log('displayVillagerState', displayVillagerState);
   const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
   const focusedVillagerId = get(displayVillagerState, 'focusedVillagerId').toString()
 
@@ -48,8 +47,8 @@ const MapWithHomeLocations = () => {
   }, [displayVillagerState])
   return (
     /**
-        * Map box 
-        */
+    * Map box 
+    */
     <>
       <ReactMapGL
         mapStyle="mapbox://styles/mapbox/streets-v11"

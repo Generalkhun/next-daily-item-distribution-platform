@@ -2,7 +2,7 @@ export type VillagerHomeData = {
   homeId: string;
   homeRepresentativesName: string;
   homeRepresentativesContactNum: string;
-  homeLocation: [number, number];
+  homeLocation: [string, string];
   homeRepresentativesImg: string;
   isItemRecieved: boolean;
   numberOfFamilyMember: number;

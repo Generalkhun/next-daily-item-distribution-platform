@@ -32,13 +32,14 @@ interface Props {
   isOpenModal: boolean;
   handleCloseModal: () => void;
   key: number;
-  homeLocation: [number, number]
+  homeLocation: [string, string]
   personName: string;
   isItemRecieved: boolean;
   personImgUrl: string;
   numberOfFamilyMembers: number;
   homeRepresentativesContactNum: string
   isSelected: boolean
+  addressAdditionalDescription:string
 }
 
 export default function ModalVillagerDetails(props: Props) {
@@ -64,8 +65,8 @@ export default function ModalVillagerDetails(props: Props) {
     >
       <Fade in={isOpenModal}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">ตั้งค่า</h2>
-          <p id="transition-modal-description">ตั้งค่าการแสดงผลข้อมูล</p>
+          <h2 id="transition-modal-title">ข้อมูลตัวแทนบ้าน</h2>
+          <p id="transition-modal-description"></p>
           <VillagerDetailsCardManager submissionHandlerMode={true} {...props} />
           <VillagerTransactionHistory />
         </div>

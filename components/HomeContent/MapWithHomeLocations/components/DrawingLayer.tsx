@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Editor, DrawRectangleMode } from 'react-map-gl-draw';
 import { get, isEmpty, map } from 'lodash'
 import { DisplayingVillagerDataContext } from '../../../../contextProviders/DisplayingVillagerDataContextProvider';
-import { Feature, Layer } from 'react-mapbox-gl';
-import { GeoJSONLayer } from 'react-mapbox-gl/lib/geojson-layer';
-import { Marker } from "react-map-gl";
+import { Layer, Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import inside from "point-in-polygon";
 import { findRecievedItem } from '../../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList';
@@ -52,12 +50,8 @@ const DrawingLayer = () => {
                                 :
                                 <LocationOnIcon fontSize={focusedVillagerId === villager.HOME_ID ? 'large' : 'small'} color={recieved ? 'success' : 'error'} />
 
-
                         }
                     </>
-
-
-
                 </Marker>
             )
         }
@@ -107,7 +101,6 @@ const DrawingLayer = () => {
                 features={displayedRectangle}
             />
             {/* markers */}
-
             {isFilterByArea ?
                 (
                     isEmpty(displayedRectangle) ? baseMarkers : (
