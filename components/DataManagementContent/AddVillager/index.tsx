@@ -66,7 +66,8 @@ const useStyles = makeStyles({
   imgInputWrapper: {
     marginTop: 10,
     width: 400,
-    height: 250
+    height: 250,
+    marginBottom:50,
   }
 })
 const AddVillager = (props: Props) => {
@@ -288,7 +289,6 @@ const AddVillager = (props: Props) => {
         onUpdateHomeLocation={onUpdateHomeLocation}
       />
     </div>
-
   )
 }
 
