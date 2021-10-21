@@ -12,6 +12,9 @@ import { readImgURL } from '../../../helpers/utils/readImgURL';
 import { saveVillagerImgToGGDrive } from '../../../helpers/api/saveVillagerImgToGGDriveAPI';
 import { getGGDriveImgURLViewWithId } from '../../../helpers/utils/getGGDriveImgURLViewWithId';
 import { DisplayingVillagerDataContext } from '../../../contextProviders/DisplayingVillagerDataContextProvider';
+import { saveImgToGGDrive } from '../../../helpers/api/saveImgToGGDriveAPI';
+import { ADD_VILLAGER_SERVICE_URL } from '../../../constants';
+import { mapRequestBodyAddItemCatFormState } from '../../../helpers/utils/mapRequestBodyAddItemCatFormState';
 interface Props {
 
 }
@@ -150,14 +153,14 @@ const AddVillager = (props: Props) => {
 
     // save image in google drive first
 
-    const imgSavedGGdriveResp = await saveVillagerImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
+    const imgSavedGGdriveResp = await saveImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
     const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
     // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
     // save all info in giigle sheeet
     const res = await axios({
       method: 'post',
-      url: 'api/addVillagerToGGSheet',
-      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
+      url: ADD_VILLAGER_SERVICE_URL,
+      data: mapRequestBodyAddItemCatFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
     })
     console.log('res', res);
   }

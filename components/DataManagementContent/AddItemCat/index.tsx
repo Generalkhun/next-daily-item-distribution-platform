@@ -1,11 +1,16 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, TextField, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import axios from 'axios'
 import { get } from 'lodash'
 import { isEmpty } from 'lodash'
 import { DropzoneArea } from 'material-ui-dropzone'
-import React, { useReducer, useState } from 'react'
+import React, { useContext, useReducer, useState } from 'react'
+import { ADD_ITEM_CAT_SERVICE_URL } from '../../../constants'
+import { GoogleSheetDataContext } from '../../../contextProviders/GoogleSheetContextProvider'
+import { saveImgToGGDrive } from '../../../helpers/api/saveImgToGGDriveAPI'
+import { getGGDriveImgURLViewWithId } from '../../../helpers/utils/getGGDriveImgURLViewWithId'
+import { mapRequestBodyAddItemCatFormState } from '../../../helpers/utils/mapRequestBodyAddItemCatFormState'
 import ConfirmationItemAddedModal from './components/ConfirmationItemAddedModal'
-
 interface Props {
 
 }
@@ -58,15 +63,28 @@ const addItemCatFormInitialState = {
 }
 
 const AddItemCat = (props: Props) => {
-
     const classes = useStyles()
     const [addItemCatFormstate, addItemCatFormDispatch] = useReducer(addItemCatFormReducer, addItemCatFormInitialState)
+    console.log('addItemCatFormstate', addItemCatFormstate);
+
     const itemCatName = get(addItemCatFormstate, 'itemCatName')
     const itemRecievedType = get(addItemCatFormstate, 'itemRecievedType')
     const itemToShortageDays = get(addItemCatFormstate, 'itemToShortageDays')
     const itemCatImg = get(addItemCatFormstate, 'itemCatImg')
+    const isValidated = get(addItemCatFormstate, 'isValidated')
 
     const [isOpenConfirmSubmitItemModal, setIsOpenConfirmSubmitItemModal] = useState(false)
+
+    // get item cat data from the context
+    const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
+
+
+    const currentTotalItemCat = googleSheetItemCatData && googleSheetItemCatData.length
+    console.log('currentTotalItemCat', currentTotalItemCat);
+
+    // const itemCatData = get(GoogleSheetDataState, 'googleSheetItemCatData')// get current total itemCat
+    // console.log('AddItemCat: googleSheetItemCatData', googleSheetItemCatData);
+
 
     const openConfirmSubmitItemModalHandler = () => {
         setIsOpenConfirmSubmitItemModal(true)
@@ -91,7 +109,22 @@ const AddItemCat = (props: Props) => {
         openConfirmSubmitItemModalHandler()
 
     }
-    const onConfirmAddItem = () => console.log('add item');
+    const onConfirmAddItem = async () => {
+
+        // save image in google drive first
+
+        const imgSavedGGdriveResp = await saveImgToGGDrive((get(addItemCatFormstate, 'itemCatImg') || [])[0])
+        const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
+        // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
+        // save all info in giigle sheeet
+        const res = await axios({
+            method: 'post',
+            url: ADD_ITEM_CAT_SERVICE_URL,
+            data: mapRequestBodyAddItemCatFormState(addItemCatFormstate, imgURLGGdrive, currentTotalItemCat)
+        })
+        console.log('res', res);
+
+    }
 
     return (
         <div className={classes.root}>
@@ -100,7 +133,7 @@ const AddItemCat = (props: Props) => {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        error={get(addItemCatFormstate, 'isValidated') && isEmpty(get(addItemCatFormstate, 'itemCatName'))}
+                        error={isValidated && isEmpty(itemCatName)}
                         required
                         placeholder='ชื่อสิ่งของเตรียมแจก เช่น ข้าวกล่อง ถุงยังชีพ ชุดตรวจโควิท'
                         id="required"
@@ -112,7 +145,7 @@ const AddItemCat = (props: Props) => {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl component="fieldset">
+                    <FormControl component="fieldset" error={isValidated && isEmpty(itemRecievedType)}>
                         <FormLabel component="legend">ประเภทการได้รับสิ่งของ</FormLabel>
                         <RadioGroup
                             aria-label="itemRecievedType"
@@ -120,7 +153,7 @@ const AddItemCat = (props: Props) => {
                             value={itemRecievedType}
                             onChange={(e) => addItemCatFormDispatch({ type: 'updateItemRecievedType', payload: e.target.value })}
                         >
-                            <FormControlLabel value="oneTime" control={<Radio />} label="ได้รับครั้งเดียว" />
+                            <FormControlLabel value="oneTime" control={<Radio />} label="จะได้รับครั้งเดียว" />
                             <FormControlLabel value="repetitive" control={<Radio />} label="จะได้รับหลายครั้ง" />
 
 
@@ -131,11 +164,11 @@ const AddItemCat = (props: Props) => {
                     {itemRecievedType === 'repetitive' ?
                         <TextField
                             fullWidth
-                            error={get(addItemCatFormstate, 'isValidated') && isEmpty(get(addItemCatFormstate, 'itemCatName'))}
+                            error={isValidated && isEmpty(itemToShortageDays)}
                             required
                             placeholder='จำนวนวันโดยประมาณ ที่จะต้องไปแจกของชิ้นนี้อีกครั้งที่บ้านเดิม'
                             id='required'
-                            label='ควรจะได้รับอีกครั้ง ภายใน (วัน)'
+                            label='ควรจะได้รับอีกครั้งภายใน (วัน) หลังได้รับแล้ว'
                             defaultValue=''
                             type='number'
                             value={itemToShortageDays}
@@ -147,8 +180,9 @@ const AddItemCat = (props: Props) => {
                     }
                 </Grid>
                 <Grid item xs={12}>
+
                     <Paper className={classes.imgInputWrapper}>
-                        <Typography>ตัวอย่างภาพสิ่งของ</Typography>
+                        <Typography style={{ color: isValidated && isEmpty(itemCatImg) ? 'red' : 'black' }}>{`ตัวอย่างภาพสิ่งของ ${isValidated && isEmpty(itemCatImg) ? '(กรุณาใส่)' : ''}`}</Typography>
                         <DropzoneArea
                             onChange={(loadedFiles) => addItemCatFormDispatch({ type: 'updateItemCatImg', payload: loadedFiles })}
                             clearOnUnmount={true}
