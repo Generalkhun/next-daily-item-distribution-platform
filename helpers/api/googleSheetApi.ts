@@ -1,9 +1,9 @@
 import { google } from "googleapis"
 import { get } from "lodash";
 import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE, SHEET_RANGE_ADD_PEOPLE, USER_ENTERED } from "../../constants";
-import { VillagerAddingFormState } from "../../type";
+import { ItemCatAddingFormState, VillagerAddingFormState } from "../../type";
 import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataResponse";
-import { transformToArrayTobeAddedVillagerData } from "../utils/transformToArrayTobeAddedVillagerData";
+import { transformToArrayTobeAddedToGGSheet } from "../utils/transformToArrayTobeAddedToGGSheet";
 
 
 // This funtion is to connect googlesheet api
@@ -51,7 +51,7 @@ export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: Villag
     console.log('tobeAddedVillagerData', tobeAddedVillagerData);
 
     // transform the tobeAddedVillagerData to arrays format 
-    const tobeAddedVillagerDataArray = transformToArrayTobeAddedVillagerData(tobeAddedVillagerData)
+    const tobeAddedVillagerDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedVillagerData, 9)
 
     // connect to the sheet 
     const sheets = await connectGoogleSheetsApi()
@@ -65,6 +65,32 @@ export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: Villag
         requestBody: {
             "majorDimension": "ROWS",
             "values": [tobeAddedVillagerDataArray],
+        }
+    }
+    // append data on a google sheet row
+    const response = await sheets.spreadsheets.values.append(request)
+    return response
+}
+
+// Add an item cat data
+export const addItemCatDataToGoogleSheet = async (tobeAddedItemCatData: ItemCatAddingFormState) => {
+    console.log('tobeAddedItemCatData', tobeAddedItemCatData);
+
+    // transform the tobeAddedVillagerData to arrays format 
+    const tobeAddedItemCatDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedItemCatData, 4)
+
+    // connect to the sheet 
+    const sheets = await connectGoogleSheetsApi()
+
+    // request 
+    const request = {
+        spreadsheetId: process.env.SHEET_ID,
+        range: SHEET_RANGE_ITEM_CAT,
+        valueInputOption: USER_ENTERED,
+        insertDataOption: 'INSERT_ROWS',
+        requestBody: {
+            "majorDimension": "ROWS",
+            "values": [tobeAddedItemCatDataArray],
         }
     }
     // append data on a google sheet row

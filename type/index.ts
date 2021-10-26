@@ -14,11 +14,21 @@ export type VillagerAddingFormState = {
   homeRepresentativesName: string
   homeRepresentativesContactNum?: string
   numberOfFamilyMember: number
-  homeLocation: [string,string]
+  homeLocation: [string, string]
   homeRepresentativesImg?: any
   addressAdditionalDescription?: string
 }
 
+export type ItemCatAddingFormState = {
+  itemCatImg: File
+  itemCatName: string
+  itemRecievedType: string
+  itemToShortageDays: number
+}
+
+/**
+ * ToAddObject is an object that will pass through api request to add to the db
+ */
 export type VillagerToAddObject = {
   homeId: string;
   homeRepresentativesName: string;
@@ -27,6 +37,14 @@ export type VillagerToAddObject = {
   homeRepresentativesImg?: string;
   numberOfFamilyMember: number;
   addressAdditionalDescription?: string;
+}
+
+export type ItemCatToAddObject = {
+  itemCatId: string
+  itemCatImg: File
+  itemCatName: string
+  itemRecievedType: string
+  itemToShortageDays: number
 }
 
 export interface NextViewport {
