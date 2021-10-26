@@ -21,7 +21,7 @@ import useSelectItemCatName from "../../../hooks/useSelectItemCatName";
 interface Props {
   open: boolean;
   setOpen: any;
-  mapCenterLocation: [string, string];
+  mapCenterLocation: [number, number];
   onClickVillager: (villager: VillagerHomeData) => void;
   selectedVillagerInfo: VillagerHomeData;
   setOpenVillagerConsole: any;
@@ -33,11 +33,9 @@ interface Props {
 const useStyles = appConsoleStyles
 const AppConsoleVillager = (props: Props) => {
   // get mapdata from dispalyVillagerData context
-  const { displayVillagerState, displayVillagerDispatch } = useContext
+  const { displayVillagerState } = useContext
     (DisplayingVillagerDataContext)
 
-  // get item cat data from the context
-  const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
   const {
     onClickVillager,
   } = props;
@@ -46,7 +44,7 @@ const AppConsoleVillager = (props: Props) => {
   const villagerHomeListData = dataPrepFromVillagerDataContextToDisplayOnList(displayVillagerState)
 
   // calculate for summary info
-  const summaryInfoItemName =  useSelectItemCatName()
+  const summaryInfoItemName = useSelectItemCatName()
   // const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
   const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
@@ -57,6 +55,17 @@ const AppConsoleVillager = (props: Props) => {
     <div className={classes.AppConsoleVillagerWrapper}>
       <Paper variant="outlined">
         <DataDisplaySetting
+        />
+      </Paper>
+
+      <Paper variant="outlined" className={styles.summaryInfoWrapper}>
+        <Typography>ยอดรวม</Typography>
+        <SummaryInfo
+          summaryInfoItemName={summaryInfoItemName}
+          summaryInfoTotalHome={summaryInfoTotalHome}
+          summaryInfoTotalPeople={summaryInfoTotalPeople}
+          summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
+          summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
         />
       </Paper>
 
@@ -82,16 +91,7 @@ const AppConsoleVillager = (props: Props) => {
         </Grid>
       </Paper>
 
-      <Paper variant="outlined">
-        <Typography>ยอดรวม</Typography>
-        <SummaryInfo
-          summaryInfoItemName={summaryInfoItemName}
-          summaryInfoTotalHome={summaryInfoTotalHome}
-          summaryInfoTotalPeople={summaryInfoTotalPeople}
-          summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
-          summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
-        />
-      </Paper>
+
     </div>
 
   );

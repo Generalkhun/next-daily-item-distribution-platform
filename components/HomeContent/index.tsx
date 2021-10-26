@@ -19,8 +19,11 @@ const MapWithHomeLocations = dynamic(() => import("./MapWithHomeLocations"), {
 
 const useStyles = makeStyles({
   mapContainer: {
-    height: "90vh",
+    height: "70vh",
   },
+  homeContentContainer: {
+    height: '85vh'
+  }
 });
 function HomeContent() {
   /**
@@ -52,11 +55,11 @@ function HomeContent() {
   };
   const onClickVillager = (
     villager: VillagerHomeData,
-    isFromClickLocation?: boolean
+    isFromClickLocation?: boolean,
   ) => {
     setSelectedVillagerInfo(villager);
     setOpenVillagerConsole(true);
-    setMapCenterLocation(villager.homeLocation);
+    setMapCenterLocation([parseFloat(villager.homeLocation[0]),parseFloat(villager.homeLocation[1])]);
   };
   const handleCloseModalSetting = () => {
     setIsOpenModalSetting(false);
@@ -68,7 +71,7 @@ function HomeContent() {
 
   return (
     <>
-      <Grid container>
+      <Grid container className={classes.homeContentContainer}>
         <Grid item xs={12} lg={4}>
           <AppConsoleVillager
             open={drawerOpen}
@@ -84,11 +87,11 @@ function HomeContent() {
         <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations
-              setDrawerOpen={setDrawerOpen}
-              mapCenterLocation={mapCenterLocation}
-              villagerHomeListData={villagerHomeListData}
-              onClickVillager={onClickVillager}
-              setMap={setMap}
+              // setDrawerOpen={setDrawerOpen}
+              // mapCenterLocation={mapCenterLocation}
+              // villagerHomeListData={villagerHomeListData}
+              // onClickVillager={onClickVillager}
+              // setMap={setMap}
             />
           </Paper>
         </Grid>

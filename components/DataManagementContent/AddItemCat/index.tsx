@@ -42,7 +42,7 @@ const addItemCatFormReducer = (state: any, action: any) => {
         case 'updateItemCatName':
             return { ...state, itemCatName: action.payload }
         case 'updateItemRecievedType':
-            return { ...state, itemRecievedType: action.payload }
+            return { ...state, itemToShortageDays: action.payload === 'repetitive' ? null : state.itemToShortageDays, itemRecievedType: action.payload }
         case 'updateItemToShortageDays':
             return { ...state, itemToShortageDays: action.payload > 0 ? action.payload : 0 }
         case 'updateItemCatImg':
@@ -79,12 +79,10 @@ const AddItemCat = (props: Props) => {
     const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
 
 
+    console.log('googleSheetItemCatData',googleSheetItemCatData);
+    
     const currentTotalItemCat = googleSheetItemCatData && googleSheetItemCatData.length
     console.log('currentTotalItemCat', currentTotalItemCat);
-
-    // const itemCatData = get(GoogleSheetDataState, 'googleSheetItemCatData')// get current total itemCat
-    // console.log('AddItemCat: googleSheetItemCatData', googleSheetItemCatData);
-
 
     const openConfirmSubmitItemModalHandler = () => {
         setIsOpenConfirmSubmitItemModal(true)
