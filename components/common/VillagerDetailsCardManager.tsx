@@ -28,14 +28,15 @@ const useStyles = makeStyles({
     paddingRight: 10,
     paddingTop: 10,
   },
-  addrDescriptionWrapper : {
-   borderColor:'white'
+  addrDescriptionWrapper: {
+    borderColor: 'white'
   }
 });
 
 interface Props {
   key: number;
   homeLocation: [string, string]
+  personId: string;
   personName: string;
   isItemRecieved?: boolean;
   personImgUrl: string;
@@ -56,15 +57,14 @@ const VillagerDetailsCardManager = (props: Props) => {
   const lng = parseFloat((get(props, 'homeLocation') || [0, 0])[1]);
   const addressAdditionalDescription = get(props, 'addressAdditionalDescription')
   const numberOfFamilyMembers = get(props, 'numberOfFamilyMembers')
+  const personId = get(props,'personId')
   const personName = get(props, 'personName')
   const homeRepresentativesContactNum = get(props, 'homeRepresentativesContactNum')
   const isItemRecieved = get(props, 'isItemRecieved')
   const personImgUrl = get(props, 'personImgUrl')
 
   // get item cat name
-  const itemCatName = useSelectItemCatName()
-  console.log('itemCatName',itemCatName);
-  
+  const [itemCatId, itemCatTitle] = useSelectItemCatName()
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -75,15 +75,10 @@ const VillagerDetailsCardManager = (props: Props) => {
     longitude: lng,
     zoom: 16
   });
-
-  const [isGetFood, setIsGetFood] = useState<boolean>(
-    get(props, 'isItemRecieved') || true
-  );
-
+  
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const toggleGetFoodStatus = () => {
-    setIsGetFood((prevStatus) => !prevStatus);
     handleOpenModal();
     console.log("ส่งแล้วว");
   };
@@ -93,11 +88,21 @@ const VillagerDetailsCardManager = (props: Props) => {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
+  const onConfirmSubmitItemSuccessHandler = () => {
+
+    // sent put request to add recieved item on user record
+    console.log('onConfirmSubmitItemSuccessHandler: itemCatId', itemCatId);
+    console.log('onConfirmSubmitItemSuccessHandler: personId', personId);
+
+    //close modal
+    setIsOpenModal(false);
+  }
   return (
     <>
       <ModalConfirmStatusChange
         isOpenModal={isOpenModal}
         handleCloseModal={handleCloseModal}
+        onConfirmSubmitItemSuccessHandler={onConfirmSubmitItemSuccessHandler}
       />
       <Card className={classes.root}>
         <CardActionArea>
@@ -133,7 +138,7 @@ const VillagerDetailsCardManager = (props: Props) => {
           <Grid container>
             <Grid item xs={12} lg={6} className={classes.contactButton}>
               <Paper variant='outlined' className={classes.addrDescriptionWrapper}>
-                <Typography variant='body2'>{ `รายละเอียดที่อยู่: ${!!addressAdditionalDescription ? addressAdditionalDescription : '-'}`}</Typography>
+                <Typography variant='body2'>{`รายละเอียดที่อยู่: ${!!addressAdditionalDescription ? addressAdditionalDescription : '-'}`}</Typography>
               </Paper>
               {/* <Button size="small" color="primary" variant="outlined" fullWidth>
                 <img
@@ -170,7 +175,7 @@ const VillagerDetailsCardManager = (props: Props) => {
               variant="contained"
               color={isItemRecieved ? undefined : "primary"}
             >
-              {`ส่ง ${itemCatName} สำเร็จแล้ว`}
+              {isItemRecieved ? `ได้รับ ${itemCatTitle} แล้ว` : `ส่ง ${itemCatTitle} สำเร็จ`}
             </Button>
           </CardActions></> : <></>}
 

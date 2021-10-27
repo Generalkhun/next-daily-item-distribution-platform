@@ -1,5 +1,5 @@
 import { google } from "googleapis"
-import { get } from "lodash";
+import { filter, get } from "lodash";
 import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE, SHEET_RANGE_ADD_PEOPLE, USER_ENTERED } from "../../constants";
 import { ItemCatAddingFormState, VillagerAddingFormState } from "../../type";
 import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataResponse";
@@ -96,4 +96,29 @@ export const addItemCatDataToGoogleSheet = async (tobeAddedItemCatData: ItemCatA
     // append data on a google sheet row
     const response = await sheets.spreadsheets.values.append(request)
     return response
+}
+
+/**
+ * Update villager data status on recieving item
+ */
+
+const updateRecieveItemStatus = async (villagerId: number,villagerRecievedItemList: string[], recievedItemId: number) => {
+    // request 
+
+    // const  = filter(villagerRecievedItemList,(itemId:number) => {
+    //     return itemId != recievedItemId
+    // })
+
+    // const request = {
+    //     spreadsheetId: process.env.SHEET_ID,
+    //     range: `H${villagerId+1}`,
+    //     valueInputOption: USER_ENTERED,
+    //     requestBody: {
+    //         "majorDimension": "ROWS",
+    //         "values": ,
+    //     }
+    // }
+    
+    // const response = await sheets.spreadsheets.values.append(request)
+    //return response
 }

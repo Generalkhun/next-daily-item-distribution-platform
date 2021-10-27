@@ -1,8 +1,15 @@
 import { filter, reduce, find, get } from "lodash"
 
-export const findSelectedItemCatfromId = (selectedItemCatId: string, googleSheetItemCatData: any): string => {
+interface selectedItem {
+    itemCatId: string
+    itemCatTitle: string
+}
+export const findSelectedItemCatfromId = (selectedItemCatId: string, googleSheetItemCatData: any): selectedItem => {
     const itemCatRecordOnSheet = find(googleSheetItemCatData, (sheetData) => sheetData.ITEM_ID === selectedItemCatId)
-    return get(itemCatRecordOnSheet, 'ITEM_TITLE')
+    return {
+        itemCatId: selectedItemCatId,
+        itemCatTitle: get(itemCatRecordOnSheet, 'ITEM_TITLE')
+    }
 
 }
 export const calcTotalHome = (villagerHomeListData: any): number => {

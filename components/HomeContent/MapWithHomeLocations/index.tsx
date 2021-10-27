@@ -17,7 +17,7 @@ const MapWithHomeLocations = () => {
    */
   const [viewport, setViewport] = useState<NextViewport>({
     width: '66vw',
-    height: '90vh',
+    height: '80vh',
     // The latitude and longitude of the center of distribution place
     latitude: CENTER_OF_DISTRIBUTION_LAT,
     longitude: CENTER_OF_DISTRIBUTION_LNG,

@@ -11,6 +11,7 @@ import ModalVillagerDetails from "./ModalVillagerDetails";
 interface Props {
   key: number;
   homeLocation: [string, string]
+  personId:string;
   personName: string;
   isItemRecieved: boolean;
   personImgUrl: string;

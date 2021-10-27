@@ -19,10 +19,10 @@ const MapWithHomeLocations = dynamic(() => import("./MapWithHomeLocations"), {
 
 const useStyles = makeStyles({
   mapContainer: {
-    height: "70vh",
+    height: "60vh",
   },
   homeContentContainer: {
-    height: '85vh'
+    height: '90vh'
   }
 });
 function HomeContent() {
