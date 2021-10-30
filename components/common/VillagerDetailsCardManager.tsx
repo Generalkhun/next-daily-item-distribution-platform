@@ -71,7 +71,7 @@ const VillagerDetailsCardManager = (props: Props) => {
    */
   // get item cat name and recieved item list from the context
   const [itemCatId, itemCatTitle] = useSelectItemCat()
-  const recievedItemList = useFindRecievedItemList(personId)
+  const personRecievedItemListText = useFindRecievedItemList(personId)
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -104,10 +104,12 @@ const VillagerDetailsCardManager = (props: Props) => {
       data: {
         itemCatId,
         personId,
+        personRecievedItemListText,
       }
     })
     console.log('res', res);
 
+    // update recieved item status
     // await updateVillagerItemRecievedStatus(itemCatId,personId)
 
     //close modal
