@@ -13,7 +13,10 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { get } from "lodash";
 import { NextViewport } from "../../type";
-import useSelectItemCatName from "../../hooks/useSelectItemCatName";
+import useSelectItemCat from "../../hooks/useSelectItemCat";
+import axios from "axios";
+import { UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL } from "../../constants";
+import { useFindRecievedItemList } from "../../hooks/useFindRecievedItemList";
 
 const useStyles = makeStyles({
   root: {
@@ -57,14 +60,18 @@ const VillagerDetailsCardManager = (props: Props) => {
   const lng = parseFloat((get(props, 'homeLocation') || [0, 0])[1]);
   const addressAdditionalDescription = get(props, 'addressAdditionalDescription')
   const numberOfFamilyMembers = get(props, 'numberOfFamilyMembers')
-  const personId = get(props,'personId')
+  const personId = get(props, 'personId')
   const personName = get(props, 'personName')
   const homeRepresentativesContactNum = get(props, 'homeRepresentativesContactNum')
   const isItemRecieved = get(props, 'isItemRecieved')
   const personImgUrl = get(props, 'personImgUrl')
 
-  // get item cat name
-  const [itemCatId, itemCatTitle] = useSelectItemCatName()
+  /**
+   * Hooks
+   */
+  // get item cat name and recieved item list from the context
+  const [itemCatId, itemCatTitle] = useSelectItemCat()
+  const recievedItemList = useFindRecievedItemList(personId)
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -75,7 +82,7 @@ const VillagerDetailsCardManager = (props: Props) => {
     longitude: lng,
     zoom: 16
   });
-  
+
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const toggleGetFoodStatus = () => {
@@ -88,11 +95,20 @@ const VillagerDetailsCardManager = (props: Props) => {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
-  const onConfirmSubmitItemSuccessHandler = () => {
+  const onConfirmSubmitItemSuccessHandler = async () => {
 
-    // sent put request to add recieved item on user record
-    console.log('onConfirmSubmitItemSuccessHandler: itemCatId', itemCatId);
-    console.log('onConfirmSubmitItemSuccessHandler: personId', personId);
+    //sent put request to add recieved item on user record
+    const res = await axios({
+      method: 'put',
+      url: UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL,
+      data: {
+        itemCatId,
+        personId,
+      }
+    })
+    console.log('res', res);
+
+    // await updateVillagerItemRecievedStatus(itemCatId,personId)
 
     //close modal
     setIsOpenModal(false);

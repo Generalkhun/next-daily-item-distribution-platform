@@ -2,7 +2,7 @@
 
 import { get } from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { addVillagerDataToGoogleSheet } from '../../helpers/api/googleSheetApi';
+import {  updateRecieveItemStatusOnGoogleSheet } from '../../helpers/api/googleSheetApi';
 
 type Data = {
     name: string
@@ -13,11 +13,11 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
 
-    if (req.method === 'POST') {
+    if (req.method === 'PUT') {
         // get added villager data
-        const tobeAddedVillagerData = get(req, 'body')
+        const recievedItemOnPersonObj = get(req, 'body')
         // add data to villager sheet
-        await addVillagerDataToGoogleSheet(tobeAddedVillagerData)
-        res.status(200).json({ name: 'Added villager to google sheet' })
+        await updateRecieveItemStatusOnGoogleSheet(recievedItemOnPersonObj)
+        res.status(200).json({ name: 'adjust item cat recieved on google sheet' })
     }
 }

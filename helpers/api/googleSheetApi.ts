@@ -102,23 +102,27 @@ export const addItemCatDataToGoogleSheet = async (tobeAddedItemCatData: ItemCatA
  * Update villager data status on recieving item
  */
 
-const updateRecieveItemStatus = async (villagerId: number,villagerRecievedItemList: string[], recievedItemId: number) => {
+interface updateAddRecievedStatusParams {
+    itemCatId: string,
+    personId: string,
+    personRecievedItemListText: string,
+}
+export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId, personRecievedItemListText }: updateAddRecievedStatusParams) => {
+
+    //connect google sheet
+    const sheets = await connectGoogleSheetsApi()
+
     // request 
+    const request = {
+        spreadsheetId: process.env.SHEET_ID,
+        range: `H${personId + 1}`,
+        valueInputOption: USER_ENTERED,
+        requestBody: {
+            "majorDimension": "ROWS",
+            "values": personRecievedItemListText + ',' + itemCatId,
+        }
+    }
 
-    // const  = filter(villagerRecievedItemList,(itemId:number) => {
-    //     return itemId != recievedItemId
-    // })
-
-    // const request = {
-    //     spreadsheetId: process.env.SHEET_ID,
-    //     range: `H${villagerId+1}`,
-    //     valueInputOption: USER_ENTERED,
-    //     requestBody: {
-    //         "majorDimension": "ROWS",
-    //         "values": ,
-    //     }
-    // }
-    
     // const response = await sheets.spreadsheets.values.append(request)
-    //return response
+    return {test:'test'}
 }

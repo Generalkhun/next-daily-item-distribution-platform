@@ -50,7 +50,7 @@ export const UPLOAD_FILE = `${BASEURL}/api/ggdrive/uploadFile`
 export const UPLOAD_IMG_SERVICE_URL = 'api/saveImgToGGDrive'
 export const ADD_VILLAGER_SERVICE_URL = 'api/addVillagerToGGSheet'
 export const ADD_ITEM_CAT_SERVICE_URL = 'api/addItemCatToGGSheet'
-
+export const UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL = 'api/updateAddRecievedItemCatOnGGSheet'
 /**
  * Config UI 
  */
