@@ -2,10 +2,10 @@
 
 import { get } from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {  updateRecieveItemStatusOnGoogleSheet } from '../../helpers/api/googleSheetApi';
+import { updateRecieveItemStatusOnGoogleSheet } from '../../helpers/api/googleSheetApi';
 
 type Data = {
-    name: string
+    newRecievedItemList: string
 }
 
 export default async function handler(
@@ -16,8 +16,14 @@ export default async function handler(
     if (req.method === 'PUT') {
         // get added villager data
         const recievedItemOnPersonObj = get(req, 'body')
+        console.log('recievedItemOnPersonObj', recievedItemOnPersonObj);
         // add data to villager sheet
-        await updateRecieveItemStatusOnGoogleSheet(recievedItemOnPersonObj)
-        res.status(200).json({ name: 'adjust item cat recieved on google sheet' })
+        try {
+            const newRecievedItemList = await updateRecieveItemStatusOnGoogleSheet(recievedItemOnPersonObj)
+            res.status(200).json({ newRecievedItemList })
+        } catch (error) {
+            throw new Error(error as any)
+        }
+
     }
 }

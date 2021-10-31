@@ -112,6 +112,9 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
     //connect google sheet
     const sheets = await connectGoogleSheetsApi()
 
+    // new recieved item list
+    const newRecievedItemList = personRecievedItemListText + ',' + itemCatId
+
     // request 
     const request = {
         spreadsheetId: process.env.SHEET_ID,
@@ -119,10 +122,10 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
         valueInputOption: USER_ENTERED,
         requestBody: {
             "majorDimension": "ROWS",
-            "values": personRecievedItemListText + ',' + itemCatId,
+            "values": newRecievedItemList,
         }
     }
 
-    // const response = await sheets.spreadsheets.values.append(request)
-    return {test:'test'}
+    //const response = await sheets.spreadsheets.values.append(request)
+    return newRecievedItemList
 }

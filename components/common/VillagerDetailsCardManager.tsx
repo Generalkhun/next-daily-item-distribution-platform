@@ -69,9 +69,11 @@ const VillagerDetailsCardManager = (props: Props) => {
   /**
    * Hooks
    */
+  // for submissionHandlerMode
   // get item cat name and recieved item list from the context
+
   const [itemCatId, itemCatTitle] = useSelectItemCat()
-  const personRecievedItemListText = useFindRecievedItemList(personId)
+  const personRecievedItemListText = personId && useFindRecievedItemList(personId)
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -87,7 +89,6 @@ const VillagerDetailsCardManager = (props: Props) => {
 
   const toggleGetFoodStatus = () => {
     handleOpenModal();
-    console.log("ส่งแล้วว");
   };
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -97,21 +98,25 @@ const VillagerDetailsCardManager = (props: Props) => {
   };
   const onConfirmSubmitItemSuccessHandler = async () => {
 
-    //sent put request to add recieved item on user record
-    const res = await axios({
-      method: 'put',
-      url: UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL,
-      data: {
-        itemCatId,
-        personId,
-        personRecievedItemListText,
-      }
-    })
-    console.log('res', res);
+    console.log('onConfirmSubmitItemSuccessHandler personRecievedItemListText', personRecievedItemListText);
 
-    // update recieved item status
-    // await updateVillagerItemRecievedStatus(itemCatId,personId)
+    try {
+      //sent put request to add recieved item on user record
+      const res = await axios({
+        method: 'put',
+        url: UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL,
+        data: {
+          itemCatId,
+          personId,
+          personRecievedItemListText,
+        }
+      })
 
+      console.log('onConfirmSubmitItemSuccessHandler res', res);
+
+    } catch (error) {
+      console.log(error);
+    }
     //close modal
     setIsOpenModal(false);
   }
