@@ -5,14 +5,15 @@ import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextPr
 import { findSelectedItemCatfromId } from '../helpers/utils/calcSummaryInfo'
 
 
-const useSelectItemCatName = () => {
+const useSelectItemCat = () => {
     // get mapdata from dispalyVillagerData context
     const { displayVillagerState, displayVillagerDispatch } = useContext
         (DisplayingVillagerDataContext)
 
     // get item cat data from the context
     const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
-    return findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
+    const { itemCatId, itemCatTitle } = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
+    return [itemCatId,itemCatTitle]
 }
 
-export default useSelectItemCatName
+export default useSelectItemCat

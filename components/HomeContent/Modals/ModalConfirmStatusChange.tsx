@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   isOpenModal: boolean;
   handleCloseModal: () => void;
+  onConfirmSubmitItemSuccessHandler: () => void;
 }
 
 export default function ModalConfirmStatusChange(props: Props) {
   const classes = useStyles();
 
-  const { isOpenModal, handleCloseModal } = props;
+  const { isOpenModal, handleCloseModal, onConfirmSubmitItemSuccessHandler } = props;
 
   return (
     <Modal
@@ -50,11 +51,11 @@ export default function ModalConfirmStatusChange(props: Props) {
           <p id="transition-modal-description">
             หากส่งของสำเร็จแล้ว ให้กดยืนยัน
           </p>
-          <Button>
-              ยืนยัน
+          <Button onClick={onConfirmSubmitItemSuccessHandler}>
+            ยืนยัน
           </Button>
-          <Button onClick ={handleCloseModal}>
-              ยกเลิก
+          <Button onClick={handleCloseModal}>
+            ยกเลิก
           </Button>
         </div>
       </Fade>

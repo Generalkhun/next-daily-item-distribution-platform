@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   isOpenModal: boolean;
+  personId:string
   handleCloseModal: () => void;
   key: number;
   homeLocation: [string, string]

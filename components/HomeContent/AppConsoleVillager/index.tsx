@@ -17,7 +17,7 @@ import { GoogleSheetDataContext } from "../../../contextProviders/GoogleSheetCon
 import DataDisplaySetting from "./components/DataDisplaySetting";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { dataPrepFromVillagerDataContextToDisplayOnList } from "../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList";
-import useSelectItemCatName from "../../../hooks/useSelectItemCatName";
+import useSelectItemCat from "../../../hooks/useSelectItemCat";
 interface Props {
   open: boolean;
   setOpen: any;
@@ -44,8 +44,8 @@ const AppConsoleVillager = (props: Props) => {
   const villagerHomeListData = dataPrepFromVillagerDataContextToDisplayOnList(displayVillagerState)
 
   // calculate for summary info
-  const summaryInfoItemName = useSelectItemCatName()
-  // const summaryInfoItemName = findSelectedItemCatfromId(get(displayVillagerState, 'filterCondition.itemCatSelected'), googleSheetItemCatData)
+  const [itemCatId, itemCatTitle] = useSelectItemCat()
+  const summaryInfoItemName = itemCatTitle
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
   const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
   const summaryInfoTotalNonRecievedItemHome = calcTotalNonRecievedItemHome(villagerHomeListData)

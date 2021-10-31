@@ -18,6 +18,6 @@ export default async function handler(
         const tobeAddedVillagerData = get(req, 'body')
         // add data to villager sheet
         await addVillagerDataToGoogleSheet(tobeAddedVillagerData)
-        res.status(200).json({ name: 'John Doe' })
+        res.status(200).json({ name: 'Added villager to google sheet' })
     }
 }

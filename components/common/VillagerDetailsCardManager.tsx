@@ -13,7 +13,10 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { get } from "lodash";
 import { NextViewport } from "../../type";
-import useSelectItemCatName from "../../hooks/useSelectItemCatName";
+import useSelectItemCat from "../../hooks/useSelectItemCat";
+import axios from "axios";
+import { UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL } from "../../constants";
+import { useFindRecievedItemList } from "../../hooks/useFindRecievedItemList";
 
 const useStyles = makeStyles({
   root: {
@@ -28,14 +31,15 @@ const useStyles = makeStyles({
     paddingRight: 10,
     paddingTop: 10,
   },
-  addrDescriptionWrapper : {
-   borderColor:'white'
+  addrDescriptionWrapper: {
+    borderColor: 'white'
   }
 });
 
 interface Props {
   key: number;
   homeLocation: [string, string]
+  personId: string;
   personName: string;
   isItemRecieved?: boolean;
   personImgUrl: string;
@@ -56,15 +60,20 @@ const VillagerDetailsCardManager = (props: Props) => {
   const lng = parseFloat((get(props, 'homeLocation') || [0, 0])[1]);
   const addressAdditionalDescription = get(props, 'addressAdditionalDescription')
   const numberOfFamilyMembers = get(props, 'numberOfFamilyMembers')
+  const personId = get(props, 'personId')
   const personName = get(props, 'personName')
   const homeRepresentativesContactNum = get(props, 'homeRepresentativesContactNum')
   const isItemRecieved = get(props, 'isItemRecieved')
   const personImgUrl = get(props, 'personImgUrl')
 
-  // get item cat name
-  const itemCatName = useSelectItemCatName()
-  console.log('itemCatName',itemCatName);
-  
+  /**
+   * Hooks
+   */
+  // for submissionHandlerMode
+  // get item cat name and recieved item list from the context
+
+  const [itemCatId, itemCatTitle] = useSelectItemCat()
+  const personRecievedItemListText = personId && useFindRecievedItemList(personId)
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -76,16 +85,10 @@ const VillagerDetailsCardManager = (props: Props) => {
     zoom: 16
   });
 
-  const [isGetFood, setIsGetFood] = useState<boolean>(
-    get(props, 'isItemRecieved') || true
-  );
-
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const toggleGetFoodStatus = () => {
-    setIsGetFood((prevStatus) => !prevStatus);
     handleOpenModal();
-    console.log("ส่งแล้วว");
   };
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -93,11 +96,36 @@ const VillagerDetailsCardManager = (props: Props) => {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
+  const onConfirmSubmitItemSuccessHandler = async () => {
+
+    console.log('onConfirmSubmitItemSuccessHandler personRecievedItemListText', personRecievedItemListText);
+
+    try {
+      //sent put request to add recieved item on user record
+      const res = await axios({
+        method: 'put',
+        url: UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL,
+        data: {
+          itemCatId,
+          personId,
+          personRecievedItemListText,
+        }
+      })
+
+      console.log('onConfirmSubmitItemSuccessHandler res', res);
+
+    } catch (error) {
+      console.log(error);
+    }
+    //close modal
+    setIsOpenModal(false);
+  }
   return (
     <>
       <ModalConfirmStatusChange
         isOpenModal={isOpenModal}
         handleCloseModal={handleCloseModal}
+        onConfirmSubmitItemSuccessHandler={onConfirmSubmitItemSuccessHandler}
       />
       <Card className={classes.root}>
         <CardActionArea>
@@ -133,7 +161,7 @@ const VillagerDetailsCardManager = (props: Props) => {
           <Grid container>
             <Grid item xs={12} lg={6} className={classes.contactButton}>
               <Paper variant='outlined' className={classes.addrDescriptionWrapper}>
-                <Typography variant='body2'>{ `รายละเอียดที่อยู่: ${!!addressAdditionalDescription ? addressAdditionalDescription : '-'}`}</Typography>
+                <Typography variant='body2'>{`รายละเอียดที่อยู่: ${!!addressAdditionalDescription ? addressAdditionalDescription : '-'}`}</Typography>
               </Paper>
               {/* <Button size="small" color="primary" variant="outlined" fullWidth>
                 <img
@@ -170,7 +198,7 @@ const VillagerDetailsCardManager = (props: Props) => {
               variant="contained"
               color={isItemRecieved ? undefined : "primary"}
             >
-              {`ส่ง ${itemCatName} สำเร็จแล้ว`}
+              {isItemRecieved ? `ได้รับ ${itemCatTitle} แล้ว` : `ส่ง ${itemCatTitle} สำเร็จ`}
             </Button>
           </CardActions></> : <></>}
 

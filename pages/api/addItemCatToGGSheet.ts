@@ -18,6 +18,6 @@ export default async function handler(
         const tobeAddedItemCatData = get(req, 'body')
         // add data to villager sheet
         await addItemCatDataToGoogleSheet(tobeAddedItemCatData)
-        res.status(200).json({ name: 'John Doe' })
+        res.status(200).json({ name: 'Added item cat to google sheet' })
     }
 }

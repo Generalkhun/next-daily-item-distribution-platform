@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 });
 interface Props {
   selectedVillagerInfo: VillagerHomeData;
+  personId: string;
+  personName: string;
 }
 
 export default function VillagerConsoleBox(props: Props) {
@@ -51,11 +53,20 @@ export default function VillagerConsoleBox(props: Props) {
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
+  const onConfirmSubmitItemSuccessHandler = () => {
+    // sent put request to add recieved item on user record
+    //console.log('onConfirmSubmitItemSuccessHandler: itemCatId', itemCatId);
+    //console.log('onConfirmSubmitItemSuccessHandler: personId', personId);
+
+    //close modal
+    setIsOpenModal(false);
+  }
   return (
     <>
       <ModalConfirmStatusChange
         isOpenModal={isOpenModal}
         handleCloseModal={handleCloseModal}
+        onConfirmSubmitItemSuccessHandler={onConfirmSubmitItemSuccessHandler}
       />
       <Card className={classes.root}>
         <CardActionArea>
@@ -80,8 +91,8 @@ export default function VillagerConsoleBox(props: Props) {
             <Divider />
             <Typography variant="body2" color="textSecondary" component="p">
               {`สถานะ: ${selectedVillagerInfo.isItemRecieved
-                  ? "ได้รับข้าวแล้ว"
-                  : "ยังไม่ได้รับข้าว"
+                ? "ได้รับข้าวแล้ว"
+                : "ยังไม่ได้รับข้าว"
                 }`}
             </Typography>
           </CardContent>

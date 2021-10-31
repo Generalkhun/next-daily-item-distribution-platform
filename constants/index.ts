@@ -22,10 +22,15 @@ export const MENUS_DATA_MGT = [
     { menuName: 'addVillager', menuTitle: 'เพิ่มข้อมูลบ้าน' },
     { menuName: 'addItemCat', menuTitle: 'เพิ่มประเภทสิ่งของ' }
 ]
-export const USER_ENTERED = 'USER_ENTERED' // use inside ggsheet append param config
+/**
+ * ggsheet append param config 
+ * */
+export const USER_ENTERED = 'USER_ENTERED' 
+export const RAW = 'RAW'
 
-//google drive
-
+/**
+ * google drive api
+ */
 export const DRIVE_API_SECRET_DIR = path.resolve('./secrets')
 export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] // If modifying these scopes, delete token.json.
 // The file token.json stores the user's access and refresh tokens, and is
@@ -41,16 +46,16 @@ export const DRIVE_API_TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
 /**
  * base url
  */
-export const BASEURL = 'http://localhost:3000'
+//export const BASEURL = 'http://localhost:3000'
 
 /**
  * API url Client with Server
  */
-export const UPLOAD_FILE = `${BASEURL}/api/ggdrive/uploadFile`
+// export const UPLOAD_FILE = `${BASEURL}/api/ggdrive/uploadFile`
 export const UPLOAD_IMG_SERVICE_URL = 'api/saveImgToGGDrive'
 export const ADD_VILLAGER_SERVICE_URL = 'api/addVillagerToGGSheet'
 export const ADD_ITEM_CAT_SERVICE_URL = 'api/addItemCatToGGSheet'
-
+export const UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL = 'api/updateAddRecievedItemCatOnGGSheet'
 /**
  * Config UI 
  */
