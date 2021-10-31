@@ -22,10 +22,15 @@ export const MENUS_DATA_MGT = [
     { menuName: 'addVillager', menuTitle: 'เพิ่มข้อมูลบ้าน' },
     { menuName: 'addItemCat', menuTitle: 'เพิ่มประเภทสิ่งของ' }
 ]
-export const USER_ENTERED = 'USER_ENTERED' // use inside ggsheet append param config
+/**
+ * ggsheet append param config 
+ * */
+export const USER_ENTERED = 'USER_ENTERED' 
+export const RAW = 'RAW'
 
-//google drive
-
+/**
+ * google drive api
+ */
 export const DRIVE_API_SECRET_DIR = path.resolve('./secrets')
 export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] // If modifying these scopes, delete token.json.
 // The file token.json stores the user's access and refresh tokens, and is
