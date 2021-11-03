@@ -11,7 +11,7 @@ import { getAllVillagerDataFromGoogleSheet, getItemCatDataFromGoogleSheet } from
 import { get } from 'lodash'
 import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextProvider'
 import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVillagerDataContextProvider'
-import axios from 'axios'
+import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 
 interface Props {
 
@@ -22,22 +22,6 @@ const datamanagement = (props: Props) => {
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     useEffect(() => {
-        // fetch all data from google sheet and save in the context
-        const fetchSheetVillagerData = async () => {
-            const sheetVillagerDataRsp = await axios({
-                method: 'get',
-                url: GET_VILLAGER_GGSHEET_DATA
-            })
-            return sheetVillagerDataRsp
-        }
-
-        const fetchSheetItemCatData = async () => {
-            const sheetItemCatDataRsp = await axios({
-                method: 'get',
-                url: GET_ITEMCAT_GGSHEET_DATA
-            })
-            return sheetItemCatDataRsp
-        }
         // set villager google sheet data in the context
         initializeVillagerSheetData(fetchSheetVillagerData())
         displayVillagerDispatch({ type: 'initialVillagerData', payload: fetchSheetVillagerData() })

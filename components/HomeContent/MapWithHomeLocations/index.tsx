@@ -10,6 +10,8 @@ const MapWithHomeLocations = () => {
   const { displayVillagerState } = useContext(DisplayingVillagerDataContext)
   const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
   const focusedVillagerId = get(displayVillagerState, 'focusedVillagerId').toString()
+  console.log('MapWithHomeLocations displayVillagerState',displayVillagerState);
+  
 
   /**
    * Mapbox
@@ -50,17 +52,19 @@ const MapWithHomeLocations = () => {
     * Map box 
     */
     <>
-      <ReactMapGL
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-        mapboxApiAccessToken='pk.eyJ1IjoiZ2VuZXJhbGtodW4iLCJhIjoiY2t0bGl5NXduMXdmaTJ2bXA3NXgyMXR4aiJ9.dBaNof7U4QoJImXeDk1QXg'
-        {...viewport}
-        onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
-      >
-        <>
-          <DrawingLayer
-          />
-        </>
-      </ReactMapGL>
+      {displayVillagerState &&
+        <ReactMapGL
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          mapboxApiAccessToken='pk.eyJ1IjoiZ2VuZXJhbGtodW4iLCJhIjoiY2t0bGl5NXduMXdmaTJ2bXA3NXgyMXR4aiJ9.dBaNof7U4QoJImXeDk1QXg'
+          {...viewport}
+          onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
+        >
+          <>
+            <DrawingLayer
+            />
+          </>
+        </ReactMapGL>
+      }
     </>
   );
 };
