@@ -113,7 +113,7 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
     const sheets = await connectGoogleSheetsApi()
 
     // new recieved item list
-    const newRecievedItemList = '"' + personRecievedItemListText + ',' + itemCatId + '"'
+    const newRecievedItemList = personRecievedItemListText + ',' + itemCatId
 
     // request 
     const request = {
@@ -127,37 +127,6 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
             "values": [[newRecievedItemList]],
         }
     }
-
-    console.log('requestAPI',request);
-    
-
     const response = await sheets.spreadsheets.values.update(request as any)
-    console.log('responseAPI',response);
     return newRecievedItemList
 }
-
-
-// const res = await sheets.spreadsheets.values.update({
-//     // Determines if the update response should include the values of the cells that were updated. By default, responses do not include the updated values. If the range to write was larger than the range actually written, the response includes all values in the requested range (excluding trailing empty rows and columns).
-//     includeValuesInResponse: 'placeholder-value',
-//     // The A1 notation of the values to update.
-//     range: 'placeholder-value',
-//     // Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
-//     responseDateTimeRenderOption: 'placeholder-value',
-//     // Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.
-//     responseValueRenderOption: 'placeholder-value',
-//     // The ID of the spreadsheet to update.
-//     spreadsheetId: 'placeholder-value',
-//     // How the input data should be interpreted.
-//     valueInputOption: 'placeholder-value',
-
-//     // Request body metadata
-//     requestBody: {
-//       // request body parameters
-//       // {
-//       //   "majorDimension": "my_majorDimension",
-//       //   "range": "my_range",
-//       //   "values": []
-//       // }
-//     },
-//   });

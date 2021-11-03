@@ -32,6 +32,7 @@ const VillagerHomeList = (props: Props) => {
   // get mapdata from dispalyVillagerData context
   const { displayVillagerState, displayVillagerDispatch } = useContext
     (DisplayingVillagerDataContext)
+    
   const isShowOnlyWaitingVillager = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved')
 
   const foucusedVillagerId = get(displayVillagerState, 'focusedVillagerId')

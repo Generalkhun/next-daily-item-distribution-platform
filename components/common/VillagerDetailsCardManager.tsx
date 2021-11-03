@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,12 +11,13 @@ import { Divider, Grid, Paper } from "@material-ui/core";
 import ModalConfirmStatusChange from "../HomeContent/Modals/ModalConfirmStatusChange";
 import ReactMapGL, { Marker } from "react-map-gl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { get } from "lodash";
+import { get, isEmpty } from "lodash";
 import { NextViewport } from "../../type";
 import useSelectItemCat from "../../hooks/useSelectItemCat";
 import axios from "axios";
 import { UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL } from "../../constants";
 import { useFindRecievedItemList } from "../../hooks/useFindRecievedItemList";
+import { useUpdateStoreVillagerRecievedStatus } from "../../hooks/contextUpdateAfterDBfetch/useUpdateStoreVillagerRecievedStatus";
 
 const useStyles = makeStyles({
   root: {
@@ -74,6 +75,10 @@ const VillagerDetailsCardManager = (props: Props) => {
 
   const [itemCatId, itemCatTitle] = useSelectItemCat()
   const personRecievedItemListText = personId && useFindRecievedItemList(personId)
+  const { updateVillagerRecievedStatus } = useUpdateStoreVillagerRecievedStatus()
+
+  // reference to card action
+  const cardActionRef = useRef<HTMLDivElement>(document.createElement("div"))
 
   // viewport, used on show map mode only 
   const [viewport, setViewport] = useState<any>({
@@ -111,14 +116,20 @@ const VillagerDetailsCardManager = (props: Props) => {
           personRecievedItemListText,
         }
       })
-
-      console.log('onConfirmSubmitItemSuccessHandler res', res);
-
+      // update store
+      updateVillagerRecievedStatus({
+        villagerId: personId,
+        updatedRecievedItemList: get(res, 'data.newRecievedItemList'),
+      })
     } catch (error) {
       console.log(error);
     }
+
     //close modal
     setIsOpenModal(false);
+
+    //click the cardAction to trigger re-render
+    !isEmpty(cardActionRef.current) && cardActionRef.current.click();
   }
   return (
     <>
@@ -128,7 +139,7 @@ const VillagerDetailsCardManager = (props: Props) => {
         onConfirmSubmitItemSuccessHandler={onConfirmSubmitItemSuccessHandler}
       />
       <Card className={classes.root}>
-        <CardActionArea>
+        <CardActionArea ref={cardActionRef as any}>
           <CardMedia
             className={classes.media}
             image={personImgUrl}
