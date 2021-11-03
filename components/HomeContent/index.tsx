@@ -7,7 +7,6 @@ import AppConsoleVillager from "./AppConsoleVillager";
 import dynamic from 'next/dynamic'
 import ModalSetting from "./Modals/ModalSetting";
 import VillagerConsole from "./VillagerConsole";
-
 /**
  * Dynamic imports
  */
@@ -59,7 +58,7 @@ function HomeContent() {
   ) => {
     setSelectedVillagerInfo(villager);
     setOpenVillagerConsole(true);
-    setMapCenterLocation([parseFloat(villager.homeLocation[0]),parseFloat(villager.homeLocation[1])]);
+    setMapCenterLocation([parseFloat(villager.homeLocation[0]), parseFloat(villager.homeLocation[1])]);
   };
   const handleCloseModalSetting = () => {
     setIsOpenModalSetting(false);
@@ -87,11 +86,11 @@ function HomeContent() {
         <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations
-              // setDrawerOpen={setDrawerOpen}
-              // mapCenterLocation={mapCenterLocation}
-              // villagerHomeListData={villagerHomeListData}
-              // onClickVillager={onClickVillager}
-              // setMap={setMap}
+            // setDrawerOpen={setDrawerOpen}
+            // mapCenterLocation={mapCenterLocation}
+            // villagerHomeListData={villagerHomeListData}
+            // onClickVillager={onClickVillager}
+            // setMap={setMap}
             />
           </Paper>
         </Grid>

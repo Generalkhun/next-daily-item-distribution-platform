@@ -52,6 +52,8 @@ export const DRIVE_API_TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
  * API url Client with Server
  */
 // export const UPLOAD_FILE = `${BASEURL}/api/ggdrive/uploadFile`
+export const GET_VILLAGER_GGSHEET_DATA = 'api/getVillagerFromGGSheet'
+export const GET_ITEMCAT_GGSHEET_DATA = 'api/getItemCatDataFromGGSheet'
 export const UPLOAD_IMG_SERVICE_URL = 'api/saveImgToGGDrive'
 export const ADD_VILLAGER_SERVICE_URL = 'api/addVillagerToGGSheet'
 export const ADD_ITEM_CAT_SERVICE_URL = 'api/addItemCatToGGSheet'

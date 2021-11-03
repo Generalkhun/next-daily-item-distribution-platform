@@ -1,15 +1,34 @@
 import { Grid, ListItem } from '@material-ui/core'
 import { map } from 'lodash'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import AddItemCat from '../components/DataManagementContent/AddItemCat'
 import AddVillager from '../components/DataManagementContent/AddVillager'
-import { MENUS_DATA_MGT } from '../constants'
+import { GET_ITEMCAT_GGSHEET_DATA, GET_VILLAGER_GGSHEET_DATA, MENUS_DATA_MGT } from '../constants'
+import { HomeWorkSharp } from '@material-ui/icons'
+import { getServers } from 'dns'
+import { getAllVillagerDataFromGoogleSheet, getItemCatDataFromGoogleSheet } from '../helpers/api/googleSheetApi'
+import { get } from 'lodash'
+import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextProvider'
+import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVillagerDataContextProvider'
+import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 
 interface Props {
 
 }
 
 const datamanagement = (props: Props) => {
+    // set data to the context on useEffect
+    const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
+    const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
+    useEffect(() => {
+        // set villager google sheet data in the context
+        initializeVillagerSheetData(fetchSheetVillagerData())
+        displayVillagerDispatch({ type: 'initialVillagerData', payload: fetchSheetVillagerData() })
+
+        // get item cat sheet data in the context
+        initializeItemCatSheetData(fetchSheetItemCatData())
+    }, [])
     const [selectedMenu, setSelectedMenu] = useState(0)
     const onClickSelectMenu = (idx: number) => {
         setSelectedMenu(idx)
@@ -38,3 +57,21 @@ const datamanagement = (props: Props) => {
 }
 
 export default datamanagement
+
+// export const getStaticProps: GetStaticProps = async (context) => {
+
+//     // fetch all data from google sheet and save in the context
+//     const sheetVillagerDataRsp = await getAllVillagerDataFromGoogleSheet()
+//     const sheetitemCatDataRsp = await getItemCatDataFromGoogleSheet()
+
+//     return {
+//         props: {
+//             sheetData: {
+//                 sheetVillagerDataRsp,
+//                 sheetitemCatDataRsp
+//             }
+
+//         }
+//     }
+
+// }
