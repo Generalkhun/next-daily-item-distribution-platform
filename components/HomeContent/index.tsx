@@ -7,7 +7,6 @@ import AppConsoleVillager from "./AppConsoleVillager";
 import dynamic from 'next/dynamic'
 import ModalSetting from "./Modals/ModalSetting";
 import VillagerConsole from "./VillagerConsole";
-
 /**
  * Dynamic imports
  */
