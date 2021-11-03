@@ -1,7 +1,7 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, TextField, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import axios from 'axios'
-import { get } from 'lodash'
+import { find, get } from 'lodash'
 import { isEmpty } from 'lodash'
 import { DropzoneArea } from 'material-ui-dropzone'
 import React, { useContext, useReducer, useState } from 'react'
@@ -79,11 +79,20 @@ const AddItemCat = (props: Props) => {
     const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
 
 
-    console.log('googleSheetItemCatData',googleSheetItemCatData);
-    
+    console.log('googleSheetItemCatData', googleSheetItemCatData);
+
     const currentTotalItemCat = googleSheetItemCatData && googleSheetItemCatData.length
     console.log('currentTotalItemCat', currentTotalItemCat);
 
+    const isItemAlreadyExit = (itemName: string): boolean => {
+        const existedItem = find(googleSheetItemCatData, (itemCat) => {
+            return itemCat.ITEM_TITLE === itemName
+        })
+        if (existedItem) {
+            return true
+        }
+        return false
+    }
     const openConfirmSubmitItemModalHandler = () => {
         setIsOpenConfirmSubmitItemModal(true)
     }
@@ -96,6 +105,7 @@ const AddItemCat = (props: Props) => {
         addItemCatFormDispatch({ type: 'validateOnSubimit' })
         if (
             isEmpty(itemCatName) ||
+            isItemAlreadyExit(itemCatName) ||
             isEmpty(itemRecievedType) ||
             isEmpty(itemCatImg) ||
             (itemRecievedType === 'repetitive' && isEmpty(itemToShortageDays))
@@ -131,14 +141,14 @@ const AddItemCat = (props: Props) => {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        error={isValidated && isEmpty(itemCatName)}
+                        error={isValidated && (isEmpty(itemCatName) || isItemAlreadyExit(itemCatName))}
                         required
                         placeholder='ชื่อสิ่งของเตรียมแจก เช่น ข้าวกล่อง ถุงยังชีพ ชุดตรวจโควิท'
                         id="required"
                         label="ชื่อประเภทสิ่งของ"
                         defaultValue=""
                         value={get(addItemCatFormstate, 'homeRepresentativesName')}
-                        helperText={(get(addItemCatFormstate, 'isValidated') && isEmpty(get(addItemCatFormstate, 'itemCatName'))) ? "จำเป็นต้องใส่" : ""}
+                        helperText={isValidated ? (isEmpty(itemCatName) ? "จำเป็นต้องใส่" : (isItemAlreadyExit(itemCatName) ? "มีสิ่งของนี้อยู่แล้ว" : "")) : ""}
                         onChange={(e) => addItemCatFormDispatch({ type: 'updateItemCatName', payload: e.target.value })}
                     />
                 </Grid>
