@@ -1,3 +1,4 @@
+import { find, reduce } from "lodash";
 import { createContext, useContext, useReducer, useState } from "react";
 import { GoogleSheetDataContext } from "./GoogleSheetContextProvider";
 
@@ -81,6 +82,18 @@ const displayVillagerDataReducer = (state: any, action: any) => {
                 ...state,
                 focusedVillagerId: parseInt(action.payload)
             }
+
+        // update item recieved status on update
+        case 'updateSuccessVillagerItemRecievedStatus':
+            const { villagerId, updatedRecievedItemList } = action.payload
+            let updatedVillager = find(state.displayVillagerData, villager => villager.HOME_ID === villagerId)
+
+            // update ITEM_RECIEVED to be updated item recieved list
+            if (updatedVillager) {
+                updatedVillager.ITEM_RECIEVED = updatedRecievedItemList
+            }
+
+            return state
         default:
             return state
     }
