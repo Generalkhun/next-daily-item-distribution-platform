@@ -132,9 +132,9 @@ const AddItemCat = (props: Props) => {
         })
         console.log('res', res);
 
-        //close confirmation modal 
-
         //get props again by refresh
+        window.location.reload();
+
 
     }
 

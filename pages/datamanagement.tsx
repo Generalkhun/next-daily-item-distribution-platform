@@ -21,38 +21,53 @@ const datamanagement = (props: Props) => {
     // set data to the context on useEffect
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
+    const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
     useEffect(() => {
         // set villager google sheet data in the context
-        initializeVillagerSheetData(fetchSheetVillagerData())
-        displayVillagerDispatch({ type: 'initialVillagerData', payload: fetchSheetVillagerData() })
+        fetchSheetVillagerData().then((initialVillagerRsp) => {
+            console.log('initialVillagerRsp', initialVillagerRsp);
 
-        // get item cat sheet data in the context
-        initializeItemCatSheetData(fetchSheetItemCatData())
+            initializeVillagerSheetData(initialVillagerRsp)
+            displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
+            setDoneFetchingVillagerData(true)
+
+        })
+
+        // set item cat google sheet data in the context
+        fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
+            console.log('fetchSheetItemCatRsp', fetchSheetItemCatRsp);
+
+            // get item cat sheet data in the context
+            initializeItemCatSheetData(fetchSheetItemCatRsp)
+        })
     }, [])
     const [selectedMenu, setSelectedMenu] = useState(0)
     const onClickSelectMenu = (idx: number) => {
         setSelectedMenu(idx)
     }
     return (
-        <Grid container>
-            <Grid item sm={1} md={2} lg={3}>
-                {map(MENUS_DATA_MGT, (menu, idx) => {
-                    return (<ListItem
-                        key={idx}
-                        button
-                        onClick={() => onClickSelectMenu(idx)}
-                        selected={selectedMenu === idx}
-                    >
-                        {menu.menuTitle}
-                    </ListItem>)
-                })}
-            </Grid>
-            <Grid item xs={12} sm={10} md={8} lg={5}>
-                {selectedMenu === 0 ? <AddVillager /> : <></>}
-                {selectedMenu === 1 ? <AddItemCat /> : <></>}
-            </Grid>
-            <Grid item sm={1} md={2} lg={3}></Grid>
-        </Grid>
+        <>
+            {doneFetchingVillagerData &&
+                <Grid container>
+                    <Grid item sm={1} md={2} lg={3}>
+                        {map(MENUS_DATA_MGT, (menu, idx) => {
+                            return (<ListItem
+                                key={idx}
+                                button
+                                onClick={() => onClickSelectMenu(idx)}
+                                selected={selectedMenu === idx}
+                            >
+                                {menu.menuTitle}
+                            </ListItem>)
+                        })}
+                    </Grid>
+                    <Grid item xs={12} sm={10} md={8} lg={5}>
+                        {selectedMenu === 0 ? <AddVillager /> : <></>}
+                        {selectedMenu === 1 ? <AddItemCat /> : <></>}
+                    </Grid>
+                    <Grid item sm={1} md={2} lg={3}></Grid>
+                </Grid>}
+        </>
     )
 }
 

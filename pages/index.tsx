@@ -32,6 +32,7 @@ const Home = (props: Props) => {
 
         })
 
+        // set item cat google sheet data in the context
         fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
             console.log('fetchSheetItemCatRsp', fetchSheetItemCatRsp);
 

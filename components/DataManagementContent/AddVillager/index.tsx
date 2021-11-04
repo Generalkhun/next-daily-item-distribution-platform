@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
-import { Button, IconButton, makeStyles, Paper, Typography ,Grid, TextField, Divider } from '@material-ui/core';
+import { Button, IconButton, makeStyles, Paper, Typography, Grid, TextField, Divider } from '@material-ui/core';
 import { get, isEmpty } from 'lodash';
 import ConfirmHomeLocationModal from './components/ConfirmHomeLocationModal';
 import ConfirmSubmitModal from './components/ConfirmSubmitModal';
@@ -14,7 +14,6 @@ import { getGGDriveImgURLViewWithId } from '../../../helpers/utils/getGGDriveImg
 import { DisplayingVillagerDataContext } from '../../../contextProviders/DisplayingVillagerDataContextProvider';
 import { saveImgToGGDrive } from '../../../helpers/api/saveImgToGGDriveAPI';
 import { ADD_VILLAGER_SERVICE_URL } from '../../../constants';
-import { mapRequestBodyAddItemCatFormState } from '../../../helpers/utils/mapRequestBodyAddItemCatFormState';
 interface Props {
 
 }
@@ -70,7 +69,7 @@ const useStyles = makeStyles({
     marginTop: 10,
     width: 400,
     height: 250,
-    marginBottom:50,
+    marginBottom: 50,
   }
 })
 const AddVillager = (props: Props) => {
@@ -156,13 +155,16 @@ const AddVillager = (props: Props) => {
     const imgSavedGGdriveResp = await saveImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
     const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
     // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
-    // save all info in giigle sheeet
+    // save all info in google sheeet
     const res = await axios({
       method: 'post',
       url: ADD_VILLAGER_SERVICE_URL,
-      data: mapRequestBodyAddItemCatFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
+      data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
     })
     console.log('res', res);
+
+    // refresh page to fetch new villager data 
+    window.location.reload()
   }
   return (
     <div className={classes.root}>
