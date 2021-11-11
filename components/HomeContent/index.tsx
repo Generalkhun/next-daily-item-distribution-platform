@@ -39,7 +39,6 @@ function HomeContent() {
     useState(false);
 
   const [isOpenModalSetting, setIsOpenModalSetting] = useState(false);
-  const [map, setMap] = useState(null as any);
   /**
    * Hooks
    */
@@ -48,10 +47,6 @@ function HomeContent() {
   /**
    * Functions
    */
-  const changeShowConditionHandler = () => {
-    setIsShowOnlyWaitingVillager((prev) => !prev);
-    setOpenVillagerConsole(false);
-  };
   const onClickVillager = (
     villager: VillagerHomeData,
     isFromClickLocation?: boolean,
@@ -60,13 +55,7 @@ function HomeContent() {
     setOpenVillagerConsole(true);
     setMapCenterLocation([parseFloat(villager.homeLocation[0]), parseFloat(villager.homeLocation[1])]);
   };
-  const handleCloseModalSetting = () => {
-    setIsOpenModalSetting(false);
-  };
 
-  const handleOpenModalSetting = () => {
-    setIsOpenModalSetting(true);
-  };
 
   return (
     <>
@@ -80,7 +69,6 @@ function HomeContent() {
             onClickVillager={onClickVillager}
             selectedVillagerInfo={selectedVillagerInfo}
             isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
-            handleOpenModalSetting={handleOpenModalSetting}
           />
         </Grid>
         <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>

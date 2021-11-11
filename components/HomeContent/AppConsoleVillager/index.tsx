@@ -18,6 +18,7 @@ import DataDisplaySetting from "./components/DataDisplaySetting";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { dataPrepFromVillagerDataContextToDisplayOnList } from "../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList";
 import useSelectItemCat from "../../../hooks/useSelectItemCat";
+import useSelectItemCatGetItemImg from "../../../hooks/useSelectItemCatGetItemImg";
 interface Props {
   open: boolean;
   setOpen: any;
@@ -26,7 +27,6 @@ interface Props {
   selectedVillagerInfo: VillagerHomeData;
   setOpenVillagerConsole: any;
   isShowOnlyWaitingVillager: boolean;
-  handleOpenModalSetting: () => void;
 }
 
 
@@ -45,6 +45,7 @@ const AppConsoleVillager = (props: Props) => {
 
   // calculate for summary info
   const [itemCatId, itemCatTitle] = useSelectItemCat()
+  const itemCatImageURL = useSelectItemCatGetItemImg()
   const summaryInfoItemName = itemCatTitle
   const summaryInfoTotalHome = calcTotalHome(villagerHomeListData)
   const summaryInfoTotalPeople = calcTotalPeople(villagerHomeListData)
@@ -58,6 +59,8 @@ const AppConsoleVillager = (props: Props) => {
         />
       </Paper>
 
+      <img width='100' height='100' src={itemCatImageURL}/>
+
       <Paper variant="outlined" className={styles.summaryInfoWrapper}>
         <Typography>ยอดรวม</Typography>
         <SummaryInfo
@@ -69,8 +72,8 @@ const AppConsoleVillager = (props: Props) => {
         />
       </Paper>
 
+      <Typography>รายชื่อตัวแทนบ้าน</Typography>
       <Paper variant="outlined" className={styles.villageHomeListWrapper}>
-        <Typography>รายชื่อ</Typography>
         <Grid container >
           <Grid item xs={12} lg={6} >
             <List>
