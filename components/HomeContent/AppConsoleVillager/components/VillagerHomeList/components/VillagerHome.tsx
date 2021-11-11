@@ -84,7 +84,7 @@ function VillagerHome(props: Props) {
         <Grid item xs={12} lg={10}>
           <ListItemText
             primary={personName} secondary={"โทร: " + homeRepresentativesContactNum + " สมาชิก: " + numberOfFamilyMembers + " คน "}
-            style={{ paddingLeft: 20, color: 'black' }}
+            style={{ paddingLeft: 30, color: 'black' }}
           />
         </Grid>
         {isSelected ? <Button onClick={() => onClickSeeDetailHandler(props)} className={classes.seeDetailButton} variant='contained' fullWidth >ดูรายละเอียด</Button> : <></>}
