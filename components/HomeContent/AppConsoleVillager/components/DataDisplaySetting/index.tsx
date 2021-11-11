@@ -55,7 +55,7 @@ const DataDisplaySetting = (props: Props) => {
             </Grid>
             <Grid item xs={12} lg={4}>
                 <FormControlLabel
-                    style={{ fontSize: 0.5 }}
+                    style={{ marginTop: 20 }}
                     control={
                         <Checkbox
                             checked={isShowOnlyWaitingVillager}
@@ -71,9 +71,8 @@ const DataDisplaySetting = (props: Props) => {
 
 
             <Grid item xs={12} lg={4}>
-                <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
+                <Button style={{marginTop:25, fontSize:15}} onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
                 {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
-                {/* <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button> */}
             </Grid>
 
         </Grid>

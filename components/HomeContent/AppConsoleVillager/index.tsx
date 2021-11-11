@@ -58,18 +58,25 @@ const AppConsoleVillager = (props: Props) => {
         <DataDisplaySetting
         />
       </Paper>
-
-      <img width='100' height='100' src={itemCatImageURL}/>
-
       <Paper variant="outlined" className={styles.summaryInfoWrapper}>
-        <Typography>ยอดรวม</Typography>
-        <SummaryInfo
-          summaryInfoItemName={summaryInfoItemName}
-          summaryInfoTotalHome={summaryInfoTotalHome}
-          summaryInfoTotalPeople={summaryInfoTotalPeople}
-          summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
-          summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
-        />
+        <Grid container>
+          <Grid item lg={4}>
+            <Paper elevation={0}>
+              <img height='100vh' src={itemCatImageURL} style={{marginTop:10}} />
+            </Paper>
+          </Grid>
+          <Grid item lg={6} style={{marginLeft:40}}>
+            <SummaryInfo
+              summaryInfoItemName={summaryInfoItemName}
+              summaryInfoTotalHome={summaryInfoTotalHome}
+              summaryInfoTotalPeople={summaryInfoTotalPeople}
+              summaryInfoTotalNonRecievedItemHome={summaryInfoTotalNonRecievedItemHome}
+              summaryInfoTotalNonRecievedItemPeople={summaryInfoTotalNonRecievedItemPeople}
+            />
+          </Grid>
+
+        </Grid>
+
       </Paper>
 
       <Typography>รายชื่อตัวแทนบ้าน</Typography>

@@ -34,6 +34,6 @@ export const appConsoleStyles = makeStyles((theme: Theme) =>
     },
     summaryInfoWrapper: {
       height: '30vh'
-    }
+    },
   })
 );
