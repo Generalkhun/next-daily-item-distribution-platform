@@ -2,6 +2,7 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography'
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useEffect } from 'react';
@@ -61,8 +62,8 @@ export const ItemCatListSelector = (props: Props) => {
                     onClick={handleClickListItem}
                 >
                     <ListItemText
-                        primary="ประเภทสิ่งของ"
-                        secondary={options[selectedIndex]}
+                        primary={<Typography style={{fontFamily:'Kanit'}}>ประเภทสิ่งของ</Typography>}
+                        secondary={<Typography style={{fontFamily:'Kanit',fontStyle:'italic',color:'gray'}}>{options[selectedIndex]}</Typography>}
                     />
                 </ListItem>
             </List>

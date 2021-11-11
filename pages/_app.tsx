@@ -5,12 +5,20 @@ import Head from 'next/head'
 import Layouts from '../components/Layouts'
 import { GoogleSheetDataProvider } from '../contextProviders/GoogleSheetContextProvider'
 import { DisplayVillagerDataProvider } from '../contextProviders/DisplayingVillagerDataContextProvider'
-
+import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 function MyApp({ Component, pageProps }: AppProps) {
 
-
+  const theme = createTheme({
+    typography: {
+      "fontFamily": `"Kanit","Roboto", "Helvetica", "Arial", sans-serif`,
+      "fontSize": 15,
+      "fontWeightLight": 300,
+      "fontWeightRegular": 400,
+      "fontWeightMedium": 500
+     }
+  })
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GoogleSheetDataProvider>
         <DisplayVillagerDataProvider>
           <Layouts>
@@ -22,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </DisplayVillagerDataProvider>
       </GoogleSheetDataProvider>
 
-    </>
+    </ThemeProvider>
 
   )
 }

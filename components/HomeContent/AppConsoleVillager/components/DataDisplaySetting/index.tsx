@@ -6,6 +6,7 @@ import { GoogleSheetDataContext } from '../../../../../contextProviders/GoogleSh
 import { ItemCatListSelector } from './components/ItemCatListSelector'
 import { DrawRectangleMode } from 'react-map-gl-draw';
 import CancelIcon from '@mui/icons-material/Cancel';
+import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
 interface Props {
 
 }
@@ -44,7 +45,7 @@ const DataDisplaySetting = (props: Props) => {
     }
     return (
         <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{marginTop:5, marginLeft:5}}>
                 <Typography>เลือกดูข้อมูล</Typography>
             </Grid>
             <Grid item xs={12} lg={4}>
@@ -55,7 +56,7 @@ const DataDisplaySetting = (props: Props) => {
             </Grid>
             <Grid item xs={12} lg={4}>
                 <FormControlLabel
-                    style={{ fontSize: 0.5 }}
+                    style={{ marginTop: 25 }}
                     control={
                         <Checkbox
                             checked={isShowOnlyWaitingVillager}
@@ -64,16 +65,18 @@ const DataDisplaySetting = (props: Props) => {
                         />
                     }
                     label={
-                        <Typography>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
+                        <Typography style={{fontSize:15}}>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
                     }
                 />
             </Grid>
 
 
             <Grid item xs={12} lg={4}>
-                <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
+                <Button style={{ marginTop: 30, fontSize: 15 }} onClick={toggleSelectByAreaHandler} endIcon={<PhotoSizeSelectSmallIcon/>}>
+                    ดูเฉพาะพื้นที่
+                
+                </Button>
                 {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
-                {/* <Button onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button> */}
             </Grid>
 
         </Grid>
