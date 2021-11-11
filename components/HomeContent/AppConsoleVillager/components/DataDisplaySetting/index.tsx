@@ -6,6 +6,7 @@ import { GoogleSheetDataContext } from '../../../../../contextProviders/GoogleSh
 import { ItemCatListSelector } from './components/ItemCatListSelector'
 import { DrawRectangleMode } from 'react-map-gl-draw';
 import CancelIcon from '@mui/icons-material/Cancel';
+import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
 interface Props {
 
 }
@@ -55,7 +56,7 @@ const DataDisplaySetting = (props: Props) => {
             </Grid>
             <Grid item xs={12} lg={4}>
                 <FormControlLabel
-                    style={{ marginTop: 20 }}
+                    style={{ marginTop: 25 }}
                     control={
                         <Checkbox
                             checked={isShowOnlyWaitingVillager}
@@ -64,14 +65,17 @@ const DataDisplaySetting = (props: Props) => {
                         />
                     }
                     label={
-                        <Typography>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
+                        <Typography style={{fontSize:15}}>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
                     }
                 />
             </Grid>
 
 
             <Grid item xs={12} lg={4}>
-                <Button style={{marginTop:25, fontSize:15}} onClick={toggleSelectByAreaHandler}>ดูเฉพาะพื้นที่</Button>
+                <Button style={{ marginTop: 30, fontSize: 15 }} onClick={toggleSelectByAreaHandler} endIcon={<PhotoSizeSelectSmallIcon/>}>
+                    ดูเฉพาะพื้นที่
+                    
+                </Button>
                 {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
             </Grid>
 

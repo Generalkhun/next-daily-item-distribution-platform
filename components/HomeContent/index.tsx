@@ -73,13 +73,7 @@ function HomeContent() {
         </Grid>
         <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
-            <MapWithHomeLocations
-            // setDrawerOpen={setDrawerOpen}
-            // mapCenterLocation={mapCenterLocation}
-            // villagerHomeListData={villagerHomeListData}
-            // onClickVillager={onClickVillager}
-            // setMap={setMap}
-            />
+            <MapWithHomeLocations />
           </Paper>
         </Grid>
       </Grid>
