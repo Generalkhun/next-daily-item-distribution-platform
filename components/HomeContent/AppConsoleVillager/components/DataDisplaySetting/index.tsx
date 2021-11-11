@@ -42,6 +42,7 @@ const DataDisplaySetting = (props: Props) => {
     }
     const onTurnFilterByAreaOffHandler = () => {
         displayVillagerDispatch({ type: 'togglefilterByAreaOff' })
+        displayVillagerDispatch({ type: 'toggleDrawableMapModeOff' })
     }
     return (
         <Grid container>
