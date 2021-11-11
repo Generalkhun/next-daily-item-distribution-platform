@@ -21,7 +21,9 @@ const useStyles = makeStyles({
     height: "60vh",
   },
   homeContentContainer: {
-    height: '90vh'
+    height: '90vh',
+    marginLeft:'10px',
+    marginTop:'10px'
   }
 });
 function HomeContent() {

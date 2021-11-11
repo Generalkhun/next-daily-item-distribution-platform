@@ -45,7 +45,7 @@ const DataDisplaySetting = (props: Props) => {
     }
     return (
         <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{marginTop:5, marginLeft:5}}>
                 <Typography>เลือกดูข้อมูล</Typography>
             </Grid>
             <Grid item xs={12} lg={4}>
@@ -74,7 +74,7 @@ const DataDisplaySetting = (props: Props) => {
             <Grid item xs={12} lg={4}>
                 <Button style={{ marginTop: 30, fontSize: 15 }} onClick={toggleSelectByAreaHandler} endIcon={<PhotoSizeSelectSmallIcon/>}>
                     ดูเฉพาะพื้นที่
-                    
+                
                 </Button>
                 {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
             </Grid>

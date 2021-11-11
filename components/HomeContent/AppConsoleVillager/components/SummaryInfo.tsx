@@ -20,10 +20,10 @@ const SummaryInfo = (props: Props) => {
         summaryInfoTotalHome
     } = props
     return (
-        <div style={{marginTop:10}}>
+        <div style={{ marginTop: 20 , marginLeft:10}}>
             <Typography style={{ fontSize: 20 }}>{'ยอดรวม ' + summaryInfoItemName}</Typography>
             <Typography style={{ fontSize: 15 }}>{`รวมบ้านทั้งหมด: ${summaryInfoTotalHome} บ้าน (${summaryInfoTotalPeople} คน)`}</Typography>
-            <Typography style={{ fontSize: 15 }}>{`ที่ยังไม่ได้รับของ: ${summaryInfoTotalNonRecievedItemHome} บ้าน (${summaryInfoTotalNonRecievedItemPeople} คน)`}</Typography>
+            <Typography style={{ fontSize: 15 }}>{`ยังไม่ได้รับของ: ${summaryInfoTotalNonRecievedItemHome} บ้าน (${summaryInfoTotalNonRecievedItemPeople} คน)`}</Typography>
         </div>
     )
 }
