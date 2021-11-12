@@ -68,8 +68,8 @@ const NavBar = () => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <HomeIcon />
                 <Typography className={classes.otherNavText}>
-                  <HomeIcon />
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
@@ -79,8 +79,8 @@ const NavBar = () => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <AddCircleOutlineIcon />
                 <Typography className={classes.otherNavText}>
-                  <AddCircleOutlineIcon/>
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
               </IconButton>
@@ -88,10 +88,10 @@ const NavBar = () => {
             <Grid item className={classes.naviagtionWrapper}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
-                typeof window !== 'undefined' && router.push('/datamanagement')
+                typeof window !== 'undefined' && router.push('/login')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <ExitToAppIcon />
                 <Typography className={classes.otherNavText}>
-                  <ExitToAppIcon/>
                   ออกจากระบบ
                 </Typography>
               </IconButton>
