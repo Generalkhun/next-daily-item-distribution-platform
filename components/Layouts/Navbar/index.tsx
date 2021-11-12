@@ -2,6 +2,9 @@ import { IconButton, Theme, Toolbar, Typography, AppBar, makeStyles, createStyle
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import { get } from 'lodash'
+import HomeIcon from '@mui/icons-material/Home';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -66,6 +69,7 @@ const NavBar = () => {
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Typography className={classes.otherNavText}>
+                  <HomeIcon />
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
@@ -76,6 +80,7 @@ const NavBar = () => {
                 typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Typography className={classes.otherNavText}>
+                  <AddCircleOutlineIcon/>
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
               </IconButton>
@@ -86,6 +91,7 @@ const NavBar = () => {
                 typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Typography className={classes.otherNavText}>
+                  <ExitToAppIcon/>
                   ออกจากระบบ
                 </Typography>
               </IconButton>
