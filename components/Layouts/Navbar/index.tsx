@@ -12,13 +12,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       fontStyle: 'BOLD',
-      fontFamily: 'Cinzel',
+      fontFamily: 'Kanit',
       paddingRight: 100
     },
     otherNavText: {
       paddingLeft: 10,
       fontSize: '1.3rem',
-      fontFamily: 'Cinzel',
+      fontFamily: 'Kanit',
     },
     otherNavIcon: {
       marginLeft: 'auto',
