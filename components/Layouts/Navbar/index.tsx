@@ -6,6 +6,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import OtherMenuList from "./components/OtherMenuList";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -56,6 +58,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const NavBar = () => {
   const router = useRouter()
   const pathname = get(router, 'pathname')
+  const theme = useTheme();
+  const matchesMediaQueryMediumAndBelow = useMediaQuery(theme.breakpoints.down('md'))
 
   const classes = useStyles();
   return (
@@ -63,18 +67,18 @@ const NavBar = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Grid container>
-            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={2} sm={3} md={3} lg={2}>
+            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={10} sm={matchesMediaQueryMediumAndBelow ? 10 : 6} md={3} lg={2}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <HomeIcon />  
+                <HomeIcon />
                 <Typography className={classes.otherNavText}>
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
             </Grid>
-            <Grid item className={classes.naviagtionWrapper} lg={8}>
+            {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper} md = {6} lg={8}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
@@ -84,8 +88,8 @@ const NavBar = () => {
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
               </IconButton>
-            </Grid>
-            <Grid item className={classes.naviagtionWrapper}>
+            </Grid>}
+            {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/login')
@@ -95,8 +99,8 @@ const NavBar = () => {
                   ออกจากระบบ
                 </Typography>
               </IconButton>
-            </Grid>
-            <OtherMenuList/>
+            </Grid>}
+            {matchesMediaQueryMediumAndBelow ? <OtherMenuList /> : <></>}
           </Grid>
         </Toolbar>
       </AppBar>

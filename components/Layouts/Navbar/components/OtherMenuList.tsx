@@ -36,9 +36,9 @@ export default function OtherMenuList() {
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                <Tooltip title="Account settings">
+                <Tooltip title="Menu">
                     <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-                        <MenuIcon />
+                        <MenuIcon style={{color:'white'}} />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -50,8 +50,8 @@ export default function OtherMenuList() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <Button style={{color:'darkorange'}} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
-                <Button style={{color:'darkorange'}} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
+                <Button style={{color:'Black'}} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
+                <Button style={{color:'Black'}} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
 
             </Menu>
         </React.Fragment>
