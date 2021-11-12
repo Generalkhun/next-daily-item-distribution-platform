@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Button from '@mui/material/Button'
 import { makeStyles } from '@material-ui/core';
+import { useRouter } from "next/dist/client/router";
 
 const useStyles = makeStyles({
     menuItemInsideMenuList: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
     }
 })
 export default function OtherMenuList() {
+    const router = useRouter()
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -38,7 +40,7 @@ export default function OtherMenuList() {
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                 <Tooltip title="Menu">
                     <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-                        <MenuIcon style={{color:'white'}} />
+                        <MenuIcon style={{ color: 'white' }} />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -50,8 +52,15 @@ export default function OtherMenuList() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <Button style={{color:'Black'}} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
-                <Button style={{color:'Black'}} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
+                <Button onClick={e => {
+                    e.preventDefault()
+                    typeof window !== 'undefined' && router.push('/datamanagement')
+                }} style={{ color: 'Black' }} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
+                <Divider />
+                <Button onClick={e => {
+                    e.preventDefault()
+                    typeof window !== 'undefined' && router.push('/login')
+                }} style={{ color: 'Black' }} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
 
             </Menu>
         </React.Fragment>
