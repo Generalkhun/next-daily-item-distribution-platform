@@ -20,15 +20,13 @@ interface Props {
 const Home = (props: Props) => {
     // set data to the context on useEffect
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
-    const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
+    const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
-    const isDrawableMapMode = get(displayVillagerState, 'isDrawableMapMode')
     const [currentCursor] = useCursor()
     useEffect(() => {
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
             console.log('initialVillagerRsp', initialVillagerRsp);
-
             initializeVillagerSheetData(initialVillagerRsp)
             displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
             setDoneFetchingVillagerData(true)
