@@ -8,7 +8,7 @@ interface Props {
 const useCursor = () => {
     const { displayVillagerState, displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const isDrawableMapMode = get(displayVillagerState, 'isDrawableMapMode')
-    return [isDrawableMapMode ? 'crosshair' : 'pointer']
+    return [isDrawableMapMode ? 'crosshair' : '']
 }
 
 export default useCursor

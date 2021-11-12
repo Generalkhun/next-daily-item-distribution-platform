@@ -7,6 +7,7 @@ import { ItemCatListSelector } from './components/ItemCatListSelector'
 import { DrawRectangleMode } from 'react-map-gl-draw';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
+import FilterListIcon from '@mui/icons-material/FilterList';
 interface Props {
 
 }
@@ -46,8 +47,11 @@ const DataDisplaySetting = (props: Props) => {
     }
     return (
         <Grid container>
-            <Grid item xs={12} style={{marginTop:5, marginLeft:5}}>
-                <Typography>เลือกดูข้อมูล</Typography>
+            <Grid item xs={12} style={{ marginTop: 5, marginLeft: 5 }}>
+                <Typography>
+                    <FilterListIcon />
+                    เลือกดูข้อมูล
+                </Typography>
             </Grid>
             <Grid item xs={12} lg={4}>
                 <ItemCatListSelector
@@ -66,16 +70,16 @@ const DataDisplaySetting = (props: Props) => {
                         />
                     }
                     label={
-                        <Typography style={{fontSize:15}}>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
+                        <Typography style={{ fontSize: 15 }}>เฉพาะบ้านที่ยังไม่ได้รับของ</Typography>
                     }
                 />
             </Grid>
 
 
             <Grid item xs={12} lg={4}>
-                <Button style={{ marginTop: 30, fontSize: 15 }} onClick={toggleSelectByAreaHandler} endIcon={<PhotoSizeSelectSmallIcon/>}>
+                <Button style={{ marginTop: 30, fontSize: 15 }} onClick={toggleSelectByAreaHandler} endIcon={<PhotoSizeSelectSmallIcon />}>
                     ดูเฉพาะพื้นที่
-                
+
                 </Button>
                 {isFilterByArea ? <CancelIcon onClick={onTurnFilterByAreaOffHandler} /> : <></>}
             </Grid>
