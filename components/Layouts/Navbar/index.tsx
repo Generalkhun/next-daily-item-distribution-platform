@@ -5,6 +5,7 @@ import { get } from 'lodash'
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import OtherMenuList from "./components/OtherMenuList";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -95,6 +96,7 @@ const NavBar = () => {
                 </Typography>
               </IconButton>
             </Grid>
+            <OtherMenuList/>
           </Grid>
         </Toolbar>
       </AppBar>
