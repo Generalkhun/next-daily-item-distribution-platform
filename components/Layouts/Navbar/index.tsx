@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     naviagtionWrapper: {
       //paddingLeft:480,
-      marginTop: 12,
       // [theme.breakpoints.down('lg')]:{
       //   paddingLeft:180
       // },
@@ -63,18 +62,18 @@ const NavBar = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Grid container>
-            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={6} sm={6} md={6} lg={6}>
+            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={2} sm={3} md={3} lg={2}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <HomeIcon />
+                <HomeIcon />  
                 <Typography className={classes.otherNavText}>
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
             </Grid>
-            <Grid item className={classes.naviagtionWrapper}>
+            <Grid item className={classes.naviagtionWrapper} lg={8}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
