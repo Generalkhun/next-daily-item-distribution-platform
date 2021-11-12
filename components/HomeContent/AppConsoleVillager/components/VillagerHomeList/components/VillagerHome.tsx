@@ -11,14 +11,14 @@ import ModalVillagerDetails from "./ModalVillagerDetails";
 interface Props {
   key: number;
   homeLocation: [string, string]
-  personId:string;
+  personId: string;
   personName: string;
   isItemRecieved: boolean;
   personImgUrl: string;
   numberOfFamilyMembers: number;
   homeRepresentativesContactNum: string
   isSelected: boolean
-  addressAdditionalDescription:string
+  addressAdditionalDescription: string
 }
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
@@ -83,8 +83,8 @@ function VillagerHome(props: Props) {
         </Grid>
         <Grid item xs={12} lg={10}>
           <ListItemText
-            primary={personName} secondary={"โทร: " + homeRepresentativesContactNum + " สมาชิก: " + numberOfFamilyMembers + " คน "}
-            style={{ paddingLeft: 20, color: 'black' }}
+            primary={personName} secondary={<Typography style={{ color: 'gray',fontSize:10.6 }}>{"โทร: " + homeRepresentativesContactNum + " สมาชิก: " + numberOfFamilyMembers + " คน "}</Typography>}
+            style={{ paddingLeft: 30, color: 'black' }}
           />
         </Grid>
         {isSelected ? <Button onClick={() => onClickSeeDetailHandler(props)} className={classes.seeDetailButton} variant='contained' fullWidth >ดูรายละเอียด</Button> : <></>}

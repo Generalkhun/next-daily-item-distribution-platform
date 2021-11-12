@@ -10,6 +10,7 @@ import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextPr
 import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVillagerDataContextProvider'
 import { GET_ITEMCAT_GGSHEET_DATA, GET_VILLAGER_GGSHEET_DATA } from '../constants'
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
+import useCursor from '../hooks/useCursor'
 
 interface Props {
 
@@ -21,11 +22,11 @@ const Home = (props: Props) => {
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
+    const [currentCursor] = useCursor()
     useEffect(() => {
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
             console.log('initialVillagerRsp', initialVillagerRsp);
-
             initializeVillagerSheetData(initialVillagerRsp)
             displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
             setDoneFetchingVillagerData(true)
@@ -41,10 +42,10 @@ const Home = (props: Props) => {
         })
     }, [])
     return (
-        <>
+        <div style={{ cursor: currentCursor }}>
             {doneFetchingVillagerData && <HomeContent />}
 
-        </>
+        </div>
     )
 }
 

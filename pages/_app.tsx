@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const theme = createTheme({
     typography: {
       "fontFamily": `"Kanit","Roboto", "Helvetica", "Arial", sans-serif`,
-      "fontSize": 15,
+      "fontSize": 16,
       "fontWeightLight": 300,
       "fontWeightRegular": 400,
       "fontWeightMedium": 500

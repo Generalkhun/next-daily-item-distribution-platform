@@ -2,6 +2,9 @@ import { IconButton, Theme, Toolbar, Typography, AppBar, makeStyles, createStyle
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import { get } from 'lodash'
+import HomeIcon from '@mui/icons-material/Home';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -12,13 +15,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       fontStyle: 'BOLD',
-      fontFamily: 'Cinzel',
+      fontFamily: 'Kanit',
       paddingRight: 100
     },
     otherNavText: {
       paddingLeft: 10,
       fontSize: '1.3rem',
-      fontFamily: 'Cinzel',
+      fontFamily: 'Kanit',
     },
     otherNavIcon: {
       marginLeft: 'auto',
@@ -36,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     naviagtionWrapper: {
       //paddingLeft:480,
-      marginTop: 12,
       // [theme.breakpoints.down('lg')]:{
       //   paddingLeft:180
       // },
@@ -60,21 +62,23 @@ const NavBar = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Grid container>
-            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={6} sm={6} md={6} lg={6}>
+            <Grid item className={classes.naviagtionWrapper} style={{ zIndex: 9999 }} xs={2} sm={3} md={3} lg={2}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <HomeIcon />  
                 <Typography className={classes.otherNavText}>
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
             </Grid>
-            <Grid item className={classes.naviagtionWrapper}>
+            <Grid item className={classes.naviagtionWrapper} lg={8}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <AddCircleOutlineIcon />
                 <Typography className={classes.otherNavText}>
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
@@ -83,8 +87,9 @@ const NavBar = () => {
             <Grid item className={classes.naviagtionWrapper}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
-                typeof window !== 'undefined' && router.push('/datamanagement')
+                typeof window !== 'undefined' && router.push('/login')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <ExitToAppIcon />
                 <Typography className={classes.otherNavText}>
                   ออกจากระบบ
                 </Typography>

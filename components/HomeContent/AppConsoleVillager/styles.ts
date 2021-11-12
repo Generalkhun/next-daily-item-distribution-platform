@@ -27,10 +27,11 @@ export const appConsoleStyles = makeStyles((theme: Theme) =>
       justifyContent: "flex-start",
     },
     AppConsoleVillagerWrapper: {
-      height: '90vh'
+      height: '70vh',
+      paddingRight:10,
+      marginTop:10
     },
     villageHomeListWrapper: {
-
     },
     summaryInfoWrapper: {
       height: '30vh',

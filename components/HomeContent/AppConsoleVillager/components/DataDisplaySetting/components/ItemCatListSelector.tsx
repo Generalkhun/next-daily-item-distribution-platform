@@ -62,7 +62,7 @@ export const ItemCatListSelector = (props: Props) => {
                     onClick={handleClickListItem}
                 >
                     <ListItemText
-                        primary={<Typography style={{fontFamily:'Kanit'}}>ประเภทสิ่งของ</Typography>}
+                        primary={<Typography style={{fontFamily:'Kanit'}}>เลือกประเภทของ</Typography>}
                         secondary={<Typography style={{fontFamily:'Kanit',fontStyle:'italic',color:'gray'}}>{options[selectedIndex]}</Typography>}
                     />
                 </ListItem>

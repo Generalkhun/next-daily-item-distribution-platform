@@ -35,7 +35,7 @@ const AppConsoleVillager = (props: Props) => {
   // get mapdata from dispalyVillagerData context
   const { displayVillagerState } = useContext
     (DisplayingVillagerDataContext)
-    
+
   const {
     onClickVillager,
   } = props;
@@ -53,21 +53,20 @@ const AppConsoleVillager = (props: Props) => {
   const summaryInfoTotalNonRecievedItemPeople = calcTotalNonRecievedItemPeople(villagerHomeListData)
 
   // calculate displaying counts
-  const displayingVillagerCounts = get(displayVillagerState,'filterCondition.displayOnlyNotrecieved') ? summaryInfoTotalNonRecievedItemHome : summaryInfoTotalHome
+  const displayingVillagerCounts = get(displayVillagerState, 'filterCondition.displayOnlyNotrecieved') ? summaryInfoTotalNonRecievedItemHome : summaryInfoTotalHome
   return (
     <div className={classes.AppConsoleVillagerWrapper}>
       <Paper variant="outlined">
-        <DataDisplaySetting
-        />
+        <DataDisplaySetting />
       </Paper>
-      <Paper variant="outlined" style={{paddingBottom:5}} className={styles.summaryInfoWrapper}>
+      <Paper variant="outlined" style={{ paddingBottom: 5 }} className={styles.summaryInfoWrapper}>
         <Grid container>
-          <Grid item lg={4} style={{marginLeft:10}}>
+          <Grid item lg={4} style={{ marginLeft: 10 }}>
             <Paper elevation={0}>
-              <img height='100vh' src={itemCatImageURL} style={{marginTop:10}} />
+              <img height='100vh' src={itemCatImageURL} style={{ marginTop: 10 }} />
             </Paper>
           </Grid>
-          <Grid item lg={6} style={{marginLeft:40}}>
+          <Grid item lg={6} style={{ marginLeft: 40 }}>
             <SummaryInfo
               summaryInfoItemName={summaryInfoItemName}
               summaryInfoTotalHome={summaryInfoTotalHome}
@@ -81,8 +80,8 @@ const AppConsoleVillager = (props: Props) => {
 
       </Paper>
 
-      <Typography style={{paddingTop:15}}>{`รายชื่อตัวแทนบ้าน (${displayingVillagerCounts})`}</Typography>
-      <Paper variant="outlined" className={styles.villageHomeListWrapper}>
+      <Typography style={{ paddingTop: 15 }}>{`รายชื่อตัวแทนบ้าน (${displayingVillagerCounts})`}</Typography>
+      <Paper variant="outlined" className={styles.villageHomeListWrapper} style={{height:'50vh'}}>
         <Grid container >
           <Grid item xs={12} lg={6} >
             <List>
