@@ -11,7 +11,6 @@ const MapWithHomeLocations = () => {
   const { displayVillagerState } = useContext(DisplayingVillagerDataContext)
   const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
   const focusedVillagerId = get(displayVillagerState, 'focusedVillagerId').toString()
-  console.log('MapWithHomeLocations displayVillagerState', displayVillagerState);
 
   /**
    * Hooks
@@ -23,8 +22,8 @@ const MapWithHomeLocations = () => {
    * 
    */
   const [viewport, setViewport] = useState<NextViewport>({
-    width: '66vw',
-    height: '80vh',
+    width: '65.4vw',
+    height: '87.5vh',
     // The latitude and longitude of the center of distribution place
     latitude: CENTER_OF_DISTRIBUTION_LAT,
     longitude: CENTER_OF_DISTRIBUTION_LNG,
@@ -32,9 +31,6 @@ const MapWithHomeLocations = () => {
   });
 
   const changeMapCenter = (newLat: number, newLng: number) => {
-    console.log('newLat', newLat);
-    console.log('newLng', newLng);
-
     setViewport((prevViewPort: NextViewport) => ({
       ...prevViewPort,
       latitude: newLat,
