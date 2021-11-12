@@ -140,7 +140,7 @@ const AddItemCat = (props: Props) => {
 
     return (
         <div className={classes.root}>
-            <Typography variant='h4'>เพิ่มประเภทสิ่งของ</Typography>
+            <Typography variant='h6'>เพิ่มประเภทสิ่งของ</Typography>
             <Grid container className={classes.topSectionFormWrapper}>
                 <Grid item xs={12}>
                     <TextField
@@ -156,7 +156,7 @@ const AddItemCat = (props: Props) => {
                         onChange={(e) => addItemCatFormDispatch({ type: 'updateItemCatName', payload: e.target.value })}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{marginTop:20}}>
                     <FormControl component="fieldset" error={isValidated && isEmpty(itemRecievedType)}>
                         <FormLabel component="legend">ประเภทการได้รับสิ่งของ</FormLabel>
                         <RadioGroup

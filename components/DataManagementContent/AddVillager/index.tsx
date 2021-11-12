@@ -47,20 +47,21 @@ const addVillagerFormReducer = (state: any, action: any) => {
 const useStyles = makeStyles({
   root: {
     marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 10,
+    marginRight: 10,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
 
   },
   topSectionFormWrapper: {
-    marginTop: 20,
+    height:200,
+    marginTop: 10,
     marginLeft: 20,
-    paddingBottom: 20
+    paddingBottom: 10
   },
   topSectionLowerPartWrapper: {
-    marginTop: 20
+    marginTop: 10
   },
   numFamMembers: {
     marginLeft: 10,
@@ -168,7 +169,7 @@ const AddVillager = (props: Props) => {
   }
   return (
     <div className={classes.root}>
-      <Typography variant='h4'>เพิ่มข้อมูลบ้าน</Typography>
+      <Typography variant='h6'>เพิ่มข้อมูลบ้าน</Typography>
       <Grid container className={classes.topSectionFormWrapper}>
         <Grid item xs={12}>
           <TextField
