@@ -5,13 +5,18 @@ import DrawingLayer from "./components/DrawingLayer";
 import { CENTER_OF_DISTRIBUTION_LAT, CENTER_OF_DISTRIBUTION_LNG } from "../../../constants";
 import { DisplayingVillagerDataContext } from "../../../contextProviders/DisplayingVillagerDataContextProvider";
 import { filter, get } from "lodash";
+import useCursor from "../../../hooks/useCursor";
 
 const MapWithHomeLocations = () => {
   const { displayVillagerState } = useContext(DisplayingVillagerDataContext)
   const displayVillagerData = get(displayVillagerState, 'displayVillagerData')
   const focusedVillagerId = get(displayVillagerState, 'focusedVillagerId').toString()
-  console.log('MapWithHomeLocations displayVillagerState',displayVillagerState);
-  
+  console.log('MapWithHomeLocations displayVillagerState', displayVillagerState);
+
+  /**
+   * Hooks
+   */
+  const [currentCursor] = useCursor()
 
   /**
    * Mapbox
@@ -54,6 +59,7 @@ const MapWithHomeLocations = () => {
     <>
       {displayVillagerState &&
         <ReactMapGL
+          getCursor={e => currentCursor}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken='pk.eyJ1IjoiZ2VuZXJhbGtodW4iLCJhIjoiY2t0bGl5NXduMXdmaTJ2bXA3NXgyMXR4aiJ9.dBaNof7U4QoJImXeDk1QXg'
           {...viewport}

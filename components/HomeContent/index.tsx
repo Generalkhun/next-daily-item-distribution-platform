@@ -39,8 +39,6 @@ function HomeContent() {
     useState<VillagerHomeData>({} as VillagerHomeData);
   const [isShowOnlyWaitingVillager, setIsShowOnlyWaitingVillager] =
     useState(false);
-
-  const [isOpenModalSetting, setIsOpenModalSetting] = useState(false);
   /**
    * Hooks
    */
