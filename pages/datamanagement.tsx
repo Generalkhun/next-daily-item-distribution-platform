@@ -12,6 +12,7 @@ import { get } from 'lodash'
 import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextProvider'
 import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVillagerDataContextProvider'
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
+import { LoginContext } from '../contextProviders/LoginContextProvider'
 
 interface Props {
 
@@ -22,7 +23,12 @@ const datamanagement = (props: Props) => {
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
+
+    // auth management
+    const { logoutHandler } = useContext(LoginContext)
     useEffect(() => {
+        // if not logged in yet, send back to login page
+        logoutHandler()
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
             console.log('initialVillagerRsp', initialVillagerRsp);
