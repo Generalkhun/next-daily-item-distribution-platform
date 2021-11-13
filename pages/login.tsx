@@ -9,24 +9,24 @@ interface Props {
 
 const useStyles = makeStyles({
     loginBox: {
-        width: '50%',
+        width: '30%',
         height: '50%',
         marginTop: 100,
-        marginLeft: 100
     },
     loginWrapper: {
-        marginLeft: 30,
+        marginLeft: 10,
         paddingTop: 30,
         paddingBottom: 30,
         marginBottom: 10,
+        width: '95%',
     },
     loginTextField: {
-        marginTop: 20,
+        marginTop: 40,
         backgroundColor: 'lightgray',
         borderRadius: 5,
     },
     loginButton: {
-        marginTop:40
+        marginTop: 40
     }
 
 })
@@ -45,12 +45,14 @@ const login = (props: Props) => {
 
     return (
         <div>
+            <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography>
 
             <Paper className={classes.loginBox} elevation={2}>
+
                 <Grid container className={classes.loginWrapper}>
-                    <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography>
                     <Grid item xs={12}>
                         <TextField
+                            fullWidth
                             className={classes.loginTextField}
                             variant='outlined'
                             error={isValidated && (isEmpty(inputUserName))}
@@ -64,6 +66,7 @@ const login = (props: Props) => {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
+                            fullWidth
                             className={classes.loginTextField}
                             variant='outlined'
                             error={isValidated && (isEmpty(inputPassword))}
@@ -77,7 +80,7 @@ const login = (props: Props) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button  className={classes.loginButton}>เข้าสู่ระบบ</Button>
+                        <Button className={classes.loginButton}>เข้าสู่ระบบ</Button>
                     </Grid>
                 </Grid>
 
