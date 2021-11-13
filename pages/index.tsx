@@ -24,13 +24,15 @@ const Home = (props: Props) => {
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
     const [currentCursor] = useCursor()
-    
+
     // auth management
-    const { logoutHandler } = useContext(LoginContext)
+    const { isLogin, logoutHandler } = useContext(LoginContext)
     useEffect(() => {
         // if not logged in yet, send back to login page
-        logoutHandler()
-        
+        if (!isLogin) {
+            logoutHandler()
+        }
+
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
             console.log('initialVillagerRsp', initialVillagerRsp);
