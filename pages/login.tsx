@@ -8,25 +8,32 @@ interface Props {
 }
 
 const useStyles = makeStyles({
+    loginContentWrapepr: {
+        // display: 'flex',
+        // justifyContent: 'center'
+    },
     loginBox: {
-        width: '30%',
-        height: '50%',
-        marginTop: 100,
+        width: 400,
+        height: '49.5%',
+        marginTop: 200,
+
     },
     loginWrapper: {
         marginLeft: 10,
-        paddingTop: 30,
-        paddingBottom: 30,
+        paddingTop: 1,
+        paddingBottom: 1,
         marginBottom: 10,
         width: '95%',
+        
     },
     loginTextField: {
-        marginTop: 40,
-        backgroundColor: 'lightgray',
+        marginTop: 10,
+        backgroundColor: '#eeeee4',
         borderRadius: 5,
     },
     loginButton: {
-        marginTop: 40
+        marginTop: 10,
+        backgroundColor: '#f7e1af'
     }
 
 })
@@ -44,49 +51,54 @@ const login = (props: Props) => {
     }
 
     return (
-        <div>
-            <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography>
+        <>
+            {/* <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography> */}
+            <Grid container className={classes.loginContentWrapepr}>
+            <Grid item xs={1} sm={4}></Grid>
+                <Grid item xs={8} sm={4}>
+                    <Paper className={classes.loginBox} elevation={2}>
+                        <Grid container className={classes.loginWrapper}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    className={classes.loginTextField}
+                                    variant='outlined'
+                                    error={isValidated && (isEmpty(inputUserName))}
+                                    placeholder=''
+                                    label="username"
+                                    defaultValue=""
+                                    value={inputUserName}
+                                    helperText={isValidated && isEmpty(inputUserName) ? "กรุณาใส่ username" : ""}
+                                    onChange={onChangeUserName}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    className={classes.loginTextField}
+                                    variant='outlined'
+                                    error={isValidated && (isEmpty(inputPassword))}
+                                    placeholder=''
+                                    label="password"
+                                    defaultValue=""
+                                    value={inputPassword}
+                                    helperText={isValidated && isEmpty(inputPassword) ? "กรุณาใส่ username" : ""}
+                                    onChange={onChangePassword}
+                                    type="password"
+                                />
+                            </Grid>
+                            <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                                <Button fullWidth variant='contained' className={classes.loginButton}>เข้าสู่ระบบ</Button>
+                            </Grid>
+                        </Grid>
 
-            <Paper className={classes.loginBox} elevation={2}>
 
-                <Grid container className={classes.loginWrapper}>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            className={classes.loginTextField}
-                            variant='outlined'
-                            error={isValidated && (isEmpty(inputUserName))}
-                            placeholder=''
-                            label="username"
-                            defaultValue=""
-                            value={inputUserName}
-                            helperText={isValidated && isEmpty(inputUserName) ? "กรุณาใส่ username" : ""}
-                            onChange={onChangeUserName}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            className={classes.loginTextField}
-                            variant='outlined'
-                            error={isValidated && (isEmpty(inputPassword))}
-                            placeholder=''
-                            label="password"
-                            defaultValue=""
-                            value={inputPassword}
-                            helperText={isValidated && isEmpty(inputPassword) ? "กรุณาใส่ username" : ""}
-                            onChange={onChangePassword}
-                            type="password"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button className={classes.loginButton}>เข้าสู่ระบบ</Button>
-                    </Grid>
+                    </Paper>
                 </Grid>
+            </Grid>
+            <Grid item xs={1} sm={4}></Grid>
 
-
-            </Paper>
-        </div>
+        </>
     )
 }
 
