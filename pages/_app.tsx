@@ -6,6 +6,7 @@ import Layouts from '../components/Layouts'
 import { GoogleSheetDataProvider } from '../contextProviders/GoogleSheetContextProvider'
 import { DisplayVillagerDataProvider } from '../contextProviders/DisplayingVillagerDataContextProvider'
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
+import { LoginContextProvider } from '../contextProviders/LoginContextProvider'
 function MyApp({ Component, pageProps }: AppProps) {
 
   const theme = createTheme({
@@ -15,21 +16,22 @@ function MyApp({ Component, pageProps }: AppProps) {
       "fontWeightLight": 300,
       "fontWeightRegular": 400,
       "fontWeightMedium": 500
-     }
+    }
   })
   return (
     <ThemeProvider theme={theme}>
-      <GoogleSheetDataProvider>
-        <DisplayVillagerDataProvider>
-          <Layouts>
-            <Head>
-              <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-            </Head>
-            <Component {...pageProps} />
-          </Layouts>
-        </DisplayVillagerDataProvider>
-      </GoogleSheetDataProvider>
-
+      <LoginContextProvider>
+        <GoogleSheetDataProvider>
+          <DisplayVillagerDataProvider>
+            <Layouts>
+              <Head>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+              </Head>
+              <Component {...pageProps} />
+            </Layouts>
+          </DisplayVillagerDataProvider>
+        </GoogleSheetDataProvider>
+      </LoginContextProvider>
     </ThemeProvider>
 
   )

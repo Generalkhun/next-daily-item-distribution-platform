@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useEffect } from 'react';
+import Button from '@mui/material/Button'
 
 // const options = [
 //   'Show some love to MUI',
@@ -16,11 +17,11 @@ import { useEffect } from 'react';
 
 interface Props {
     options: string[]
-    displayVillagerDispatch:any
+    displayVillagerDispatch: any
 }
 
 export const ItemCatListSelector = (props: Props) => {
-    const { options,displayVillagerDispatch } = props
+    const { options, displayVillagerDispatch } = props
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const open = Boolean(anchorEl);
@@ -42,7 +43,7 @@ export const ItemCatListSelector = (props: Props) => {
 
     // update selected item inside context on the side effect of updating selectedIndex state
     useEffect(() => {
-        displayVillagerDispatch({type:'itemCatSelect',payload:selectedIndex})
+        displayVillagerDispatch({ type: 'itemCatSelect', payload: selectedIndex })
     }, [selectedIndex])
 
     return (
@@ -62,8 +63,8 @@ export const ItemCatListSelector = (props: Props) => {
                     onClick={handleClickListItem}
                 >
                     <ListItemText
-                        primary={<Typography style={{fontFamily:'Kanit'}}>เลือกประเภทของ</Typography>}
-                        secondary={<Typography style={{fontFamily:'Kanit',fontStyle:'italic',color:'gray'}}>{options[selectedIndex]}</Typography>}
+                        primary={<Typography style={{ fontFamily: 'Kanit' }}>เลือกประเภทของ</Typography>}
+                        secondary={<Typography style={{ fontFamily: 'Kanit', fontStyle: 'italic', color: 'gray' }}>{options[selectedIndex]}</Typography>}
                     />
                 </ListItem>
             </List>
@@ -81,7 +82,7 @@ export const ItemCatListSelector = (props: Props) => {
                     <MenuItem
                         key={option}
                         selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        onClick={(event: any) => handleMenuItemClick(event, index)}
                     >
                         {option}
                     </MenuItem>

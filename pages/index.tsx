@@ -11,6 +11,7 @@ import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVil
 import { GET_ITEMCAT_GGSHEET_DATA, GET_VILLAGER_GGSHEET_DATA } from '../constants'
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 import useCursor from '../hooks/useCursor'
+import { LoginContext } from '../contextProviders/LoginContextProvider'
 
 interface Props {
 
@@ -23,7 +24,15 @@ const Home = (props: Props) => {
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
     const [currentCursor] = useCursor()
+
+    // auth management
+    const { isLogin, logoutHandler } = useContext(LoginContext)
     useEffect(() => {
+        // if not logged in yet, send back to login page
+        if (!isLogin) {
+            logoutHandler()
+        }
+
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
             console.log('initialVillagerRsp', initialVillagerRsp);
