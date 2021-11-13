@@ -1,5 +1,5 @@
 import { IconButton, Theme, Toolbar, Typography, AppBar, makeStyles, createStyles, Grid } from "@material-ui/core";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import { get } from 'lodash'
 import HomeIcon from '@mui/icons-material/Home';
@@ -8,6 +8,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import OtherMenuList from "./components/OtherMenuList";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { LoginContext } from "../../../contextProviders/LoginContextProvider";
+import ModalConfirmLogout from "./components/ModalConfirmLogout";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -60,10 +62,26 @@ const NavBar = () => {
   const pathname = get(router, 'pathname')
   const theme = useTheme();
   const matchesMediaQueryMediumAndBelow = useMediaQuery(theme.breakpoints.down('md'))
-
+  const { logoutHandler } = useContext(LoginContext)
   const classes = useStyles();
+  const [isOpenModalConfirmLogout, setIsOpenModalConfirmLogout] = useState(false)
+  const openModalConfirmLogouHandler = () => {
+    setIsOpenModalConfirmLogout(true)
+  }
+  const closeModalConfirmLogouHandler = () => {
+    setIsOpenModalConfirmLogout(false)
+  }
+  const onConfirmLogout = () => {
+    logoutHandler()
+    closeModalConfirmLogouHandler()
+  }
   return (
     <div className={classes.root}>
+      <ModalConfirmLogout
+        isOpenModal={isOpenModalConfirmLogout}
+        handleCloseModal={closeModalConfirmLogouHandler}
+        onConfirmLogout={onConfirmLogout}
+      />
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Grid container>
@@ -78,7 +96,7 @@ const NavBar = () => {
                 </Typography>
               </IconButton>
             </Grid>
-            {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper} md = {6} lg={8}>
+            {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper} md={6} lg={8}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
@@ -92,7 +110,7 @@ const NavBar = () => {
             {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
-                typeof window !== 'undefined' && router.push('/login')
+                openModalConfirmLogouHandler()
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <ExitToAppIcon />
                 <Typography className={classes.otherNavText}>
