@@ -2,7 +2,7 @@ import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@materia
 import { get } from 'http'
 import { isEmpty } from 'lodash'
 import React, { useContext, useReducer } from 'react'
-import InvalidUsernamePasswordModal from '../components/LoginContent/components/invalidUsernamePasswordModal'
+import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 
 interface Props {

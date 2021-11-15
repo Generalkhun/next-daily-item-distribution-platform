@@ -9,6 +9,7 @@ export const LoginContextProvider: React.FC<Props> = ({ children }) => {
     const [isLogin, setIsLogin] = useState(false)
     const loginSuccessHandler = () => {
         setIsLogin(true)
+        // send request to create and store user's sessionId and will use it to store on the cookie
         // navigate to main page
         typeof window !== 'undefined' && router.push('/')
 
