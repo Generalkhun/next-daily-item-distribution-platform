@@ -58,8 +58,15 @@ export const UPLOAD_IMG_SERVICE_URL = 'api/saveImgToGGDrive'
 export const ADD_VILLAGER_SERVICE_URL = 'api/addVillagerToGGSheet'
 export const ADD_ITEM_CAT_SERVICE_URL = 'api/addItemCatToGGSheet'
 export const UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL = 'api/updateAddRecievedItemCatOnGGSheet'
+export const VALIDATE_SESSION_URL = 'api/validateSession'
 /**
  * Config UI 
  */
 export const CENTER_OF_DISTRIBUTION_LAT = 13.68474450590383
 export const CENTER_OF_DISTRIBUTION_LNG = 100.47730858426843
+
+/**
+ * Cookie constants
+ */
+export const SESSION_ID_COOKIE = 'SESSION_ID_COOKIE'
+export const SESSION_COOKIE_VALUE = 'sessionIdTmp'

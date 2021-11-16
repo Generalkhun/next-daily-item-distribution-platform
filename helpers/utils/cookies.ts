@@ -20,3 +20,4 @@ export const setCookie = (cname: string, cvalue: string, exdays: number) => {
     let expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
