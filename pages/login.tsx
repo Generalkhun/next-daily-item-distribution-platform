@@ -1,10 +1,10 @@
 import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
 import { get } from 'http'
 import { isEmpty } from 'lodash'
-import React, { useContext, useReducer } from 'react'
-import InvalidUsernamePasswordModal from '../components/LoginContent/components/invalidUsernamePasswordModal'
+import React, { useContext, useEffect, useReducer } from 'react'
+import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
-
+import router from "next/dist/client/router";
 interface Props {
 
 }
@@ -46,7 +46,7 @@ const login = (props: Props) => {
     const [isValidated, setIsValidated] = React.useState<boolean>(false)
 
     const [isShowInvalidModal, setIsShowInvalidModal] = React.useState<boolean>(false)
-    const { loginSuccessHandler } = useContext(LoginContext)
+    const { loginSuccessHandler, loginSessionChecker } = useContext(LoginContext)
 
     const onChangeUserName = (e: any) => {
         setInputUserName(e.target.value)
@@ -68,7 +68,7 @@ const login = (props: Props) => {
         // check if the username and password is correct
         if (
             // mocking auth
-            inputUserName === 'userName1234' &&
+            inputUserName === 'admin1234' &&
             inputPassword === 'password1234'
         ) {
             // auth success
@@ -78,6 +78,13 @@ const login = (props: Props) => {
         openInvalidAuthModalHandler()
         return
     }
+    useEffect(() => {
+        const isAlreadyLogin = loginSessionChecker()
+        if (isAlreadyLogin) {
+            // navigate to main page if already logged in
+            typeof window !== 'undefined' && router.push('/')
+        }
+    }, [])
 
     return (
         <>
