@@ -1,10 +1,10 @@
-import { google } from "googleapis"
+import { google, sheets_v4 } from "googleapis"
 import { filter, get } from "lodash";
 import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE, SHEET_RANGE_ADD_PEOPLE, USER_ENTERED, RAW } from "../../constants";
 import { ItemCatAddingFormState, VillagerAddingFormState } from "../../type";
 import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataResponse";
 import { transformToArrayTobeAddedToGGSheet } from "../utils/transformToArrayTobeAddedToGGSheet";
-
+import moment from "moment"
 
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
@@ -51,7 +51,7 @@ export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: Villag
     console.log('tobeAddedVillagerData', tobeAddedVillagerData);
 
     // transform the tobeAddedVillagerData to arrays format 
-    const tobeAddedVillagerDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedVillagerData, 9)
+    const tobeAddedVillagerDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedVillagerData, 10)
 
     // connect to the sheet 
     const sheets = await connectGoogleSheetsApi()
@@ -106,27 +106,57 @@ interface updateAddRecievedStatusParams {
     itemCatId: string,
     personId: string,
     personRecievedItemListText: string,
+    personRecievedItemExpirationDateText: string,
 }
-export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId, personRecievedItemListText }: updateAddRecievedStatusParams) => {
-
-    //connect google sheet
-    const sheets = await connectGoogleSheetsApi()
-
-    // new recieved item list
+const updateRecievedItemList = async (sheets: sheets_v4.Sheets, personRecievedItemListText: string, itemCatId: string, personId: string) => {
     const newRecievedItemList = personRecievedItemListText + ',' + itemCatId
 
-    // request 
+    // request to update recieved item list
     const request = {
         spreadsheetId: process.env.SHEET_ID,
         range: `H${parseInt(personId) + 1}`,
         valueInputOption: RAW,
-        includeValuesInResponse:true,
+        includeValuesInResponse: true,
         requestBody: {
-            "range" : `H${parseInt(personId) + 1}`,
+            "range": `H${parseInt(personId) + 1}`,
             "majorDimension": "ROWS",
             "values": [[newRecievedItemList]],
         }
     }
     const response = await sheets.spreadsheets.values.update(request as any)
+    return response
+}
+
+export const updateRecievedItemExpirationDate = async (sheets: sheets_v4.Sheets, personRecievedItemExpirationDateText: string, personId: string) => {
+    // concat today's date to the list
+    const todayDate = moment(new Date()).format('YYYY-MM-DD');
+    const newExpiaryDate = personRecievedItemExpirationDateText + ',' + todayDate
+
+    // request to update recieved item list
+    const request = {
+        spreadsheetId: process.env.SHEET_ID,
+        range: `J${parseInt(personId) + 1}`,
+        valueInputOption: RAW,
+        includeValuesInResponse: true,
+        requestBody: {
+            "range": `J${parseInt(personId) + 1}`,
+            "majorDimension": "ROWS",
+            "values": [[newExpiaryDate]],
+        }
+    }
+    const response = await sheets.spreadsheets.values.update(request as any)
+    return response
+}
+export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId, personRecievedItemListText, personRecievedItemExpirationDateText }: updateAddRecievedStatusParams) => {
+
+    //connect google sheet
+    const sheets = await connectGoogleSheetsApi()
+
+    // update recieved item list
+    const updateRecievedItemListRsp = await updateRecievedItemList(sheets, personRecievedItemListText, itemCatId, personId)
+
+    // update recieved item expiration date
+    const updateRecievedItemExpirationDateRsp = await updateRecievedItemExpirationDate(sheets, personRecievedItemExpirationDateText, personId)
+    const newRecievedItemList = { updateRecievedItemListRsp, updateRecievedItemExpirationDateRsp }
     return newRecievedItemList
 }

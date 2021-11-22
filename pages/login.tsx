@@ -1,7 +1,6 @@
 import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
-import { get } from 'http'
 import { isEmpty } from 'lodash'
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect } from 'react'
 import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
@@ -68,8 +67,8 @@ const login = (props: Props) => {
         // check if the username and password is correct
         if (
             // mocking auth
-            inputUserName === 'admin1234' &&
-            inputPassword === 'password1234'
+            inputUserName === 'a' &&
+            inputPassword === 'b'
         ) {
             // auth success
             loginSuccessHandler()

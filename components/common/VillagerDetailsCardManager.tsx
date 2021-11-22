@@ -18,6 +18,7 @@ import axios from "axios";
 import { UPDATE_ADD_RECIEVED_ITEM_CAT_SERVICE_URL } from "../../constants";
 import { useFindRecievedItemList } from "../../hooks/useFindRecievedItemList";
 import { useUpdateStoreVillagerRecievedStatus } from "../../hooks/contextUpdateAfterDBfetch/useUpdateStoreVillagerRecievedStatus";
+import { useFindRecievedItemExpirationDateList } from "../../hooks/useFindRecievedItemExpirationDateList";
 
 const useStyles = makeStyles({
   root: {
@@ -75,6 +76,7 @@ const VillagerDetailsCardManager = (props: Props) => {
 
   const [itemCatId, itemCatTitle] = useSelectItemCat()
   const personRecievedItemListText = personId && useFindRecievedItemList(personId)
+  const personRecievedItemExpirationDateText = personId && useFindRecievedItemExpirationDateList(personId)
   const { updateVillagerRecievedStatus } = useUpdateStoreVillagerRecievedStatus()
 
   // reference to card action
@@ -114,6 +116,7 @@ const VillagerDetailsCardManager = (props: Props) => {
           itemCatId,
           personId,
           personRecievedItemListText,
+          personRecievedItemExpirationDateText,
         }
       })
       // update store

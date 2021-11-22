@@ -9,6 +9,7 @@ import inside from "point-in-polygon";
 import { findRecievedItem } from '../../../../helpers/utils/dataPrepFromVillagerDataContextToDisplayOnList';
 import { CENTER_OF_DISTRIBUTION_LAT, CENTER_OF_DISTRIBUTION_LNG } from '../../../../constants';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { removeExpiredRecievedItems } from '../../../../helpers/utils/removeExpiredRecievedItems';
 interface Props {
 }
 
@@ -36,7 +37,10 @@ const DrawingLayer = () => {
     // create base markers to render without having the selected rectangle, showing conditions are recieved selected item
     const baseMarkers = map(villagerList,
         villager => {
-            const recieved = findRecievedItem(selectedItemCat, get(villager, 'ITEM_RECIEVED'))
+            const nonExpiredRecievedItemsArray = removeExpiredRecievedItems(get(villager, 'ITEM_RECIEVED'),get(villager, 'ITEM_RECIEVED_EXP_DATE'))
+            const recieved = findRecievedItem(selectedItemCat, nonExpiredRecievedItemsArray)
+            console.log('recieved item baseMarkers',recieved);
+            
             return (
                 <Marker
                     onClick={() => onClickMarkerHandler(villager.HOME_ID)}

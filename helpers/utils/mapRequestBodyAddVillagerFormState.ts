@@ -16,6 +16,7 @@ export const mapRequestBodyAddVillagerFormState = (addVillagerFormstate: Village
     const ADDR_DESCRIPTION = isEmpty(addressDescriptionFromState) ? "" : addressDescriptionFromState
     const ITEM_RECIEVED = '""'
     const IMG_URL = imgURLGGdrive
+    const ITEM_RECIEVED_EXP_DATE = '""'
 
     const mappedAddVillagerData = {
         HOME_ID,
@@ -27,6 +28,7 @@ export const mapRequestBodyAddVillagerFormState = (addVillagerFormstate: Village
         ADDR_DESCRIPTION,
         ITEM_RECIEVED,
         IMG_URL,
+        ITEM_RECIEVED_EXP_DATE,
     }
     console.log('mappedAddVillagerData', mappedAddVillagerData);
 

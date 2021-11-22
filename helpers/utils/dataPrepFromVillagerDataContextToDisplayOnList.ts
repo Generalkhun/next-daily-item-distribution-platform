@@ -48,7 +48,7 @@ const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerState: any)
 }
 
 
-export const findRecievedItem = (currentSelectedItemId: number, itemsRecieved: string): boolean => {
-    const itemsRecievedArray = split(itemsRecieved, ',')
-    return includes(itemsRecievedArray, currentSelectedItemId.toString())
+export const findRecievedItem = (currentSelectedItemId: number, nonExpiredRecievedItemsArray: string[]): boolean => {
+    //const itemsRecievedArray = split(itemsRecieved, ',')
+    return includes(nonExpiredRecievedItemsArray, currentSelectedItemId.toString())
 }
