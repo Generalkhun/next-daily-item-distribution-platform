@@ -4,10 +4,7 @@ import { get } from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { updateRecieveItemStatusOnGoogleSheet } from '../../helpers/api/googleSheetApi';
 
-type Data = {
-    newRecievedItemList: string
-}
-
+type Data = any
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>

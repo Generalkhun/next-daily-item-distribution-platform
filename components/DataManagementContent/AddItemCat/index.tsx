@@ -119,12 +119,15 @@ const AddItemCat = (props: Props) => {
     }
     const onConfirmAddItem = async () => {
 
-        // save image in google drive first
+        // save image in google drive first (if have)
 
-        const imgSavedGGdriveResp = await saveImgToGGDrive((get(addItemCatFormstate, 'itemCatImg') || [])[0])
-        const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
-        // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
-        // save all info in giigle sheeet
+        const itemCatImg = get(addItemCatFormstate, 'itemCatImg')
+        let imgURLGGdrive = ''
+        if (!isEmpty(itemCatImg)) {
+            const imgSavedGGdriveResp = await saveImgToGGDrive((itemCatImg || [])[0])
+            imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
+        }
+        // save all info in google sheeet
         const res = await axios({
             method: 'post',
             url: ADD_ITEM_CAT_SERVICE_URL,
@@ -156,7 +159,7 @@ const AddItemCat = (props: Props) => {
                         onChange={(e) => addItemCatFormDispatch({ type: 'updateItemCatName', payload: e.target.value })}
                     />
                 </Grid>
-                <Grid item xs={12} style={{marginTop:20}}>
+                <Grid item xs={12} style={{ marginTop: 20 }}>
                     <FormControl component="fieldset" error={isValidated && isEmpty(itemRecievedType)}>
                         <FormLabel component="legend">ประเภทการได้รับสิ่งของ</FormLabel>
                         <RadioGroup

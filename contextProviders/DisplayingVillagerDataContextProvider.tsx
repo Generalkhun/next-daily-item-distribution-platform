@@ -86,6 +86,8 @@ const displayVillagerDataReducer = (state: any, action: any) => {
         // update item recieved status on update
         case 'updateSuccessVillagerItemRecievedStatus':
             const { villagerId, updatedRecievedItemList } = action.payload
+
+            // find the updated villager
             let updatedVillager = find(state.displayVillagerData, villager => villager.HOME_ID === villagerId)
 
             // update ITEM_RECIEVED to be updated item recieved list
