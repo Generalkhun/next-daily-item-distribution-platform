@@ -112,7 +112,7 @@ const login = (props: Props) => {
                                     label="username"
                                     defaultValue=""
                                     value={inputUserName}
-                                    helperText={isValidated && isEmpty(inputUserName) ? "กรุณาใส่ username" : ""}
+                                    // helperText={isValidated && isEmpty(inputUserName) ? "กรุณาใส่ username" : ""}
                                     onChange={onChangeUserName}
                                 />
                             </Grid>
@@ -126,7 +126,7 @@ const login = (props: Props) => {
                                     label="password"
                                     defaultValue=""
                                     value={inputPassword}
-                                    helperText={isValidated && isEmpty(inputPassword) ? "กรุณาใส่ password" : ""}
+                                    //helperText={isValidated && isEmpty(inputPassword) ? "กรุณาใส่ password" : ""}
                                     onChange={onChangePassword}
                                     type="password"
                                 />
