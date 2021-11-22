@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 
   },
   topSectionFormWrapper: {
-    height:200,
+    height: 200,
     marginTop: 10,
     marginLeft: 20,
     paddingBottom: 10
@@ -151,11 +151,13 @@ const AddVillager = (props: Props) => {
   }
   const confirmSubmitAddVillagerHandler = async () => {
 
-    // save image in google drive first
-
-    const imgSavedGGdriveResp = await saveImgToGGDrive((get(addVillagerFormstate, 'homeRepresentativesImg') || [])[0])
-    const imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
-    // const imgURLGGdrive = get(imgURLGGdriveResp, 'imgURLGGdrive')
+    // save image in google drive first (if have)
+    const homeRepresentativesImg = get(addVillagerFormstate, 'homeRepresentativesImg')
+    let imgURLGGdrive = ''
+    if (!isEmpty(homeRepresentativesImg)) {
+      const imgSavedGGdriveResp = await saveImgToGGDrive((homeRepresentativesImg || [])[0])
+      imgURLGGdrive = getGGDriveImgURLViewWithId(get(imgSavedGGdriveResp, 'imgIdGGdrive'))
+    }
     // save all info in google sheeet
     const res = await axios({
       method: 'post',

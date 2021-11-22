@@ -1,5 +1,8 @@
 
-export const removeExpiredRecievedItems = (itemRecieved: string, itemRecievedExpiryDate: string):string[] => {
+export const removeExpiredRecievedItems = (itemRecieved: string, itemRecievedExpiryDate: string): string[] => {
+
+    console.log('removeExpiredRecievedItems:itemRecieved', itemRecieved);
+    console.log('removeExpiredRecievedItems:itemRecievedExpiryDate', itemRecievedExpiryDate);
 
     // get the arrays
     const itemRecievedArray = itemRecieved.split(',')
