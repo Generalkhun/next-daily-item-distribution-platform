@@ -107,6 +107,7 @@ interface updateAddRecievedStatusParams {
     personId: string,
     personRecievedItemListText: string,
     personRecievedItemExpirationDateText: string,
+    dayToShorts:number,
 }
 const updateRecievedItemList = async (sheets: sheets_v4.Sheets, personRecievedItemListText: string, itemCatId: string, personId: string) => {
     const newRecievedItemList = personRecievedItemListText + ',' + itemCatId
@@ -127,9 +128,11 @@ const updateRecievedItemList = async (sheets: sheets_v4.Sheets, personRecievedIt
     return response
 }
 
-export const updateRecievedItemExpirationDate = async (sheets: sheets_v4.Sheets, personRecievedItemExpirationDateText: string, personId: string) => {
-    // concat today's date to the list
-    const todayDate = moment(new Date()).format('YYYY-MM-DD');
+const updateRecievedItemExpirationDate = async (sheets: sheets_v4.Sheets, personRecievedItemExpirationDateText: string, personId: string, dayToShorts: number) => {
+    // concat today's date to the list and add with day to shorts of the item
+    const todayDate = moment(new Date())
+        .add(dayToShorts, 'days')
+        .format('YYYY-MM-DD')
     const newExpiaryDate = personRecievedItemExpirationDateText + ',' + todayDate
 
     // request to update recieved item list
@@ -147,7 +150,7 @@ export const updateRecievedItemExpirationDate = async (sheets: sheets_v4.Sheets,
     const response = await sheets.spreadsheets.values.update(request as any)
     return response
 }
-export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId, personRecievedItemListText, personRecievedItemExpirationDateText }: updateAddRecievedStatusParams) => {
+export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId, personRecievedItemListText, personRecievedItemExpirationDateText, dayToShorts }: updateAddRecievedStatusParams) => {
 
     //connect google sheet
     const sheets = await connectGoogleSheetsApi()
@@ -156,7 +159,7 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
     const updateRecievedItemListRsp = await updateRecievedItemList(sheets, personRecievedItemListText, itemCatId, personId)
 
     // update recieved item expiration date
-    const updateRecievedItemExpirationDateRsp = await updateRecievedItemExpirationDate(sheets, personRecievedItemExpirationDateText, personId)
-    const newRecievedItemList = get(updateRecievedItemListRsp,'data.updatedData.values')[0][0]
+    const updateRecievedItemExpirationDateRsp = await updateRecievedItemExpirationDate(sheets, personRecievedItemExpirationDateText, personId, dayToShorts)
+    const newRecievedItemList = get(updateRecievedItemListRsp, 'data.updatedData.values')[0][0]
     return newRecievedItemList
 }
