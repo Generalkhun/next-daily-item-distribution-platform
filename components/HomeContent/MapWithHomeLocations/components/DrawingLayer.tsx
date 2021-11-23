@@ -37,6 +37,7 @@ const DrawingLayer = () => {
     // create base markers to render without having the selected rectangle, showing conditions are recieved selected item
     const baseMarkers = map(villagerList,
         villager => {
+            
             const nonExpiredRecievedItemsArray = removeExpiredRecievedItems(get(villager, 'ITEM_RECIEVED'),get(villager, 'ITEM_RECIEVED_EXP_DATE'))
             const recieved = findRecievedItem(selectedItemCat, nonExpiredRecievedItemsArray)
             console.log('recieved item baseMarkers',recieved);

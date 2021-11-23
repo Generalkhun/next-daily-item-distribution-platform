@@ -22,11 +22,12 @@ export const getAllVillagerDataFromGoogleSheet = async () => {
     const sheets = await connectGoogleSheetsApi()
 
     //query and return response
+    console.log('SHEET_RANGE_MAIN_PAGE',SHEET_RANGE_MAIN_PAGE);
+    
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId: process.env.SHEET_ID,
         range: SHEET_RANGE_MAIN_PAGE
     })
-
     return formatGoogleSheetDataResponse(get(response, 'data.values'))
 }
 
