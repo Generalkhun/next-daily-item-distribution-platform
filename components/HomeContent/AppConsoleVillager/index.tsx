@@ -81,7 +81,7 @@ const AppConsoleVillager = (props: Props) => {
       </Paper>
 
       <Typography style={{ paddingTop: 15 }}>{`รายชื่อตัวแทนบ้าน (${displayingVillagerCounts})`}</Typography>
-      <Paper variant="outlined" className={styles.villageHomeListWrapper} style={{height:'45vh'}}>
+      <Paper variant="outlined" className={styles.villageHomeListWrapper} style={{height:'59vh'}}>
         <Grid container >
           <Grid item xs={12} lg={6} >
             <List>

@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react'
 import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
+import { typography } from '@mui/system'
 interface Props {
 
 }
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
     },
     loginBox: {
         width: 400,
-        height: '49.5%',
+        height: '52.5%',
         marginTop: 200,
 
     },
@@ -97,10 +98,14 @@ const login = (props: Props) => {
             }
             {/* <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography> */}
             <Grid container className={classes.loginContentWrapepr}>
-                <Grid item xs={1} sm={4}></Grid>
+                <Grid item xs={1} sm={4}>
+                </Grid>
                 <Grid item xs={8} sm={4}>
+
                     <Paper className={classes.loginBox} elevation={2}>
+                        <Typography style={{marginLeft:120}}>ส่งของเข้าบ้าน ADMIN</Typography>
                         <Grid container className={classes.loginWrapper}>
+
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth

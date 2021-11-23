@@ -75,6 +75,7 @@ const NavBar = () => {
     logoutHandler()
     closeModalConfirmLogouHandler()
   }
+
   return (
     <div className={classes.root}>
       <ModalConfirmLogout
@@ -90,8 +91,8 @@ const NavBar = () => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <HomeIcon />
-                <Typography className={classes.otherNavText}>
+                <HomeIcon style={{ color: pathname === '/' ? '#f7e1af' : 'white' }} />
+                <Typography style={{ color: pathname === '/' ? '#f7e1af' : 'white' }} className={classes.otherNavText}>
                   ส่งของเข้าบ้าน
                 </Typography>
               </IconButton>
@@ -101,8 +102,8 @@ const NavBar = () => {
                 e.preventDefault()
                 typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <AddCircleOutlineIcon />
-                <Typography className={classes.otherNavText}>
+                <AddCircleOutlineIcon style={{ color: pathname === '/datamanagement' ? '#f7e1af' : 'white' }} />
+                <Typography style={{ color: pathname === '/datamanagement' ? '#f7e1af' : 'white' }} className={classes.otherNavText}>
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
               </IconButton>
