@@ -1,5 +1,6 @@
 import { includes, get, map, split, filter, isEmpty } from 'lodash'
 import inside from 'point-in-polygon';
+import { removeExpiredRecievedItems } from './removeExpiredRecievedItems';
 
 export const dataPrepFromVillagerDataContextToDisplayOnList = (displayVillagerState: any) => {
     const isFilterByarea = get(displayVillagerState, 'filterCondition.isFilterByArea')
@@ -31,8 +32,9 @@ const mapVillagerDataFromContextToDisplayInConsole = (displayVillagerState: any)
     const currentSelectedItemId = get(displayVillagerState, 'filterCondition.itemCatSelected')
 
     return map(displayVillagerData, (villager) => {
-        const itemsRecieved = get(villager, 'ITEM_RECIEVED')
-        const isItemRecieved = findRecievedItem(currentSelectedItemId, itemsRecieved)
+        //const itemsRecieved = get(villager, 'ITEM_RECIEVED')
+        const nonExpiredRecievedItemsArray = removeExpiredRecievedItems(get(villager, 'ITEM_RECIEVED'),get(villager, 'ITEM_RECIEVED_EXP_DATE'))
+        const isItemRecieved = findRecievedItem(currentSelectedItemId, nonExpiredRecievedItemsArray)
 
         return {
             homeId: get(villager, 'HOME_ID'),

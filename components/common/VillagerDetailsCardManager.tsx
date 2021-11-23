@@ -78,7 +78,7 @@ const VillagerDetailsCardManager = (props: Props) => {
   const [itemCatId, itemCatTitle] = useSelectItemCat()
   const personRecievedItemListText = personId && useFindRecievedItemList(personId)
   const personRecievedItemExpirationDateText = personId && useFindRecievedItemExpirationDateList(personId)
-  const dayToShorts = itemCatId && useFindItemDayToShorts(itemCatId)
+  const dayToShorts = itemCatId && (!isEmpty(useFindItemDayToShorts(itemCatId)) ? useFindItemDayToShorts(itemCatId) : 999999) // for one time used item, day to shorts will be empty, so we will use large int to represent day to shorts instead
   const { updateVillagerRecievedStatus } = useUpdateStoreVillagerRecievedStatus()
 
   // reference to card action
