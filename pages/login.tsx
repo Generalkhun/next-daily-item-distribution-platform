@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react'
 import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
+import { GithubNavBtn } from '../components/common/GithubNavBtn'
 interface Props {
 
 }
@@ -151,7 +152,7 @@ const login = (props: Props) => {
             </Grid>
             <Grid item xs={1} sm={4}>
             </Grid>
-
+            <GithubNavBtn />
         </>
     )
 }

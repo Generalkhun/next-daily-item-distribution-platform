@@ -65,7 +65,7 @@ const addItemCatFormInitialState = {
 const AddItemCat = (props: Props) => {
     const classes = useStyles()
     const [addItemCatFormstate, addItemCatFormDispatch] = useReducer(addItemCatFormReducer, addItemCatFormInitialState)
-    console.log('addItemCatFormstate', addItemCatFormstate);
+
 
     const itemCatName = get(addItemCatFormstate, 'itemCatName')
     const itemRecievedType = get(addItemCatFormstate, 'itemRecievedType')
@@ -79,10 +79,9 @@ const AddItemCat = (props: Props) => {
     const { googleSheetItemCatData } = useContext(GoogleSheetDataContext)
 
 
-    console.log('googleSheetItemCatData', googleSheetItemCatData);
+
 
     const currentTotalItemCat = googleSheetItemCatData && googleSheetItemCatData.length
-    console.log('currentTotalItemCat', currentTotalItemCat);
 
     const isItemAlreadyExit = (itemName: string): boolean => {
         const existedItem = find(googleSheetItemCatData, (itemCat) => {
@@ -133,7 +132,7 @@ const AddItemCat = (props: Props) => {
             url: ADD_ITEM_CAT_SERVICE_URL,
             data: mapRequestBodyAddItemCatFormState(addItemCatFormstate, imgURLGGdrive, currentTotalItemCat)
         })
-        console.log('res', res);
+
 
         //get props again by refresh
         window.location.reload();

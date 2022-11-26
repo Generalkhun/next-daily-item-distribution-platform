@@ -35,7 +35,7 @@ export default function ConfirmSubmitModal(props: Props) {
 
     const { isOpenModal, handleCloseModal, onConfirmSubmitAddVillagerHandler, addVillagerFormstate } = props;
 
-    console.log('ConfirmSubmitModal: addVillagerFormstate', addVillagerFormstate);
+
 
     return (
         <Modal

@@ -45,7 +45,7 @@ export default function VillagerConsoleBox(props: Props) {
   const toggleGetFoodStatus = () => {
     setIsGetFood((prevStatus) => !prevStatus);
     handleOpenModal();
-    console.log("ส่งแล้วว");
+
   };
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -55,9 +55,6 @@ export default function VillagerConsoleBox(props: Props) {
   };
   const onConfirmSubmitItemSuccessHandler = () => {
     // sent put request to add recieved item on user record
-    //console.log('onConfirmSubmitItemSuccessHandler: itemCatId', itemCatId);
-    //console.log('onConfirmSubmitItemSuccessHandler: personId', personId);
-
     //close modal
     setIsOpenModal(false);
   }

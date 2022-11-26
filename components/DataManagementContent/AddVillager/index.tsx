@@ -112,7 +112,7 @@ const AddVillager = (props: Props) => {
     setIsOpenConfirmSubmitModal(false)
   }
   const updateFileHandler = (loadedFiles: any) => {
-    console.log("loadedFiles", loadedFiles);
+
     addVillagerFormDispatch({ type: 'updateHomeRepresentativesImg', payload: loadedFiles });
   };
 
@@ -164,7 +164,7 @@ const AddVillager = (props: Props) => {
       url: ADD_VILLAGER_SERVICE_URL,
       data: mapRequestBodyAddVillagerFormState(addVillagerFormstate, imgURLGGdrive, currentTotalVillagers)
     })
-    console.log('res', res);
+
 
     // refresh page to fetch new villager data 
     window.location.reload()

@@ -12,12 +12,12 @@ import { GET_ITEMCAT_GGSHEET_DATA, GET_VILLAGER_GGSHEET_DATA } from '../constant
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 import useCursor from '../hooks/useCursor'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
+import { GithubNavBtn } from '../components/common/GithubNavBtn'
 
 interface Props {
 
 }
 
-//const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 const Home = (props: Props) => {
     // set data to the context on useEffect
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
@@ -35,7 +35,6 @@ const Home = (props: Props) => {
 
         // set villager google sheet data in the context
         fetchSheetVillagerData().then((initialVillagerRsp) => {
-            console.log('initialVillagerRsp', initialVillagerRsp);
             initializeVillagerSheetData(initialVillagerRsp)
             displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
             setDoneFetchingVillagerData(true)
@@ -44,8 +43,6 @@ const Home = (props: Props) => {
 
         // set item cat google sheet data in the context
         fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
-            console.log('fetchSheetItemCatRsp', fetchSheetItemCatRsp);
-
             // get item cat sheet data in the context
             initializeItemCatSheetData(fetchSheetItemCatRsp)
         })
@@ -53,7 +50,7 @@ const Home = (props: Props) => {
     return (
         <div style={{ cursor: currentCursor }}>
             {doneFetchingVillagerData && <HomeContent />}
-
+            <GithubNavBtn />
         </div>
     )
 }

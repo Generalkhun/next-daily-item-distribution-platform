@@ -107,8 +107,6 @@ const VillagerDetailsCardManager = (props: Props) => {
   };
   const onConfirmSubmitItemSuccessHandler = async () => {
 
-    console.log('onConfirmSubmitItemSuccessHandler personRecievedItemListText', personRecievedItemListText);
-
     try {
       //sent put request to add recieved item on user record
       const res = await axios({
@@ -128,7 +126,7 @@ const VillagerDetailsCardManager = (props: Props) => {
         updatedRecievedItemList: get(res, 'data.newRecievedItemList'),
       })
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     //close modal

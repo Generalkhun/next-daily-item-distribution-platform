@@ -28,7 +28,7 @@ const DrawingLayer = () => {
 
     // functions
     const onClickMarkerHandler = (villagerHomeId: string) => {
-        console.log('onClickMarkerHandler villagerHomeId', villagerHomeId);
+
 
         // update clicked homeId to a focus villager inside the context
         displayVillagerDispatch({ type: 'updateFocusingVillager', payload: villagerHomeId.toString() })
@@ -40,7 +40,7 @@ const DrawingLayer = () => {
             
             const nonExpiredRecievedItemsArray = removeExpiredRecievedItems(get(villager, 'ITEM_RECIEVED'),get(villager, 'ITEM_RECIEVED_EXP_DATE'))
             const recieved = findRecievedItem(selectedItemCat, nonExpiredRecievedItemsArray)
-            console.log('recieved item baseMarkers',recieved);
+
             
             return (
                 <Marker

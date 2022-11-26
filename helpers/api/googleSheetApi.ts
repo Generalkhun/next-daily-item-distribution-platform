@@ -47,7 +47,7 @@ export const getItemCatDataFromGoogleSheet = async () => {
  */
 // Add a villager data
 export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: VillagerAddingFormState) => {
-    console.log('tobeAddedVillagerData', tobeAddedVillagerData);
+
 
     // transform the tobeAddedVillagerData to arrays format 
     const tobeAddedVillagerDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedVillagerData, 10)
@@ -73,7 +73,7 @@ export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: Villag
 
 // Add an item cat data
 export const addItemCatDataToGoogleSheet = async (tobeAddedItemCatData: ItemCatAddingFormState) => {
-    console.log('tobeAddedItemCatData', tobeAddedItemCatData);
+
 
     // transform the tobeAddedVillagerData to arrays format 
     const tobeAddedItemCatDataArray = transformToArrayTobeAddedToGGSheet(tobeAddedItemCatData, 4)
