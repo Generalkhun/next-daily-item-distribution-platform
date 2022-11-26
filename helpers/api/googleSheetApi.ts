@@ -159,6 +159,7 @@ export const updateRecieveItemStatusOnGoogleSheet = async ({ itemCatId, personId
 
     // update recieved item expiration date
     const updateRecievedItemExpirationDateRsp = await updateRecievedItemExpirationDate(sheets, personRecievedItemExpirationDateText, personId, dayToShorts)
-    const newRecievedItemList = get(updateRecievedItemListRsp, 'data.updatedData.values')[0][0]
+    console.log("🚀 ~ file: googleSheetApi.ts ~ line 162 ~ updateRecieveItemStatusOnGoogleSheet ~ updateRecievedItemExpirationDateRsp", updateRecievedItemExpirationDateRsp)
+    const newRecievedItemList = (get(updateRecievedItemListRsp, 'data.updatedData.values') || [])[0][0]
     return newRecievedItemList
 }
