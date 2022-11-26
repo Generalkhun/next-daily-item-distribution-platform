@@ -4,7 +4,6 @@ import React, { useContext, useEffect } from 'react'
 import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
-import { typography } from '@mui/system'
 interface Props {
 
 }
@@ -101,9 +100,8 @@ const login = (props: Props) => {
                 <Grid item xs={1} sm={4}>
                 </Grid>
                 <Grid item xs={8} sm={4}>
-
                     <Paper className={classes.loginBox} elevation={2}>
-                        <Typography style={{marginLeft:120}}>ส่งของเข้าบ้าน ADMIN</Typography>
+                        <Typography style={{ marginLeft: 120 }}>ส่งของเข้าบ้าน ADMIN</Typography>
                         <Grid container className={classes.loginWrapper}>
 
                             <Grid item xs={12}>
@@ -143,13 +141,16 @@ const login = (props: Props) => {
                                     เข้าสู่ระบบ
                                 </Button>
                             </Grid>
+
+                            <p>Hint: use username: a,password:b to login ;)</p>
                         </Grid>
 
 
                     </Paper>
                 </Grid>
             </Grid>
-            <Grid item xs={1} sm={4}></Grid>
+            <Grid item xs={1} sm={4}>
+            </Grid>
 
         </>
     )
