@@ -1,11 +1,9 @@
-import { Grid, Avatar, ListItemText, Theme, Typography, Divider, Button } from "@material-ui/core";
+import { Grid, Avatar, ListItemText, Theme, Typography, Button } from "@material-ui/core";
 import { createStyles } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import { StyledBadgeUrgent } from "./StyledBadgeUrgent";
 import { StyledBadgeNormal } from "./StyledBadgeNormal";
-
-import PeopleIcon from "@material-ui/icons/People";
 import ModalVillagerDetails from "./ModalVillagerDetails";
 
 interface Props {
@@ -37,7 +35,7 @@ function VillagerHome(props: Props) {
     props;
   const classes = useStyles();
   const onClickSeeDetailHandler = (props: Props) => {
-    console.log('props', props);
+
     setIsOpenModalVillagerDetail(true)
   }
   const [isOpenModalVillagerDetail, setIsOpenModalVillagerDetail] = useState(false)
