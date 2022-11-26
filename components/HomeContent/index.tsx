@@ -1,12 +1,8 @@
-import { ClassNames } from "@emotion/react";
 import { Grid, makeStyles, Paper } from "@material-ui/core";
-import React, { useEffect, useRef, useState } from "react";
-import { villagerHomeListData } from "../../mockData";
+import React, { useState } from "react";
 import { VillagerHomeData } from "../../type";
 import AppConsoleVillager from "./AppConsoleVillager";
 import dynamic from 'next/dynamic'
-import ModalSetting from "./Modals/ModalSetting";
-import VillagerConsole from "./VillagerConsole";
 /**
  * Dynamic imports
  */
