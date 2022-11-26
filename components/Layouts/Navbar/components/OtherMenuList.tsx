@@ -54,12 +54,12 @@ export default function OtherMenuList() {
             >
                 <Button onClick={e => {
                     e.preventDefault()
-                    typeof window !== 'undefined' && router.push('/datamanagement')
+                    typeof window !== 'undefined' && router.push('/Datamanagement')
                 }} style={{ color: 'Black' }} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
                 <Divider />
                 <Button onClick={e => {
                     e.preventDefault()
-                    typeof window !== 'undefined' && router.push('/login')
+                    typeof window !== 'undefined' && router.push('/Login')
                 }} style={{ color: 'Black' }} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
 
             </Menu>

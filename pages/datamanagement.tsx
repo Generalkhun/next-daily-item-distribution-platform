@@ -1,24 +1,15 @@
 import { Grid, ListItem } from '@material-ui/core'
 import { map } from 'lodash'
 import React, { useContext, useEffect, useState } from 'react'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import AddItemCat from '../components/DataManagementContent/AddItemCat'
 import AddVillager from '../components/DataManagementContent/AddVillager'
-import { GET_ITEMCAT_GGSHEET_DATA, GET_VILLAGER_GGSHEET_DATA, MENUS_DATA_MGT } from '../constants'
-import { HomeWorkSharp } from '@material-ui/icons'
-import { getServers } from 'dns'
-import { getAllVillagerDataFromGoogleSheet, getItemCatDataFromGoogleSheet } from '../helpers/api/googleSheetApi'
-import { get } from 'lodash'
+import { MENUS_DATA_MGT } from '../constants'
 import { GoogleSheetDataContext } from '../contextProviders/GoogleSheetContextProvider'
 import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVillagerDataContextProvider'
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 
-interface Props {
-
-}
-
-const datamanagement = (props: Props) => {
+const Datamanagement = () => {
     // set data to the context on useEffect
     const { initializeVillagerSheetData, initializeItemCatSheetData } = useContext(GoogleSheetDataContext)
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
@@ -80,22 +71,4 @@ const datamanagement = (props: Props) => {
     )
 }
 
-export default datamanagement
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-
-//     // fetch all data from google sheet and save in the context
-//     const sheetVillagerDataRsp = await getAllVillagerDataFromGoogleSheet()
-//     const sheetitemCatDataRsp = await getItemCatDataFromGoogleSheet()
-
-//     return {
-//         props: {
-//             sheetData: {
-//                 sheetVillagerDataRsp,
-//                 sheetitemCatDataRsp
-//             }
-
-//         }
-//     }
-
-// }
+export default Datamanagement

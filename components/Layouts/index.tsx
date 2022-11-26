@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import styles from './Layouts.module.css'
-import { Grid } from '@material-ui/core'
 import NavBar from './Navbar'
 import { LoginContext } from '../../contextProviders/LoginContextProvider'
 
