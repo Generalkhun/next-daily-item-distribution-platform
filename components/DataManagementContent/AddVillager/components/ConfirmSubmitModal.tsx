@@ -59,9 +59,9 @@ export default function ConfirmSubmitModal(props: Props) {
                     <VillagerDetailsCardManager
                         key={0}
                         homeLocation={get(addVillagerFormstate, 'homeLocation') as [string, string]}
-                        personId={get(addVillagerFormstate, 'homeRepresentativesId')}
+                        personId={get(addVillagerFormstate, 'homeRepresentativesId') || ''}
                         personName={get(addVillagerFormstate, 'homeRepresentativesName')}
-                        personImgUrl={get(addVillagerFormstate, 'homeRepresentativesImgURL')}
+                        personImgUrl={get(addVillagerFormstate, 'homeRepresentativesImgURL') || ''}
                         numberOfFamilyMembers={get(addVillagerFormstate, 'numberOfFamilyMember')}
                         homeRepresentativesContactNum={get(addVillagerFormstate, 'homeRepresentativesContactNum') as string}
                         submissionHandlerMode={false}
