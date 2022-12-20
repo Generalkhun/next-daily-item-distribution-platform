@@ -59,7 +59,7 @@ export default function OtherMenuList() {
                 <Divider />
                 <Button onClick={e => {
                     e.preventDefault()
-                    typeof window !== 'undefined' && router.push('/Login')
+                    typeof window !== 'undefined' && router.push('/login')
                 }} style={{ color: 'Black' }} fullWidth startIcon={<Logout />}>ออกจากระบบ</Button>
 
             </Menu>

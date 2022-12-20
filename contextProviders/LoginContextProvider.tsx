@@ -35,7 +35,7 @@ export const LoginContextProvider: React.FC<Props> = ({ children }) => {
         setIsLogin(false)
         setCookie(SESSION_ID_COOKIE, 'tmpCookie', 0.01) // remove cookie
         // navigate to login page
-        typeof window !== 'undefined' && router.push('/Login')
+        typeof window !== 'undefined' && router.push('/login')
     }
 
     return (
