@@ -147,5 +147,4 @@ const Login = () => {
     )
 }
 
-const login = Login;
-export default login;
+export default Login;

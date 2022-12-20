@@ -1,4 +1,3 @@
-import axios from "axios";
 import { isEmpty } from "lodash";
 import router from "next/dist/client/router";
 import { useState, createContext, useContext } from "react";
@@ -15,17 +14,6 @@ export const LoginContextProvider: React.FC<Props> = ({ children }) => {
         // get sessionId on cookie
         let sessionId = getCookie(SESSION_ID_COOKIE)
         if (!isEmpty(sessionId)) {
-            // const resp = axios({
-            //     method: 'get',
-            //     url:VALIDATE_SESSION_URL,
-            //     data: {
-            //         sessionId
-            //     }
-            // })
-            // if(resp.body.validSessionId) {
-            //     return true
-            // }
-            // return false
             if (sessionId === SESSION_COOKIE_VALUE) {
                 return true
             }
