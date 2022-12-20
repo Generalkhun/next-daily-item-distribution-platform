@@ -31,14 +31,13 @@ const Home = (props: Props) => {
             initializeVillagerSheetData(initialVillagerRsp)
             displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
             setDoneFetchingVillagerData(true)
-
-        })
+        }).catch(err => { throw new Error(err) })
 
         // set item cat google sheet data in the context
         fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
             // get item cat sheet data in the context
             initializeItemCatSheetData(fetchSheetItemCatRsp)
-        })
+        }).catch(err => { throw new Error(err) })
     }, [])
     return (
         <div style={{ cursor: currentCursor }}>

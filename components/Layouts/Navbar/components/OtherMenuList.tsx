@@ -54,7 +54,7 @@ export default function OtherMenuList() {
             >
                 <Button onClick={e => {
                     e.preventDefault()
-                    typeof window !== 'undefined' && router.push('/Datamanagement')
+                    typeof window !== 'undefined' && router.push('/datamanagement')
                 }} style={{ color: 'Black' }} fullWidth startIcon={<AddCircleOutlineIcon />}>เพิ่ม/แก้ไขข้อมูล</Button>
                 <Divider />
                 <Button onClick={e => {

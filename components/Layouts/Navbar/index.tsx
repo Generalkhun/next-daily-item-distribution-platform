@@ -100,10 +100,10 @@ const NavBar = () => {
             {matchesMediaQueryMediumAndBelow ? <></> : <Grid item className={classes.naviagtionWrapper} md={6} lg={8}>
               <IconButton onClick={(e) => {
                 e.preventDefault()
-                typeof window !== 'undefined' && router.push('/Datamanagement')
+                typeof window !== 'undefined' && router.push('/datamanagement')
               }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <AddCircleOutlineIcon style={{ color: pathname === '/Datamanagement' ? '#f7e1af' : 'white' }} />
-                <Typography style={{ color: pathname === '/Datamanagement' ? '#f7e1af' : 'white' }} className={classes.otherNavText}>
+                <AddCircleOutlineIcon style={{ color: pathname === '/datamanagement' ? '#f7e1af' : 'white' }} />
+                <Typography style={{ color: pathname === '/datamanagement' ? '#f7e1af' : 'white' }} className={classes.otherNavText}>
                   เพิ่ม/แก้ไขข้อมูล
                 </Typography>
               </IconButton>
