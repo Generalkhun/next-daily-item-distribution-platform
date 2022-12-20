@@ -5,15 +5,8 @@ import InvalidUsernamePasswordModal from '../components/LoginContent/components/
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
 import { GithubNavBtn } from '../components/common/GithubNavBtn'
-interface Props {
-
-}
 
 const useStyles = makeStyles({
-    loginContentWrapepr: {
-        // display: 'flex',
-        // justifyContent: 'center'
-    },
     loginBox: {
         width: 400,
         height: '52.5%',
@@ -39,7 +32,7 @@ const useStyles = makeStyles({
     }
 
 })
-const login = (props: Props) => {
+const Login = () => {
     const classes = useStyles()
     const [inputUserName, setInputUserName] = React.useState<string>('');
     const [inputPassword, setInputPassword] = React.useState<string>('');
@@ -96,8 +89,7 @@ const login = (props: Props) => {
                 :
                 <></>
             }
-            {/* <Typography variant='h6'>ส่งของเข้าบ้าน admin</Typography> */}
-            <Grid container className={classes.loginContentWrapepr}>
+            <Grid container>
                 <Grid item xs={1} sm={4}>
                 </Grid>
                 <Grid item xs={8} sm={4}>
@@ -145,8 +137,6 @@ const login = (props: Props) => {
 
                             <p>Hint: use username: a,password:b to login ;)</p>
                         </Grid>
-
-
                     </Paper>
                 </Grid>
             </Grid>
@@ -157,4 +147,5 @@ const login = (props: Props) => {
     )
 }
 
-export default login
+const login = Login;
+export default login;
