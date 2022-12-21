@@ -24,14 +24,17 @@ const Datamanagement = () => {
         }
 
         // set villager google sheet data in the context
-        fetchSheetVillagerData().then((initialVillagerRsp) => {
-            console.log('initialVillagerRsp', initialVillagerRsp);
+        fetchSheetVillagerData()
+            .catch((err) => {
+                throw new Error(err);
+            })
+            .then((initialVillagerRsp) => {
+                console.log('initialVillagerRsp', initialVillagerRsp);
 
-            initializeVillagerSheetData(initialVillagerRsp)
-            displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
-            setDoneFetchingVillagerData(true)
-
-        })
+                initializeVillagerSheetData(initialVillagerRsp)
+                displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
+                setDoneFetchingVillagerData(true)
+            })
 
         // set item cat google sheet data in the context
         fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
