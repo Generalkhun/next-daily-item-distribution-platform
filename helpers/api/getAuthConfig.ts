@@ -2,6 +2,8 @@ import { DRIVE_API_SCOPES } from "../../constants";
 import { GoogleAuthOptions } from 'google-auth-library'
 
 export const getGoogleDriveAuthConfig = () => {
+
+    console.log("🚀 ~ file: getAuthConfig.ts:7 ~ getGoogleDriveAuthConfig ~ process.env.GG_DRIVE_KEY_BASE64", process.env.GG_DRIVE_KEY_BASE64)
     const ggDriveCredential = JSON.parse(
         Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString()
     );
@@ -18,6 +20,8 @@ export const getGoogleDriveAuthConfig = () => {
 }
 
 export const getGoogleSheetAuthConfig = () => {
+
+    console.log("🚀 ~ file: getAuthConfig.ts:25 ~ getGoogleSheetAuthConfig ~ process.env.GG_SHEET_KEY_BASE64", process.env.GG_SHEET_KEY_BASE64)
     const ggSheetCredential = JSON.parse(
         Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
     );
