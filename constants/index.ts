@@ -7,6 +7,7 @@ import path from 'path'
 /**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
 
 console.log("🚀 ~ file: index.ts:10 ~ process.env.GG_SHEET_KEY_BASE64", process.env.GG_SHEET_KEY_BASE64)
+console.log("🚀 ~ file: index.ts:10 ~ process.env.MAP_BOX_API_ACCESS_TOKEN", process.env.MAP_BOX_API_ACCESS_TOKEN)
 console.log('GG_SHEET_KEY_BASE64 buffer from',Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString())
 const ggSheetCredential = JSON.parse(
     Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
