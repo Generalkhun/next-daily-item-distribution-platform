@@ -10,7 +10,12 @@ import { get } from "lodash";
 import { getGoogleDriveAuthConfig } from '../../helpers/api/getAuthConfig'
 
 const uploadFile = async (file: any) => {
-  const authServiceAccount = await google.auth.getClient(getGoogleDriveAuthConfig());
+  let authServiceAccount;
+  try {
+    authServiceAccount = await google.auth.getClient(getGoogleDriveAuthConfig());
+  } catch (error) {
+    throw new Error(error as string)
+  }
   const drive = google.drive({ version: "v3", auth: authServiceAccount });
   const data = fs.createReadStream(file.path);
   const media = {

@@ -9,7 +9,12 @@ import { getGoogleSheetAuthConfig } from "./getAuthConfig";
 
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
-    const auth = await google.auth.getClient(getGoogleSheetAuthConfig())
+    let auth;
+    try {
+        auth = await google.auth.getClient(getGoogleSheetAuthConfig())
+    } catch (error) {
+        throw new Error(error as string);
+    }
     // connect to googlesheet 
     const sheets = google.sheets({ version: 'v4', auth })
     return sheets
@@ -107,7 +112,7 @@ interface updateAddRecievedStatusParams {
     personId: string,
     personRecievedItemListText: string,
     personRecievedItemExpirationDateText: string,
-    dayToShorts:number,
+    dayToShorts: number,
 }
 const updateRecievedItemList = async (sheets: sheets_v4.Sheets, personRecievedItemListText: string, itemCatId: string, personId: string) => {
     const newRecievedItemList = personRecievedItemListText + ',' + itemCatId
