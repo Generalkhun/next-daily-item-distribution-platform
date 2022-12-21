@@ -5,6 +5,9 @@ import path from 'path'
  * Config API
  */
 /**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
+
+console.log("🚀 ~ file: index.ts:10 ~ process.env.GG_SHEET_KEY_BASE64", process.env.GG_SHEET_KEY_BASE64)
+console.log('GG_SHEET_KEY_BASE64 buffer from',Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString())
 const ggSheetCredential = JSON.parse(
     Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
 );
@@ -46,6 +49,9 @@ export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] /
 // time.
 
 /**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
+
+console.log("🚀 ~ file: index.ts:53 ~ process.env.GG_DRIVE_KEY_BASE64", process.env.GG_DRIVE_KEY_BASE64)
+console.log('GG_DRIVE_KEY_BASE64 buffer from',Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString())
 const ggDriveCredential = JSON.parse(
     Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString()
 );
