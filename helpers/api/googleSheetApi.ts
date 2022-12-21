@@ -10,8 +10,10 @@ import { getGoogleSheetAuthConfig } from "./getAuthConfig";
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
     let auth;
+    const googleSheetAuthConfig = getGoogleSheetAuthConfig();
+    console.log("🚀 ~ file: googleSheetApi.ts:14 ~ connectGoogleSheetsApi ~ googleSheetAuthConfig", googleSheetAuthConfig)
     try {
-        auth = await google.auth.getClient(getGoogleSheetAuthConfig())
+        auth = await google.auth.getClient(googleSheetAuthConfig)
     } catch (error) {
         throw new Error(error as string);
     }
