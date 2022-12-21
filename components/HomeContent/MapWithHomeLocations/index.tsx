@@ -57,7 +57,7 @@ const MapWithHomeLocations = () => {
         <ReactMapGL
           getCursor={e => currentCursor}
           mapStyle="mapbox://styles/mapbox/streets-v11"
-          mapboxApiAccessToken={process.env.MAP_BOX_API_ACCESS_TOKEN || ''}
+          mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_API_ACCESS_TOKEN || ''}
           {...viewport}
           onViewportChange={(nextViewport: NextViewport) => setViewport(nextViewport)}
         >

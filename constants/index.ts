@@ -1,28 +1,4 @@
-
-import { GoogleAuthOptions } from 'google-auth-library'
 import path from 'path'
-/**
- * Config API
- */
-/**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
-
-console.log("🚀 ~ file: index.ts:10 ~ process.env.GG_SHEET_KEY_BASE64", process.env.GG_SHEET_KEY_BASE64)
-console.log("🚀 ~ file: index.ts:10 ~ process.env.MAP_BOX_API_ACCESS_TOKEN", process.env.MAP_BOX_API_ACCESS_TOKEN)
-console.log('GG_SHEET_KEY_BASE64 buffer from',Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString())
-const ggSheetCredential = JSON.parse(
-    Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
-);
-// google sheets
-export const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
-    //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    credentials: {
-        client_email: ggSheetCredential.client_email,
-        private_key: ggSheetCredential.private_key,
-    }
-    /**@note this is for the local test, use credentials instead on the production with key from the env file */
-    //keyFile: './secrets/googleSheetKeyFile.json'
-}
 
 const TOTAL_HOUSE_NUM = 1000 // changable
 const TOTAL_ITEM_CAT = 99
@@ -49,22 +25,6 @@ export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] /
 // created automatically when the authorization flow completes for the first
 // time.
 
-/**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
-
-console.log("🚀 ~ file: index.ts:53 ~ process.env.GG_DRIVE_KEY_BASE64", process.env.GG_DRIVE_KEY_BASE64)
-console.log('GG_DRIVE_KEY_BASE64 buffer from',Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString())
-const ggDriveCredential = JSON.parse(
-    Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString()
-);
-export const GOOGLE_DRIVE_AUTH_CONFIG: GoogleAuthOptions = {
-    scopes: DRIVE_API_SCOPES,
-    credentials: {
-        client_email: ggDriveCredential.client_email,
-        private_key: ggDriveCredential.private_key,
-    }
-    /**@note this is for the local test, use credentials instead on the production with key from the env file */
-    //keyFile: './secrets/googleDriveKeyFile.json'
-}
 export const DRIVE_API_TOKEN_PATH = `${DRIVE_API_SECRET_DIR}/token.json`
 export const DRIVE_API_TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
 

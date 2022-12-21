@@ -1,14 +1,15 @@
 import { google, sheets_v4 } from "googleapis"
-import { filter, get } from "lodash";
-import { GOOGLE_SHEET_AUTH_CONFIG, SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE, SHEET_RANGE_ADD_PEOPLE, USER_ENTERED, RAW } from "../../constants";
+import { get } from "lodash";
+import { SHEET_RANGE_ITEM_CAT, SHEET_RANGE_MAIN_PAGE, SHEET_RANGE_ADD_PEOPLE, USER_ENTERED, RAW } from "../../constants";
 import { ItemCatAddingFormState, VillagerAddingFormState } from "../../type";
 import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataResponse";
 import { transformToArrayTobeAddedToGGSheet } from "../utils/transformToArrayTobeAddedToGGSheet";
 import moment from "moment"
+import { getGoogleSheetAuthConfig } from "./getAuthConfig";
 
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
-    const auth = await google.auth.getClient(GOOGLE_SHEET_AUTH_CONFIG)
+    const auth = await google.auth.getClient(getGoogleSheetAuthConfig())
     // connect to googlesheet 
     const sheets = google.sheets({ version: 'v4', auth })
     return sheets
