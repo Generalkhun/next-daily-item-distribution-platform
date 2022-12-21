@@ -4,12 +4,20 @@ import path from 'path'
 /**
  * Config API
  */
+/**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
+const ggSheetCredential = JSON.parse(
+    Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
+);
 // google sheets
 export const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
     //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-
-    keyFile: './secrets/googleSheetKeyFile.json'
+    credentials: {
+        client_email: ggSheetCredential.client_email,
+        private_key: ggSheetCredential.private_key,
+    }
+    /**@note this is for the local test, use credentials instead on the production with key from the env file */
+    //keyFile: './secrets/googleSheetKeyFile.json'
 }
 
 const TOTAL_HOUSE_NUM = 1000 // changable
@@ -25,7 +33,7 @@ export const MENUS_DATA_MGT = [
 /**
  * ggsheet append param config 
  * */
-export const USER_ENTERED = 'USER_ENTERED' 
+export const USER_ENTERED = 'USER_ENTERED'
 export const RAW = 'RAW'
 
 /**
@@ -36,9 +44,19 @@ export const DRIVE_API_SCOPES = ['https://www.googleapis.com/auth/drive.file'] /
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
+
+/**@note credential is for the production, if tested locally, use keyFile: ...path to keyfile instead */
+const ggDriveCredential = JSON.parse(
+    Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString()
+);
 export const GOOGLE_DRIVE_AUTH_CONFIG: GoogleAuthOptions = {
     scopes: DRIVE_API_SCOPES,
-    keyFile: './secrets/googleDriveKeyFile.json'
+    credentials: {
+        client_email: ggDriveCredential.client_email,
+        private_key: ggDriveCredential.private_key,
+    }
+    /**@note this is for the local test, use credentials instead on the production with key from the env file */
+    //keyFile: './secrets/googleDriveKeyFile.json'
 }
 export const DRIVE_API_TOKEN_PATH = `${DRIVE_API_SECRET_DIR}/token.json`
 export const DRIVE_API_TARGET_FOLDER_ID = '1UOv4BLAMemABnbAvcZH5Gwj4pCy7afSl'
