@@ -20,7 +20,6 @@ export const getGoogleDriveAuthConfig = () => {
 }
 
 export const getGoogleSheetAuthConfig = () => {
-
     console.log("🚀 ~ file: getAuthConfig.ts:25 ~ getGoogleSheetAuthConfig ~ process.env.GG_SHEET_KEY_BASE64", process.env.GG_SHEET_KEY_BASE64)
     const ggSheetCredential = JSON.parse(
         Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()

@@ -6,14 +6,31 @@ import { formatGoogleSheetDataResponse } from "../utils/formatGoogleSheetDataRes
 import { transformToArrayTobeAddedToGGSheet } from "../utils/transformToArrayTobeAddedToGGSheet";
 import moment from "moment"
 import { getGoogleSheetAuthConfig } from "./getAuthConfig";
+import { GoogleAuthOptions } from "google-auth-library";
 
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
     let auth;
-    const googleSheetAuthConfig = getGoogleSheetAuthConfig();
-    console.log("🚀 ~ file: googleSheetApi.ts:14 ~ connectGoogleSheetsApi ~ googleSheetAuthConfig", googleSheetAuthConfig)
+    // const googleSheetAuthConfig = getGoogleSheetAuthConfig();
+    //console.log("🚀 ~ file: googleSheetApi.ts:14 ~ connectGoogleSheetsApi ~ googleSheetAuthConfig", googleSheetAuthConfig)
+    const ggSheetCredential = JSON.parse(
+        Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
+    );
+    // google sheets
+    const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
+        //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        credentials: {
+            client_email: ggSheetCredential.client_email,
+            private_key: ggSheetCredential.private_key,
+        }
+        /**@note this is for the local test, use credentials instead on the production with key from the env file */
+        //keyFile: './secrets/googleSheetKeyFile.json'
+    }
+    console.log("🚀 ~ file: googleSheetApi.ts:30 ~ connectGoogleSheetsApi ~ GOOGLE_SHEET_AUTH_CONFIG", GOOGLE_SHEET_AUTH_CONFIG)
     try {
-        auth = await google.auth.getClient(googleSheetAuthConfig)
+        //auth = await google.auth.getClient(googleSheetAuthConfig)
+        auth = await google.auth.getClient(GOOGLE_SHEET_AUTH_CONFIG);
     } catch (error) {
         throw new Error(error as string);
     }
