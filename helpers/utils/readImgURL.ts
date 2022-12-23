@@ -2,7 +2,6 @@ import { isEmpty } from "lodash";
 
 export const readImgURL = (imgFile: File) => {
     if (!isEmpty(imgFile)) {
-        console.log('readImgURL: imgFile', imgFile);
 
         //const reader = new FileReader();
 

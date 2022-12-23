@@ -10,7 +10,6 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    console.log("🚀 ~ file: getVillagerFromGGSheet.ts:15 ~ req.method", req.method)
     if (req.method === 'GET') {
         // add data to villager sheet
         const villagerData = await getAllVillagerDataFromGoogleSheet()

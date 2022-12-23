@@ -14,8 +14,6 @@ export const findSelectedItemCatfromId = (selectedItemCatId: string, googleSheet
 }
 export const findSelectedItemCatImgfromId = (selectedItemCatId: string, googleSheetItemCatData: any): string => {
     const itemCatRecordOnSheet = find(googleSheetItemCatData, (sheetData) => sheetData.ITEM_ID === selectedItemCatId)
-    console.log('findSelectedItemCatImgfromId itemCatRecordOnSheet',itemCatRecordOnSheet);
-    
     return get(itemCatRecordOnSheet, 'ITEM_IMG_URL')
 }
 export const calcTotalHome = (villagerHomeListData: any): number => {

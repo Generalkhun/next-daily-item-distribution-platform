@@ -13,7 +13,6 @@ export default async function handler(
     if (req.method === 'PUT') {
         // get added villager data
         const recievedItemOnPersonObj = get(req, 'body')
-        console.log('recievedItemOnPersonObj', recievedItemOnPersonObj);
         // add data to villager sheet
         try {
             const newRecievedItemList = await updateRecieveItemStatusOnGoogleSheet(recievedItemOnPersonObj)

@@ -3,8 +3,6 @@ import { VillagerToAddObject } from "../../type"
 
 export const mapRequestBodyAddVillagerFormState = (addVillagerFormstate: VillagerToAddObject, imgURLGGdrive: string, currentTotalVillagers: number) => {
 
-    console.log('currentTotalVillagers', currentTotalVillagers);
-
     const HOME_ID = currentTotalVillagers + 1
     const HOUSE_REPRESENTATIVES_NAME = get(addVillagerFormstate, 'homeRepresentativesName')
     const HOUSE_LOCATION_LAT = '"' + get(addVillagerFormstate, 'homeLocation')[0] + '"'

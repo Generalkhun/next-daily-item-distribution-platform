@@ -11,7 +11,6 @@ import { getGoogleSheetAuthConfig } from "./getAuthConfig";
 const connectGoogleSheetsApi = async () => {
     let auth;
     const googleSheetAuthConfig = await getGoogleSheetAuthConfig();
-    console.log("🚀 ~ file: googleSheetApi.ts:14 ~ connectGoogleSheetsApi ~ googleSheetAuthConfig", googleSheetAuthConfig)
     try {
         auth = await google.auth.getClient(googleSheetAuthConfig)
     } catch (error) {
@@ -28,7 +27,6 @@ const connectGoogleSheetsApi = async () => {
 export const getAllVillagerDataFromGoogleSheet = async () => {
 
     const sheets = await connectGoogleSheetsApi()
-    console.log("🚀 ~ file: googleSheetApi.ts:30 ~ getAllVillagerDataFromGoogleSheet ~ sheets", sheets)
 
     //query and return response
     const response = await sheets.spreadsheets.values.get({

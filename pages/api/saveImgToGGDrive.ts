@@ -12,7 +12,6 @@ import { getGoogleDriveAuthConfig } from '../../helpers/api/getAuthConfig'
 const uploadFile = async (file: any) => {
   let authServiceAccount;
   const googleDriveAuthConfig = await getGoogleDriveAuthConfig()
-  console.log("🚀 ~ file: saveImgToGGDrive.ts:15 ~ uploadFile ~ googleDriveAuthConfig", googleDriveAuthConfig)
   try {
     authServiceAccount = await google.auth.getClient(googleDriveAuthConfig);
   } catch (error) {
@@ -45,14 +44,11 @@ const uploadFile = async (file: any) => {
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    console.log("uploading file...");
     const form = new formidable.IncomingForm();
-
     //save file in ggdrive with auth
     form.parse(req, async function (err, fields, files) {
       const file = files.file;
       const savedFile = await uploadFile(file) // upload file to google drive
-      console.log('savedFile', savedFile);
       res.status(200).json({ imgIdGGdrive: get(savedFile, 'data.id') });
     });
   }

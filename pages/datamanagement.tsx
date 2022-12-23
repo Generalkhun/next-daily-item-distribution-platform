@@ -29,8 +29,6 @@ const Datamanagement = () => {
                 throw new Error(err);
             })
             .then((initialVillagerRsp) => {
-                console.log('initialVillagerRsp', initialVillagerRsp);
-
                 initializeVillagerSheetData(initialVillagerRsp)
                 displayVillagerDispatch({ type: 'initialVillagerData', payload: initialVillagerRsp })
                 setDoneFetchingVillagerData(true)
@@ -38,7 +36,6 @@ const Datamanagement = () => {
 
         // set item cat google sheet data in the context
         fetchSheetItemCatData().then((fetchSheetItemCatRsp) => {
-            console.log('fetchSheetItemCatRsp', fetchSheetItemCatRsp);
 
             // get item cat sheet data in the context
             initializeItemCatSheetData(fetchSheetItemCatRsp)
