@@ -32,7 +32,7 @@ export const getAllVillagerDataFromGoogleSheet = async () => {
 
     //query and return response
     const response = await sheets.spreadsheets.values.get({
-        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: SHEET_RANGE_MAIN_PAGE
     })
     return formatGoogleSheetDataResponse(get(response, 'data.values'))
