@@ -1,4 +1,4 @@
-import { DRIVE_API_SCOPES } from "../../constants";
+import { DRIVE_API_SCOPES, GOOGLE_DRIVE_KEYFILE_PATH, GOOGLE_SHEET_KEYFILE_PATH } from "../../constants";
 import { GoogleAuthOptions } from 'google-auth-library'
 import fs from 'fs'
 
@@ -8,7 +8,7 @@ export const getGoogleDriveAuthConfig = async () => {
         Buffer.from(process.env.GG_DRIVE_KEY_BASE64 || '', "base64").toString()
     );
     //generate a json file to store a keyfile
-    await singleObjJsonFileGenerator(ggDriveCredential, './googleDriveKeyFile.json');
+    await singleObjJsonFileGenerator(ggDriveCredential, GOOGLE_DRIVE_KEYFILE_PATH);
     const GOOGLE_DRIVE_AUTH_CONFIG: GoogleAuthOptions = {
         scopes: DRIVE_API_SCOPES,
         /**
@@ -16,7 +16,7 @@ export const getGoogleDriveAuthConfig = async () => {
          * Use keyfile from generated one instead on the production with keys from the env vars
         */
         //keyFile: './secrets/googleDriveKeyFile.json'
-        keyFile: './googleDriveKeyFile.json',
+        keyFile: GOOGLE_DRIVE_KEYFILE_PATH,
     }
     return GOOGLE_DRIVE_AUTH_CONFIG;
 }
@@ -27,7 +27,7 @@ export const getGoogleSheetAuthConfig = async () => {
         Buffer.from(process.env.GG_SHEET_KEY_BASE64 || '', "base64").toString()
     );
     //generate a json file to store a keyfile
-    await singleObjJsonFileGenerator(ggSheetCredential, './googleSheetKeyFile.json');
+    await singleObjJsonFileGenerator(ggSheetCredential, GOOGLE_SHEET_KEYFILE_PATH);
     // google sheets
     const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
         //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
@@ -37,14 +37,14 @@ export const getGoogleSheetAuthConfig = async () => {
          * Use keyfile from generated one instead on the production with keys from the env vars
         */
         //keyFile: './secrets/googleSheetKeyFile.json'
-        keyFile: './googleSheetKeyFile.json',
+        keyFile: GOOGLE_SHEET_KEYFILE_PATH,
     }
     return GOOGLE_SHEET_AUTH_CONFIG;
 }
 
 const singleObjJsonFileGenerator = async (obj: Object, path: string) => {
     const json = JSON.stringify(obj);
-    await fs.writeFile('path', json, (err) => {
+    await fs.writeFile(path, json, (err) => {
         if (!err) {
             console.log('done getting a json keyfile', obj);
         }
