@@ -60,5 +60,5 @@ export const SESSION_COOKIE_VALUE = 'sessionIdTmp'
  * generated ketfile path (for production on vercel only)
  */
 
-export const GOOGLE_SHEET_KEYFILE_PATH = '/var/task/googleSheetKeyFile.json'
-export const GOOGLE_DRIVE_KEYFILE_PATH = '/var/task/googleDriveKeyFile.json'
+export const GOOGLE_SHEET_KEYFILE_PATH = './googleSheetKeyFile.json'
+export const GOOGLE_DRIVE_KEYFILE_PATH = './googleDriveKeyFile.json'

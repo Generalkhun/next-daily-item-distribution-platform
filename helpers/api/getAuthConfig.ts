@@ -1,6 +1,6 @@
 import { DRIVE_API_SCOPES, GOOGLE_DRIVE_KEYFILE_PATH, GOOGLE_SHEET_KEYFILE_PATH } from "../../constants";
 import { GoogleAuthOptions } from 'google-auth-library'
-import fs from 'fs'
+import { promises as fsp } from "fs"
 
 export const getGoogleDriveAuthConfig = async () => {
     console.log("🚀 ~ file: getAuthConfig.ts:7 ~ getGoogleDriveAuthConfig ~ process.env.GG_DRIVE_KEY_BASE64", process.env.GG_DRIVE_KEY_BASE64)
@@ -44,9 +44,9 @@ export const getGoogleSheetAuthConfig = async () => {
 
 const singleObjJsonFileGenerator = async (obj: Object, path: string) => {
     const json = JSON.stringify(obj);
-    await fs.writeFile(path, json, (err) => {
-        if (!err) {
-            console.log('done getting a json keyfile', obj);
-        }
-    });
+    try {
+        await fsp.writeFile(path, json);
+    } catch (error) {
+        throw new Error(error)
+    }
 }
