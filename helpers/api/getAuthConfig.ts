@@ -30,8 +30,8 @@ export const getGoogleSheetAuthConfig = async () => {
     await singleObjJsonFileGenerator(ggSheetCredential, GOOGLE_SHEET_KEYFILE_PATH);
     // google sheets
     const GOOGLE_SHEET_AUTH_CONFIG: GoogleAuthOptions = {
-        //scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+        //scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         /**
          * @note keyfile from secrets folder local test.
          * Use keyfile from generated one instead on the production with keys from the env vars
