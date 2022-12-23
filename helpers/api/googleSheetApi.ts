@@ -32,7 +32,7 @@ export const getAllVillagerDataFromGoogleSheet = async () => {
 
     //query and return response
     const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: SHEET_RANGE_MAIN_PAGE
     })
     return formatGoogleSheetDataResponse(get(response, 'data.values'))
@@ -43,7 +43,7 @@ export const getItemCatDataFromGoogleSheet = async () => {
 
     //query and return response
     const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: process.env.ITEM_CAT_DATA_SHEET_ID,
+        //spreadsheetId: process.env.ITEM_CAT_DATA_SHEET_ID,
         range: SHEET_RANGE_ITEM_CAT
     })
 
@@ -66,7 +66,7 @@ export const addVillagerDataToGoogleSheet = async (tobeAddedVillagerData: Villag
 
     // request 
     const request = {
-        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: SHEET_RANGE_ADD_PEOPLE,
         valueInputOption: USER_ENTERED,
         insertDataOption: 'INSERT_ROWS',
@@ -91,7 +91,7 @@ export const addItemCatDataToGoogleSheet = async (tobeAddedItemCatData: ItemCatA
 
     // request 
     const request = {
-        spreadsheetId: process.env.ITEM_CAT_DATA_SHEET_ID,
+        //spreadsheetId: process.env.ITEM_CAT_DATA_SHEET_ID,
         range: SHEET_RANGE_ITEM_CAT,
         valueInputOption: USER_ENTERED,
         insertDataOption: 'INSERT_ROWS',
@@ -121,7 +121,7 @@ const updateRecievedItemList = async (sheets: sheets_v4.Sheets, personRecievedIt
 
     // request to update recieved item list
     const request = {
-        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: `H${parseInt(personId) + 1}`,
         valueInputOption: RAW,
         includeValuesInResponse: true,
@@ -144,7 +144,7 @@ const updateRecievedItemExpirationDate = async (sheets: sheets_v4.Sheets, person
 
     // request to update recieved item list
     const request = {
-        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: `J${parseInt(personId) + 1}`,
         valueInputOption: RAW,
         includeValuesInResponse: true,
