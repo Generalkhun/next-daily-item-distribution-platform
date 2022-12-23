@@ -47,6 +47,6 @@ const singleObjJsonFileGenerator = async (obj: Object, path: string) => {
     try {
         await fsp.writeFile(path, json);
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error as string)
     }
 }
