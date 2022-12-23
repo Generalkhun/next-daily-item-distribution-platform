@@ -5,7 +5,7 @@ import { DisplayingVillagerDataContext } from '../contextProviders/DisplayingVil
 import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/getSheetDataOnMainPages'
 import useCursor from '../hooks/useCursor'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
-import { GithubNavBtn } from '../components/common/GithubNavBtn'
+import { ExtraNavigationBtn } from '../components/common/ExtraNavigationBtn'
 
 interface Props {
 
@@ -42,7 +42,7 @@ const Home = (props: Props) => {
     return (
         <div style={{ cursor: currentCursor }}>
             {doneFetchingVillagerData && <HomeContent />}
-            <GithubNavBtn />
+            <ExtraNavigationBtn />
         </div>
     )
 }

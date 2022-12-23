@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from 'react'
 import InvalidUsernamePasswordModal from '../components/LoginContent/components/InvalidUsernamePasswordModal'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import router from "next/dist/client/router";
-import { GithubNavBtn } from '../components/common/GithubNavBtn'
+import { ExtraNavigationBtn } from '../components/common/ExtraNavigationBtn'
 
 const useStyles = makeStyles({
     loginBox: {
@@ -142,7 +142,7 @@ const Login = () => {
             </Grid>
             <Grid item xs={1} sm={4}>
             </Grid>
-            <GithubNavBtn />
+            <ExtraNavigationBtn />
         </>
     )
 }
