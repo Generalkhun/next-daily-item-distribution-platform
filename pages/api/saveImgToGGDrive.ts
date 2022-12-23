@@ -11,7 +11,7 @@ import { getGoogleDriveAuthConfig } from '../../helpers/api/getAuthConfig'
 
 const uploadFile = async (file: any) => {
   let authServiceAccount;
-  const googleDriveAuthConfig = getGoogleDriveAuthConfig()
+  const googleDriveAuthConfig = await getGoogleDriveAuthConfig()
   console.log("🚀 ~ file: saveImgToGGDrive.ts:15 ~ uploadFile ~ googleDriveAuthConfig", googleDriveAuthConfig)
   try {
     authServiceAccount = await google.auth.getClient(googleDriveAuthConfig);

@@ -55,3 +55,10 @@ export const CENTER_OF_DISTRIBUTION_LNG = 100.47730858426843
  */
 export const SESSION_ID_COOKIE = 'SESSION_ID_COOKIE'
 export const SESSION_COOKIE_VALUE = 'sessionIdTmp'
+
+/**
+ * generated ketfile path
+ */
+
+export const GOOGLE_SHEET_KEYFILE_PATH = './googleSheetKeyFile.json'
+export const GOOGLE_DRIVE_KEYFILE_PATH = './googleDriveKeyFile.json'

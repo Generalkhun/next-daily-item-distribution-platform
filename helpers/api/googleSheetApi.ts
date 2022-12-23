@@ -10,7 +10,7 @@ import { getGoogleSheetAuthConfig } from "./getAuthConfig";
 // This funtion is to connect googlesheet api
 const connectGoogleSheetsApi = async () => {
     let auth;
-    const googleSheetAuthConfig = getGoogleSheetAuthConfig();
+    const googleSheetAuthConfig = await getGoogleSheetAuthConfig();
     console.log("🚀 ~ file: googleSheetApi.ts:14 ~ connectGoogleSheetsApi ~ googleSheetAuthConfig", googleSheetAuthConfig)
     try {
         auth = await google.auth.getClient(googleSheetAuthConfig)
@@ -32,7 +32,7 @@ export const getAllVillagerDataFromGoogleSheet = async () => {
 
     //query and return response
     const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
+        //spreadsheetId: process.env.VILLAGER_DATA_SHEET_ID,
         range: SHEET_RANGE_MAIN_PAGE
     })
     return formatGoogleSheetDataResponse(get(response, 'data.values'))
