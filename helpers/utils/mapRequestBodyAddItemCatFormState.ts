@@ -14,7 +14,6 @@ export const mapRequestBodyAddItemCatFormState = (addItemCatFormstate: VillagerT
         DAYS_TO_SHORTS,
         ITEM_IMG_URL,
     }
-    console.log('mappedAddItemCatData', mappedAddItemCatData);
 
     return mappedAddItemCatData
 

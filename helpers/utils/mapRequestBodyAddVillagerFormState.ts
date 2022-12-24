@@ -28,7 +28,6 @@ export const mapRequestBodyAddVillagerFormState = (addVillagerFormstate: Village
         IMG_URL,
         ITEM_RECIEVED_EXP_DATE,
     }
-    console.log('mappedAddVillagerData', mappedAddVillagerData);
 
     return mappedAddVillagerData
 

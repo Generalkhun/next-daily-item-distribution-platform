@@ -11,7 +11,6 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === 'GET') {
-        console.log("🚀 ~ file: getVillagerFromGGSheet.ts:14 ~ req.method", req.method)
         // add data to villager sheet
         const villagerData = await getAllVillagerDataFromGoogleSheet()
         res.status(200).json({ villagerData })
