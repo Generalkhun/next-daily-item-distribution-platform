@@ -7,7 +7,9 @@ import { GoogleSheetDataProvider } from '../contextProviders/GoogleSheetContextP
 import { DisplayVillagerDataProvider } from '../contextProviders/DisplayingVillagerDataContextProvider'
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import { LoginContextProvider } from '../contextProviders/LoginContextProvider'
+import useWindowSize from '../hooks/useWindowResize'
 function MyApp({ Component, pageProps }: AppProps) {
+  const [width] = useWindowSize();
   const theme = createTheme({
     typography: {
       "fontFamily": `"Kanit","Roboto", "Helvetica", "Arial", sans-serif`,
@@ -22,12 +24,24 @@ function MyApp({ Component, pageProps }: AppProps) {
       <LoginContextProvider>
         <GoogleSheetDataProvider>
           <DisplayVillagerDataProvider>
-            <Layouts>
-              <Head>
-                <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-              </Head>
-              <Component {...pageProps} />
-            </Layouts>
+            {(width > 1280) ?
+              <Layouts>
+                <Head>
+                  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+                </Head>
+                <Component {...pageProps} />
+              </Layouts>
+              :
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                gap: '10px',
+              }}>
+                <img src="https://img.icons8.com/ios/50/null/imac.png" /><span>Please use larger screen to view this app</span>
+              </div>
+            }
           </DisplayVillagerDataProvider>
         </GoogleSheetDataProvider>
       </LoginContextProvider>
