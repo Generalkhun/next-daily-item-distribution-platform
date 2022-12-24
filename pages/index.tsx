@@ -6,6 +6,7 @@ import { fetchSheetItemCatData, fetchSheetVillagerData } from '../helpers/utils/
 import useCursor from '../hooks/useCursor'
 import { LoginContext } from '../contextProviders/LoginContextProvider'
 import { ExtraNavigationBtn } from '../components/common/ExtraNavigationBtn'
+import { useWindowSize } from '../hooks/useWindowResize'
 
 interface Props {
 
@@ -17,6 +18,8 @@ const Home = (props: Props) => {
     const { displayVillagerDispatch } = useContext(DisplayingVillagerDataContext)
     const [doneFetchingVillagerData, setDoneFetchingVillagerData] = useState(false)
     const [currentCursor] = useCursor()
+    const [width, height] = useWindowSize()
+    const [isShowDesktopOnlyScreen, setIsShowDesktopOnlyScreen] = useState<boolean>(false)
 
     // auth management
     const { isLogin, logoutHandler } = useContext(LoginContext)
@@ -39,11 +42,31 @@ const Home = (props: Props) => {
             initializeItemCatSheetData(fetchSheetItemCatRsp)
         }).catch(err => { throw new Error(err) })
     }, [])
+    useEffect(() => {
+        if (width < 1280) {
+            setIsShowDesktopOnlyScreen(true)
+        }
+    }, [width])
     return (
-        <div style={{ cursor: currentCursor }}>
-            {doneFetchingVillagerData && <HomeContent />}
-            <ExtraNavigationBtn />
+        <div>
+            {isShowDesktopOnlyScreen ?
+                <div style={{
+                    height: '100vh',
+                    backgroundColor: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '20px'
+                }}>
+                    <img src="https://img.icons8.com/ios/50/null/imac.png" /><span>This app is currently available on desktop only</span>
+                </div>
+                :
+                <div style={{ cursor: currentCursor }}>
+                    {doneFetchingVillagerData && <HomeContent />}
+                    <ExtraNavigationBtn />
+                </div>}
         </div>
+
     )
 }
 
