@@ -1,4 +1,4 @@
-import { get, isEmpty } from "lodash"
+import { get } from "lodash"
 import { VillagerToAddObject } from "../../type"
 
 export const mapRequestBodyAddItemCatFormState = (addItemCatFormstate: VillagerToAddObject, imgURLGGdrive: string, currentTotalItemCat: number) => {
