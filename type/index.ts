@@ -9,7 +9,6 @@ export type VillagerHomeData = {
   addressAdditionalDescription: string;
 };
 
-
 export type VillagerAddingFormState = {
   homeRepresentativesName: string
   homeRepresentativesContactNum?: string

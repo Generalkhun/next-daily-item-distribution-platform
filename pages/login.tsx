@@ -92,59 +92,6 @@ const Login = () => {
                 :
                 <></>
             }
-            {/* <Grid container>
-                <Grid item xs={1} sm={4}>
-                </Grid>
-                <Grid item xs={8} sm={4}>
-                    <Paper className={classes.loginBox} elevation={2}>
-                        <Typography style={{ marginLeft: 120 }}>ส่งของเข้าบ้าน ADMIN</Typography>
-                        <Grid container className={classes.loginWrapper}>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    className={classes.loginTextField}
-                                    variant='outlined'
-                                    error={isValidated && (isEmpty(inputUserName))}
-                                    placeholder=''
-                                    label="username"
-                                    defaultValue=""
-                                    value={inputUserName}
-                                    onChange={onChangeUserName}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    className={classes.loginTextField}
-                                    variant='outlined'
-                                    error={isValidated && (isEmpty(inputPassword))}
-                                    placeholder=''
-                                    label="password"
-                                    defaultValue=""
-                                    value={inputPassword}
-                                    onChange={onChangePassword}
-                                    type="password"
-                                />
-                            </Grid>
-                            <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Button
-                                    fullWidth
-                                    variant='contained'
-                                    className={classes.loginButton}
-                                    onClick={onLogin}
-                                >
-                                    เข้าสู่ระบบ
-                                </Button>
-                            </Grid>
-
-                            <p>Hint: use username: a,password:b to login ;)</p>
-                        </Grid>
-                    </Paper>
-                </Grid>
-            </Grid>
-            <Grid item xs={1} sm={4}>
-            </Grid> */}
             <div className={classes.loginBoxContainer}>
                 <Paper className={classes.loginBox} elevation={2}>
                     <Typography style={{ marginLeft: 120 }}>ส่งของเข้าบ้าน ADMIN</Typography>
