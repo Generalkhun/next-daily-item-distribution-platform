@@ -14,8 +14,8 @@ export const getGoogleDriveAuthConfig = async () => {
          * @note keyfile from secrets folder local test.
          * Use keyfile from generated one instead on the production with keys from the env vars
         */
-        keyFile: './secrets/googleDriveKeyFile.json'
-        //keyFile: GOOGLE_DRIVE_KEYFILE_PATH,
+        //keyFile: './secrets/googleDriveKeyFile.json'
+        keyFile: GOOGLE_DRIVE_KEYFILE_PATH,
     }
     return GOOGLE_DRIVE_AUTH_CONFIG;
 }
@@ -34,8 +34,8 @@ export const getGoogleSheetAuthConfig = async () => {
          * @note keyfile from secrets folder local test.
          * Use keyfile from generated one instead on the production with keys from the env vars
         */
-        keyFile: './secrets/googleSheetKeyFile.json'
-        //keyFile: GOOGLE_SHEET_KEYFILE_PATH,
+        //keyFile: './secrets/googleSheetKeyFile.json'
+        keyFile: GOOGLE_SHEET_KEYFILE_PATH,
     }
     return GOOGLE_SHEET_AUTH_CONFIG;
 }
