@@ -15,7 +15,7 @@ const MapWithHomeLocations = dynamic(() => import("./MapWithHomeLocations"), {
 const useStyles = makeStyles({
   mapContainer: {
     height: "87.5vh",
-    width:"65.4vw",
+    width:"100%",
   },
   homeContentContainer: {
     height: '90vh',
@@ -57,7 +57,7 @@ function HomeContent() {
   return (
     <>
       <Grid container className={classes.homeContentContainer}>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={3} lg={4}>
           <AppConsoleVillager
             open={drawerOpen}
             setOpen={setDrawerOpen}
@@ -68,7 +68,7 @@ function HomeContent() {
             isShowOnlyWaitingVillager={isShowOnlyWaitingVillager}
           />
         </Grid>
-        <Grid item xs={12} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
+        <Grid item xs={9} lg={8} style={{ paddingTop: 10, paddingRight: 10 }}>
           <Paper className={classes.mapContainer}>
             <MapWithHomeLocations />
           </Paper>
