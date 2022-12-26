@@ -24,24 +24,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <LoginContextProvider>
         <GoogleSheetDataProvider>
           <DisplayVillagerDataProvider>
-            {(width > 1280) ?
-              <Layouts>
-                <Head>
-                  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-                </Head>
-                <Component {...pageProps} />
-              </Layouts>
-              :
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100vh',
-                gap: '10px',
-              }}>
-                <img src="https://img.icons8.com/ios/50/null/imac.png" /><span>Please use larger screen to view this app</span>
-              </div>
-            }
+            <Layouts>
+              <Head>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+              </Head>
+              <Component {...pageProps} />
+            </Layouts>
           </DisplayVillagerDataProvider>
         </GoogleSheetDataProvider>
       </LoginContextProvider>
